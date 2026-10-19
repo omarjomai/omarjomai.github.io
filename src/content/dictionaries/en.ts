@@ -14,6 +14,7 @@ const en: Dictionary = {
     projects: "Projects",
     skills: "Skills",
     contact: "Contact",
+    blog: "Blog",
     language: "Language",
     theme: "Toggle dark mode",
     skip: "Skip to content",
@@ -175,6 +176,15 @@ const en: Dictionary = {
     text: "Hiring for a role in Riyadh, or need a senior engineer for a project? Send me a message.",
     email: "Email",
     linkedin: "LinkedIn",
+  },
+  blog: {
+    heading: "Blog",
+    intro: "Notes on AI and web technology for engineers who ship.",
+    readMore: "Read the post",
+    back: "All posts",
+    sources: "Sources",
+    otherLanguage: "This post is in English.",
+    empty: "No posts yet.",
   },
   footer: "Omar Jemai",
 };

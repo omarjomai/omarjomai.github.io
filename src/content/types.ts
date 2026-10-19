@@ -58,6 +58,7 @@ export type Dictionary = {
     projects: string;
     skills: string;
     contact: string;
+    blog: string;
     language: string;
     theme: string;
     skip: string;
@@ -105,6 +106,16 @@ export type Dictionary = {
     text: string;
     email: string;
     linkedin: string;
+  };
+  blog: {
+    heading: string;
+    intro: string;
+    readMore: string;
+    back: string;
+    sources: string;
+    /** Shown on posts written in another language than the page. */
+    otherLanguage: string;
+    empty: string;
   };
   footer: string;
 };

@@ -14,6 +14,7 @@ const fr: Dictionary = {
     projects: "Projets",
     skills: "Compétences",
     contact: "Contact",
+    blog: "Blog",
     language: "Langue",
     theme: "Basculer le mode sombre",
     skip: "Aller au contenu",
@@ -175,6 +176,15 @@ const fr: Dictionary = {
     text: "Vous recrutez à Riyad, ou cherchez un ingénieur senior pour un projet ? Écrivez-moi.",
     email: "E-mail",
     linkedin: "LinkedIn",
+  },
+  blog: {
+    heading: "Blog",
+    intro: "Notes sur l'IA et les technologies web, pour les ingénieurs qui livrent.",
+    readMore: "Lire l'article",
+    back: "Tous les articles",
+    sources: "Sources",
+    otherLanguage: "Cet article est en anglais.",
+    empty: "Aucun article pour le moment.",
   },
   footer: "Omar Jemai",
 };

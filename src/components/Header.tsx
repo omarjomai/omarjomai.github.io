@@ -20,15 +20,21 @@ type Props = {
     projects: string;
     skills: string;
     contact: string;
+    blog: string;
     language: string;
     theme: string;
     skip: string;
   };
   name: string;
   langNames: Record<Locale, string>;
+  /** Page path after the locale ("" for home, "blog/" for the blog); keeps the page when switching language. */
+  path?: string;
 };
 
-export function Header({ lang, labels, name, langNames }: Props) {
+export function Header({ lang, labels, name, langNames, path = "" }: Props) {
+  const home = `/${lang}/`;
+  // On the home page section links are plain anchors; elsewhere they point back to the home page.
+  const sectionHref = (id: string) => (path ? `${home}#${id}` : `#${id}`);
   const dark = useSyncExternalStore(subscribeTheme, isDarkNow, isDarkOnServer);
 
   function toggleTheme() {
@@ -56,27 +62,39 @@ export function Header({ lang, labels, name, langNames }: Props) {
         {labels.skip}
       </a>
       <div className="mx-auto flex max-w-5xl items-center gap-4 px-5 py-3">
-        <a href="#top" className="font-semibold tracking-tight">
+        <a href={path ? home : "#top"} className="font-semibold tracking-tight">
           {name}
         </a>
         <nav aria-label="Main" className="ms-auto hidden md:block">
           <ul className="flex gap-5 text-sm text-muted">
             {links.map(([id, label]) => (
               <li key={id}>
-                <a href={`#${id}`} className="hover:text-foreground">
+                <a href={sectionHref(id)} className="hover:text-foreground">
                   {label}
                 </a>
               </li>
             ))}
+            <li>
+              <Link
+                href={`/${lang}/blog/`}
+                aria-current={path.startsWith("blog/") ? "page" : undefined}
+                className={path.startsWith("blog/") ? "text-foreground" : "hover:text-foreground"}
+              >
+                {labels.blog}
+              </Link>
+            </li>
           </ul>
         </nav>
         <div className="ms-auto flex items-center gap-2 md:ms-4">
+          <Link href={`/${lang}/blog/`} className="px-1 text-sm text-muted hover:text-foreground md:hidden">
+            {labels.blog}
+          </Link>
           <nav aria-label={labels.language}>
             <ul className="flex overflow-hidden rounded-md border border-border text-xs">
               {locales.map((l) => (
                 <li key={l}>
                   <Link
-                    href={`/${l}/`}
+                    href={`/${l}/${path}`}
                     hrefLang={l}
                     lang={l}
                     aria-current={l === lang ? "page" : undefined}

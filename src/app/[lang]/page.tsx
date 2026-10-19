@@ -4,6 +4,8 @@ import { allStacks, contact, projects } from "@/content/projects";
 import { getDictionary } from "@/content/get-dictionary";
 import { isLocale, locales, type Locale } from "@/content/types";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import { formatDate, sortedPosts } from "@/content/posts";
 
 function Section({
   id,
@@ -189,6 +191,31 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </div>
           </div>
         </Section>
+
+        {sortedPosts.length > 0 ? (
+          <Section id="blog" heading={t.blog.heading} intro={t.blog.intro}>
+            <ul className="grid gap-4 md:grid-cols-2">
+              {sortedPosts.slice(0, 2).map((post) => (
+                <li key={post.slug} className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-sm text-muted">
+                    <time dateTime={post.date}>{formatDate(post.date, lang)}</time>
+                  </p>
+                  <h3 className="mt-1 font-semibold" lang={post.lang} dir="ltr">
+                    <Link href={`/${lang}/blog/${post.slug}/`} className="hover:text-accent">
+                      {post.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 text-sm text-muted" lang={post.lang} dir="ltr">
+                    {post.summary}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <Link href={`/${lang}/blog/`} className="mt-6 inline-block text-sm font-medium text-accent hover:underline">
+              {t.blog.back}
+            </Link>
+          </Section>
+        ) : null}
 
         <Section id="contact" heading={t.contact.heading}>
           <p className="max-w-2xl text-lg">{t.contact.text}</p>
