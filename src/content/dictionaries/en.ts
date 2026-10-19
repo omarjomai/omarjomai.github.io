@@ -179,7 +179,7 @@ const en: Dictionary = {
   },
   blog: {
     heading: "Blog",
-    intro: "Notes on AI and web technology for engineers who ship.",
+    intro: "Weekly notes on AI, web and mobile technology for engineers who ship.",
     readMore: "Read the post",
     back: "All posts",
     sources: "Sources",

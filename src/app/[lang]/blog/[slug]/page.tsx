@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { PostBody } from "@/components/PostBody";
+import { TagList } from "@/components/TagList";
 import { getDictionary } from "@/content/get-dictionary";
 import { formatDate, getPost, posts } from "@/content/posts";
 import { isLocale, locales, type Locale } from "@/content/types";
@@ -46,6 +47,9 @@ export default async function BlogPost({ params }: PageProps<"/[lang]/blog/[slug
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{post.title}</h1>
           <p className="mt-3 text-lg text-muted">{post.summary}</p>
+          <div className="mt-4">
+            <TagList tags={post.tags} lang={lang} />
+          </div>
           <div className="mt-10">
             <PostBody body={post.body} />
           </div>

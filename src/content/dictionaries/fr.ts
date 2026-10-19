@@ -179,7 +179,7 @@ const fr: Dictionary = {
   },
   blog: {
     heading: "Blog",
-    intro: "Notes sur l'IA et les technologies web, pour les ingénieurs qui livrent.",
+    intro: "Notes hebdomadaires sur l’IA, le web et le mobile, pour les ingénieurs qui livrent.",
     readMore: "Lire l'article",
     back: "Tous les articles",
     sources: "Sources",
