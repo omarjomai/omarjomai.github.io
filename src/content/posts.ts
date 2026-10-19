@@ -138,6 +138,12 @@ Two other details: a new \`next upgrade --agent\` command gives coding agents ve
 
 Note: the critical security fixes came a week later, in 16.4.1. If you upgrade, go straight to that.
 
+## Mobile
+
+- Apple opened App Store submissions for iPhone Duo, its first foldable, which goes on sale October 23. Recompile with Xcode 27.1 and use Device Hub to check every pose and orientation. From April 2027, every app submission must include iPhone Duo screenshots.
+- Flutter 3.47.7 shipped on October 8 as a stable hotfix with Dart 3.13.5.
+- Google released the October Pixel update on October 6, with fixes for a keyboard bug in search fields, VoIP ringtone distortion and photos saved in the wrong orientation. Android 17 QPR2 Beta 7 followed on October 9.
+
 ## Also worth knowing
 
 - Deno is joining Cloudflare (October 9). The Deno runtime gets one more year of monthly bug and security fixes, then development ends; Deno Deploy shuts down in six months; JSR keeps running.
@@ -169,6 +175,10 @@ Which of these changes your plans? Write to me, I read every reply.`,
       { label: "Node.js Design Patterns, Node.js release schedule changes", url: "https://nodejsdesignpatterns.com/blog/nodejs-release-schedule-changes/" },
       { label: "OriginBrief, Developer Tools & Platforms, Oct 12", url: "https://www.originbrief.app/en/reports/developer-tools-platforms/2026-10-12/weekly" },
       { label: "AccessAllGPT, AI Week in Review 2026-W41", url: "https://www.accessallgpt.com/weekly/2026-W41" },
+      { label: "Apple Developer, Prepare and submit your apps for iPhone Duo (Oct 5, 2026)", url: "https://developer.apple.com/news/?id=kkphp5qo" },
+      { label: "Flutter Releases, Flutter 3.47.7 (Oct 8, 2026)", url: "https://flutterreleases.com/release/3.47.7/" },
+      { label: "Droid Life, Everything fixed in October Pixel update (Oct 6, 2026)", url: "https://www.droid-life.com/2026/10/06/everything-fixed-in-october-pixel-update/" },
+      { label: "9to5Google, Android 17 QPR2 Beta 7 for Pixel (Oct 9, 2026)", url: "https://9to5google.com/2026/10/09/android-17-qpr2-beta-7-pixel/" },
     ],
   },
   {
