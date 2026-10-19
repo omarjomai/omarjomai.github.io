@@ -325,14 +325,14 @@ Which of these changes your plans? Write to me, I read every reply.`,
     slug: "2026-08-10-week-32",
     date: "2026-08-10",
     lang: "en",
-    title: "Week 32: TypeScript 7 goes native, Next.js 16.3 ships, and one GitHub issue hijacks coding agents",
+    title: "Week 32: TypeScript 7 lands in the toolchain, Next.js 16.3 ships, and one GitHub issue hijacks coding agents",
     tags: weeklyTags,
     summary: "AI, web and mobile news for engineers who ship. August 3 to August 9, 2026.",
     body: `The first week of August brought big speed gains for the TypeScript and Next.js stack, and a reminder that a coding agent in CI needs the same threat model as any other code there.
 
-## 1. TypeScript 7.0 ships the native Go compiler
+## 1. TypeScript 7.0 and its native Go compiler reach the toolchain
 
-Microsoft released TypeScript 7.0 on August 3, the first stable version with the native compiler ported to Go. Full builds are typically 8x to 12x faster.
+TypeScript 7.0, the first stable version with the native compiler ported to Go, came out on July 8 (Microsoft announcement). This week, coverage and tooling caught up: InfoQ wrote it up on August 3, and Next.js 16.3 can now use it for type checking. Full builds are typically 8x to 12x faster.
 
 - On the VS Code source, a full build fell from 125.7 seconds to 10.6 seconds, and memory use dropped by about 18%.
 - Opening a file with an error in the VS Code codebase went from about 17.5 seconds to under 1.3 seconds.
@@ -388,6 +388,7 @@ My take: treat issue and pull request text as untrusted input. An agent triggere
 Which of these changes your plans? Write to me, I read every reply.`,
     sources: [
       { label: "InfoQ, Microsoft Releases TypeScript 7.0 with a Native Go Compiler, Delivering 10x Faster Builds (Aug 3, 2026)", url: "https://infoq.com/news/2026/08/typescript-7-released" },
+      { label: "Microsoft TypeScript Blog, Announcing TypeScript 7.0 (July 8, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/" },
       { label: "Next.js, Next.js 16.3 (Aug 3, 2026)", url: "https://nextjs.org/blog/next-16-3" },
       { label: "Next.js, August 2026 Security Release (Aug 25, 2026)", url: "https://nextjs.org/blog/august-2026-security-release" },
       { label: "Hackread, Black Hat USA 2026: One GitHub Issue Could Compromise Major AI Coding Workflows (Aug 6, 2026)", url: "https://hackread.com/black-hat-usa-2026-github-compromise-ai-coding/" },
@@ -1000,6 +1001,1487 @@ Which of these changes your plans this week? Write to me, I read every reply.`,
       { label: "Censuus, Android developer verification: what changed on September 30, 2026 (Sep 28, 2026)", url: "https://censuus.com/blog/for-developers/android-developer-verification" },
       { label: "Cloudflare, Everything we launched during Birthday Week 2026 (Oct 2026)", url: "https://blog.cloudflare.com/birthday-week-2026-wrap-up" },
       { label: "Chrome Releases, September 2026 (Sep 30, 2026)", url: "https://chromereleases.googleblog.com/2026/09/" },
+    ],
+  },
+  {
+    slug: "2026-03-09-week-10",
+    date: "2026-03-09",
+    lang: "en",
+    title: "Week 10: GPT-5.4 gets computer use, Cursor agents run on triggers, and Google Play cuts its fees",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. March 2 to March 8, 2026.",
+    body: `This week the big model labs pushed agents further into real work, and Google changed the money side of Android.
+
+## 1. GPT-5.4 ships with 1M context and native computer use
+
+OpenAI released GPT-5.4 on March 5 in ChatGPT (as GPT-5.4 Thinking), the API and Codex, plus GPT-5.4 Pro in ChatGPT and the API. OpenAI calls it its first general-purpose model with native computer use, so agents can operate a desktop and carry out workflows across apps. It also adds tool search, which helps agents pick the right tool from a large set.
+
+- API price: $2.50 per million input tokens, $0.25 cached, $15 output. GPT-5.4 Pro costs $30 and $180.
+- Context goes up to about 1M tokens, but prompts over 272K input tokens are billed at 2x input and 1.5x output for the whole session.
+- GitHub made GPT-5.4 generally available in Copilot the same day, for Pro, Pro+, Business and Enterprise, including VS Code, JetBrains and Xcode.
+
+My take: the 1M window is real, but the pricing cliff at 272K is where budgets break. Keep your agent context under that line by default and opt in to long context only for the jobs that need it.
+
+## 2. Cursor Automations: agents that start without a prompt
+
+Cursor launched Automations on March 5. Agents now run on a schedule or start from events: a Slack message, a new Linear issue, a merged GitHub PR, a PagerDuty incident, or any custom webhook. Cursor's docs list templates such as reviewing recent commits for bugs, deep vulnerability review and triaging bugs from Slack. Automations run as cloud agents and are billed as cloud agent usage.
+
+Lesson: an event-driven agent is a new service in your stack. Give it its own credentials with narrow scopes, cap its spend, and send its output to a pull request or a channel a human reads, not straight to main.
+
+## 3. Google Play lowers fees and opens billing
+
+On March 4, Google announced changes to its Play business model. Developers can offer their own billing next to Google Play billing, or send users to their website to pay. For new installs, the in-app purchase service fee drops to 20%, and to 15% for developers in its new Apps Experience Program. Recurring subscriptions move to 10%. Developers who use Google Play billing pay a separate billing rate, 5% in the EEA, UK and US. A Registered App Stores program will make installing approved third-party stores simpler, starting outside the US.
+
+If you sell subscriptions on Android, rerun your pricing model per region before the new rates reach your market.
+
+## Mobile
+
+- Apple announced iPhone 17e on March 2: $599, A19 chip, 256GB base storage and MagSafe. Pre-orders opened March 4, with sales from March 11.
+- Android Studio Panda 2 is stable. Its AI New Project flow plans, builds and self-corrects a Kotlin and Compose app from one prompt, and the agent can automate dependency updates.
+- Google Play started enforcing battery quality on March 1. Apps that hold partial wake locks too long may get a store listing warning and lose spots in recommendations.
+- Google released Android Bench on March 5, a leaderboard of LLMs on real Android tasks. Models solved 16% to 72% of tasks, with Gemini 3.1 Pro first and Claude Opus 4.6 close behind.
+
+## Also worth knowing
+
+- Google released Gemini 3.1 Flash-Lite in preview at $0.25 per million input tokens and $1.50 output, with adjustable thinking levels.
+- TypeScript 6.0 RC landed on March 6. It is the last release on the JavaScript codebase before the Go-based TypeScript 7.0.
+- AWS is backing Open VSX, the extension registry used by Cursor, Windsurf and Kiro, which now serves over 300 million downloads a month.
+- Flutter 3.41.4 (Dart 3.11.1) and React Native 0.84.1 shipped as hotfix releases on March 4.
+
+## What I'm watching
+
+- How teams cap the cost of 1M-token agent sessions once the 272K pricing step shows up on invoices.
+- Whether Apple responds to Google's fee cuts before WWDC.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "OpenAI, Introducing GPT-5.4 (March 5, 2026)", url: "https://openai.com/index/introducing-gpt-5-4/" },
+      { label: "OpenAI API docs, GPT-5.4 model page (2026)", url: "https://developers.openai.com/api/docs/models/gpt-5.4" },
+      { label: "GitHub Changelog, GPT-5.4 is generally available in GitHub Copilot (March 5, 2026)", url: "https://github.blog/changelog/2026-03-05-gpt-5-4-is-generally-available-in-github-copilot" },
+      { label: "Cursor, Build agents that run automatically (March 5, 2026)", url: "https://cursor.com/blog/automations" },
+      { label: "Cursor Docs, Automations (2026)", url: "https://cursor.com/docs/cloud-agent/automations" },
+      { label: "Android Developers Blog, A new era for choice and openness (March 4, 2026)", url: "https://android-developers.googleblog.com/2026/03/a-new-era-for-choice-and-openness.html" },
+      { label: "Android Developers Blog, Battery Technical Quality Enforcement is Here (March 4, 2026)", url: "https://android-developers.googleblog.com/2026/03/battery-technical-quality-enforcement.html" },
+      { label: "Android Developers Blog, Elevating AI-assisted Android development with Android Bench (March 5, 2026)", url: "https://android-developers.googleblog.com/2026/03/elevating-ai-assisted-androi.html" },
+      { label: "The Register, Google stuffs Gemini into Android Studio Panda 2 (March 4, 2026)", url: "https://www.theregister.com/software/2026/03/04/android-studio-panda-2-ships-with-create-with-ai-feature/4437393" },
+      { label: "Apple Newsroom, Apple introduces iPhone 17e (March 2, 2026)", url: "https://apple.com/newsroom/2026/03/apple-introduces-iphone-17e" },
+      { label: "TechCrunch, MacBook Neo, AirPods Max 2, iPhone 17e and everything else Apple announced this month (March 17, 2026)", url: "https://techcrunch.com/2026/03/17/everything-apple-announced-macbook-neo-iphone-17e-ipad-air/" },
+      { label: "Google, Gemini 3.1 Flash-Lite: Built for intelligence at scale (March 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/" },
+      { label: "Microsoft TypeScript blog, Announcing TypeScript 6.0 RC (March 6, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-6-0-rc" },
+      { label: "The Register, AWS backs Open VSX as Rust survey shows VS Code decline (March 3, 2026)", url: "https://www.theregister.com/software/2026/03/03/aws-backs-open-vsx-as-rust-survey-shows-vs-code-decline/4554789" },
+    ],
+  },
+  {
+    slug: "2026-03-16-week-11",
+    date: "2026-03-16",
+    lang: "en",
+    title: "Week 11: Claude's 1M context gets standard pricing, AI code review arrives, and Chrome 146 ships the Sanitizer API",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. March 9 to March 15, 2026.",
+    body: `This week was about the cost and the quality of AI-written code: bigger context for less money, new review tools, and a report on what agents get wrong.
+
+## 1. Claude's 1M context window goes GA at standard pricing
+
+On March 13, Anthropic made the 1M token context window generally available for Claude Opus 4.6 and Sonnet 4.6, with no long-context premium.
+
+- Opus 4.6 stays at $5 and $25 per million input and output tokens, and Sonnet 4.6 at $3 and $15, across the full window. A 900K-token request costs the same per token as a 9K one.
+- No beta header is needed. Requests over 200K tokens just work, and standard rate limits apply at every length.
+- Media limits go from 100 to 600 images or PDF pages per request.
+- Claude Code Max, Team and Enterprise users get 1M context with Opus 4.6 by default.
+
+My take: flat pricing removes the main reason to build clever chunking for code review and long agent runs. Measure quality first though. Anthropic reports 78.3% on MRCR v2 for Opus 4.6, but your own retrieval tests matter more than a vendor score.
+
+## 2. AI review tools, and a report on why we need them
+
+Anthropic launched Code Review for Claude Code on March 9, in research preview for Team and Enterprise. A team of agents checks each PR in parallel, filters false positives and ranks bugs by severity. Anthropic says the share of its PRs with substantive review comments went from 16% to 54%, an average review takes about 20 minutes, and under 1% of findings are marked incorrect. It does not approve PRs.
+
+The same week, DryRun Security published a test of Claude Code, OpenAI Codex and Gemini building two apps from scratch. Across 30 pull requests, the agents produced 143 security issues, and 26 PRs (87%) had at least one. Broken access control showed up for all three agents. Every final game codebase lacked WebSocket authentication: the agents wrote REST auth middleware, then did not wire it into the WebSocket upgrade.
+
+On March 9, OpenAI also announced it will acquire Promptfoo, the red-teaming and evaluation tool, and keep its open-source CLI going.
+
+Lesson: agents repeat the same few mistakes. Turn them into checks you run on every PR: auth on every route and socket, server-side validation of client values, and the OAuth state parameter.
+
+## 3. Chrome 146 brings the Sanitizer API and scroll-triggered animations
+
+Chrome 146 reached stable on March 10.
+
+- The Sanitizer API strips script-capable content from user-supplied HTML, to make XSS-free apps easier to build. The new version also ships in Firefox.
+- Scroll-triggered animations let CSS start, pause or reset an animation at a scroll position, work that usually needs JavaScript.
+- \`meta name="text-scale"\` lets pages built with \`rem\` and \`em\` follow the user's OS text size setting.
+
+If you render user HTML today with a library, track the Sanitizer API as the long-term native replacement.
+
+## Mobile
+
+- Apple will cut its App Store commission in mainland China from 30% to 25% from March 15, and to 12% for auto-renewing subscriptions after the first year.
+- iOS 26.4 beta 4 reached developers on March 9, with AI playlists in Apple Music and Stolen Device Protection on by default.
+- Google's LLVM team brought AutoFDO to the Android kernel, using profiles from popular-app workloads to make phones faster and use less battery.
+- React Native 0.85 reached its first release candidates, with rc.1 tagged on March 9.
+
+## Also worth knowing
+
+- Google released Gemini Embedding 2 in preview on March 10: one embedding space for text, images, video, audio and PDFs, with output sizes from 3072 down.
+- Nvidia released Nemotron 3 Super, an open model for agentic workloads with a 1M token context and up to 5x higher throughput than the previous Nemotron.
+- GitHub Copilot for JetBrains IDEs made custom agents, sub-agents and plan agent GA on March 11, with agent hooks in preview.
+- Anthropic sued the US Defense Department on March 9 over its supply chain risk label.
+
+## What I'm watching
+
+- Whether OpenAI and Google answer with flat long-context pricing.
+- How fast Firefox and Safari usage makes the Sanitizer API safe to use without a fallback.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Claude, 1M context is now generally available for Opus 4.6 and Sonnet 4.6 (March 13, 2026)", url: "https://claude.com/blog/1m-context-ga" },
+      { label: "Claude, Bringing Code Review to Claude Code (March 9, 2026)", url: "https://claude.com/blog/code-review" },
+      { label: "Help Net Security, AI coding agents keep repeating decade-old security mistakes (March 13, 2026)", url: "https://www.helpnetsecurity.com/2026/03/13/claude-code-openai-codex-google-gemini-ai-coding-agent-security/" },
+      { label: "OpenAI, OpenAI to acquire Promptfoo (March 9, 2026)", url: "https://openai.com/index/openai-to-acquire-promptfoo/" },
+      { label: "Chrome for Developers, New in Chrome 146 (March 10, 2026)", url: "https://developer.chrome.com/blog/new-in-chrome-146" },
+      { label: "Chrome for Developers, Chrome 146 release notes (March 10, 2026)", url: "https://developer.chrome.com/release-notes/146?hl=en" },
+      { label: "TechCrunch, Apple drops commission rates in China without a fuss (March 13, 2026)", url: "https://techcrunch.com/2026/03/13/apple-drops-commission-rates-in-china-25-percent" },
+      { label: "9to5Mac, Apple releases iOS 26.4 beta 4 for iPhone (March 9, 2026)", url: "https://9to5mac.com/2026/03/09/apple-releases-ios-26-4-beta-4/" },
+      { label: "9to5Google, Google is making Android phones faster and improving battery life with this change (March 11, 2026)", url: "https://9to5google.com/2026/03/11/google-android-kernel-optimization-efforts/" },
+      { label: "GitClear, React Native v0.84.1 release and 0.85 release candidates (2026)", url: "https://www.gitclear.com/open_repos/facebook/react-native/release/v0.84.1" },
+      { label: "Google, Gemini Embedding 2: Our first natively multimodal embedding model (March 10, 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-embedding-2/" },
+      { label: "NVIDIA Blog, New NVIDIA Nemotron 3 Super Delivers 5x Higher Throughput for Agentic AI (March 2026)", url: "https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai" },
+      { label: "GitHub Changelog, Major agentic capabilities improvements in GitHub Copilot for JetBrains IDEs (March 11, 2026)", url: "https://github.blog/changelog/2026-03-11-major-agentic-capabilities-improvements-in-github-copilot-for-jetbrains-ides/" },
+      { label: "Ajit Singh, Dev Weekly Mar 9-15, 2026 (March 15, 2026)", url: "https://singhajit.com/dev-weekly/2026/mar-9-15/anthropic-sues-pentagon-google-wiz-atlassian-layoffs-nemotron/" },
+    ],
+  },
+  {
+    slug: "2026-03-23-week-12",
+    date: "2026-03-23",
+    lang: "en",
+    title: "Week 12: Next.js 16.2 writes AGENTS.md, Trivy gets hijacked, and GPT-5.4 mini lands",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. March 16 to March 22, 2026.",
+    body: `Frameworks started shipping features for coding agents this week, while a supply chain attack hit the security scanner many CI pipelines trust.
+
+## 1. Next.js 16.2: faster dev, faster rendering, and an \`AGENTS.md\`
+
+Next.js 16.2 shipped on March 18.
+
+- \`next dev\` startup is about 87% faster than in 16.1 on the default app, which the team presents as ~400% faster time to URL.
+- Rendering is about 50% faster. The team contributed a React change that makes Server Components payload deserialization up to 350% faster by dropping the \`JSON.parse\` reviver.
+- A redesigned default 500 page, Server Function logging in the dev terminal, a hydration diff indicator, and \`--inspect\` for \`next start\`.
+- \`create-next-app\` now adds an \`AGENTS.md\` file that tells agents to read the version-matched docs bundled in \`node_modules/next/dist/docs/\`. Browser errors are forwarded to the terminal by default in dev.
+- Over 200 Turbopack fixes and improvements.
+
+My take: the \`AGENTS.md\` idea is worth copying beyond Next.js. Vercel says bundled docs gave agents a 100% pass rate on its Next.js evals, against 79% for skill-based setups. Point your agents at docs pinned to the versions in your lockfile.
+
+## 2. Trivy, the security scanner, was used to steal CI secrets
+
+On March 19, an attacker used stolen credentials to publish a malicious Trivy v0.69.4, force-push 76 of 77 version tags in \`aquasecurity/trivy-action\` to credential-stealing code, and replace all 7 tags in \`aquasecurity/setup-trivy\`. On March 22, malicious v0.69.5 and v0.69.6 images went to Docker Hub. The \`trivy-action\` tags were bad for about 12 hours.
+
+Aqua says the root cause was a rotation after an earlier breach that was not atomic, so the attacker could read the new secrets while old ones were still valid. Trivy v0.69.3, \`trivy-action\` 0.35.0 (protected by immutable releases) and actions pinned to a safe commit SHA were not affected.
+
+Lesson: pin third-party GitHub Actions to a full commit SHA, not a tag, and rotate all credentials at once after an incident. If any workflow ran Trivy between March 19 and 23, treat its secrets as leaked.
+
+GitHub also shipped Dependabot malware alerts on March 17. Dependabot now flags npm dependencies with known malicious versions from the GitHub Advisory Database.
+
+## 3. OpenAI: GPT-5.4 mini and nano, and a deal for Astral
+
+OpenAI released GPT-5.4 mini and nano on March 17, small models for high-volume and sub-agent work. The API price for GPT-5.4 mini is $0.75 per million input tokens and $4.50 output. GitHub made it GA in Copilot the same day at a 0.33x premium request multiplier.
+
+On March 19, OpenAI said it will acquire Astral, the team behind \`uv\`, Ruff and ty, and fold it into Codex. OpenAI says it plans to keep supporting the open-source tools. The deal still needs regulatory approval.
+
+## Mobile
+
+- Apple seeded the iOS 26.4 release candidate to developers on March 18, a week after beta 4.
+- Flutter 3.41.5 (Dart 3.11.3) shipped on March 18 as a stable hotfix.
+- React Native 0.85 moved through rc.2 to rc.4 between March 16 and 18.
+- Apple's March launches included AirPods Max 2 on March 16, after the iPhone 17e, M4 iPad Air and MacBook Neo earlier in the month.
+
+## Also worth knowing
+
+- Nvidia GTC ran March 16 to 19. Nvidia showed Vera Rubin, a platform of seven chips, plus OpenShell, a runtime that applies policy and network guardrails to agents. Jensen Huang said he sees at least $1 trillion in revenue from 2025 through 2027.
+- Stripe says its Minions agents now open over 1,300 pull requests a week. The code is all agent-written and every PR is human-reviewed. The system started as a fork of Block's Goose.
+- Java 26 and Laravel 13, the latter with a first-party AI SDK, both shipped on March 17.
+
+## What I'm watching
+
+- How many teams move GitHub Actions to SHA pinning after Trivy.
+- Whether \`AGENTS.md\` with bundled docs spreads to other frameworks.
+- How OpenAI changes \`uv\` and Ruff once the Astral deal closes.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Next.js, Next.js 16.2 (March 18, 2026)", url: "https://nextjs.org/blog/next-16-2" },
+      { label: "Next.js, Next.js 16.2: AI Improvements (March 18, 2026)", url: "https://nextjs.org/blog/next-16-2-ai" },
+      { label: "GitHub Security Advisory, Trivy ecosystem supply chain temporarily compromised (March 2026)", url: "https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23" },
+      { label: "GitHub Changelog, Dependabot now detects malware in npm dependencies (March 17, 2026)", url: "https://github.blog/changelog/2026-03-17-dependabot-now-detects-malware-in-npm-dependencies/" },
+      { label: "OpenAI, Introducing GPT-5.4 mini and nano (March 17, 2026)", url: "https://openai.com/index/introducing-gpt-5-4-mini-and-nano" },
+      { label: "OpenAI API docs, GPT-5.4 model page with pricing comparison (2026)", url: "https://developers.openai.com/api/docs/models/gpt-5.4" },
+      { label: "GitHub Changelog, GPT-5.4 mini is now generally available for GitHub Copilot (March 17, 2026)", url: "https://github.blog/changelog/2026-03-17-gpt-5-4-mini-is-now-generally-available-for-github-copilot/" },
+      { label: "OpenAI, OpenAI to acquire Astral (March 19, 2026)", url: "https://openai.com/index/openai-to-acquire-astral" },
+      { label: "MacRumors, Apple Seeds iOS 26.4 and iPadOS 26.4 Release Candidates (March 18, 2026)", url: "https://www.macrumors.com/2026/03/18/apple-seeds-ios-26-4-release-candidate/" },
+      { label: "Flutter Releases, Flutter 3.41.5 (March 18, 2026)", url: "https://flutterreleases.com/release/3.41.5/" },
+      { label: "TechCrunch, MacBook Neo, AirPods Max 2, iPhone 17e and everything else Apple announced this month (March 17, 2026)", url: "https://techcrunch.com/2026/03/17/everything-apple-announced-macbook-neo-iphone-17e-ipad-air/" },
+      { label: "NVIDIA Blog, GTC 2026 news (March 2026)", url: "https://blogs.nvidia.com/blog/gtc-2026-news/" },
+      { label: "InfoQ, Stripe Engineers Deploy Minions, Autonomous Agents Producing Thousands of Pull Requests Weekly (March 20, 2026)", url: "https://www.infoq.com/news/2026/03/stripe-autonomous-coding-agents/" },
+      { label: "Ajit Singh, Dev Weekly Mar 16-22, 2026 (March 22, 2026)", url: "https://singhajit.com/dev-weekly/2026/mar-16-22/nvidia-gtc-vera-rubin-stripe-minions-laravel-13-trivy-attack/" },
+    ],
+  },
+  {
+    slug: "2026-03-30-week-13",
+    date: "2026-03-30",
+    lang: "en",
+    title: "Week 13: The Trivy attack reaches LiteLLM, Node.js patches two crashes, and TypeScript 6.0 ships",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. March 23 to March 29, 2026.",
+    body: `Last week's Trivy compromise spread into the AI tooling many of us install every day, so this issue starts with patching and secrets.
+
+## 1. LiteLLM on PyPI shipped a credential stealer
+
+On March 24, malicious \`litellm\` 1.82.7 and 1.82.8 were published to PyPI. LiteLLM says they went live at 10:39 UTC and were quarantined about 40 minutes later, and that anyone who installed or upgraded via \`pip\` between 10:39 and 16:00 UTC that day should check. The payload looked for environment variables, SSH keys, AWS, GCP and Azure credentials, Kubernetes tokens and database passwords, and sent them to a domain that is not LiteLLM's.
+
+LiteLLM believes the attack started from the compromised Trivy dependency in its CI security scan. The official LiteLLM Proxy Docker image was not affected because it pins dependencies. A clean v1.83.0, built by a new CI/CD pipeline, followed on March 30.
+
+My take: if either version touched a laptop or a CI runner, rotate every secret that machine could read, not only your LLM keys. Then pin Python dependencies in CI, as the Docker image did, and add hashes where you can.
+
+## 2. Node.js security releases for every active line
+
+The Node.js project shipped security releases on March 24 for 20.x, 22.x, 24.x and 25.x: v20.20.2, v22.22.2, v24.14.1 and v25.8.2. Two issues are rated High, and both can crash a server process:
+
+- An \`SNICallback\` that throws on unexpected \`servername\` input crashes TLS servers. This completes an earlier fix for CVE-2026-21637.
+- A request with a header named \`__proto__\` crashes any HTTP server that reads \`req.headersDistinct\` (CVE-2026-21710).
+
+The rest are Medium and Low issues, including an HTTP/2 memory leak, a timing leak in HMAC verification and HashDoS in V8. undici is updated too.
+
+Lesson: upgrade this week. Node.js 20 reaches end of life on April 30, so this is one of its last community patches. Plan the move to 22 or 24 now.
+
+## 3. TypeScript 6.0 is out, the bridge to the Go compiler
+
+Microsoft released TypeScript 6.0 on March 23. It is the last major version on the JavaScript codebase. TypeScript 7.0, written in Go, is "extremely close to completion" per the team.
+
+- New defaults: \`strict\` is \`true\`, \`module\` is \`esnext\`, \`target\` is the latest spec (\`es2025\`), and \`types\` defaults to \`[]\`.
+- Deprecated and gone in 7.0: \`target: es5\`, \`--moduleResolution node\`, \`--baseUrl\`, \`--outFile\`, and AMD, UMD and SystemJS output.
+- \`--stableTypeOrdering\` makes union ordering match 7.0 so you can diff the output. It can slow type checking by up to 25%, so use it only for checks.
+
+The team says many projects got 20% to 50% faster builds just by setting \`types\` explicitly.
+
+## Mobile
+
+- iOS 26.4 shipped on March 24 with AI playlists in Apple Music, Stolen Device Protection on by default and many security fixes. End-to-end encrypted RCS and the Gemini-based Siri are not in it.
+- Android 17 reached platform stability with Beta 3 on March 26. The API surface is locked, so you can finish compatibility testing and publish apps targeting Android 17.
+- Apple gave App Store Connect over 100 new metrics on March 25, including subscription reports you can export via API and peer group benchmarks.
+- Apple confirmed WWDC26 for June 8 to 12, online, with "AI advancements" on the agenda.
+
+## Also worth knowing
+
+- Anthropic launched computer use for Claude Cowork and Claude Code as a research preview on macOS. Claude asks for permission before it uses each app.
+- OpenAI added plugins to Codex on March 27. A plugin bundles skills, MCP server setups and app integrations, so a team can share one setup.
+- Google released Gemini 3.1 Flash Live on March 26, its new real-time voice model, in preview through the Live API.
+- VS Code 1.113 shipped on March 25 with a thinking effort selector in the model picker and nested subagents.
+- Flutter 3.41.6 (Dart 3.11.4) shipped as a stable hotfix on March 26.
+
+## What I'm watching
+
+- Which other packages turn out to have used the compromised Trivy action in their release pipeline.
+- How large codebases handle the TypeScript 6.0 defaults, especially \`types: []\`.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "LiteLLM, Security Update: Suspected Supply Chain Incident (March 24, 2026, updated March 30)", url: "https://docs.litellm.ai/blog/security-update-march-2026" },
+      { label: "Node.js, Tuesday, March 24, 2026 Security Releases (March 24, 2026)", url: "https://nodejs.org/en/blog/vulnerability/march-2026-security-releases" },
+      { label: "HeroDevs, March 2026 Node.js Security Release: Eight CVEs Patched (April 8, 2026)", url: "https://www.herodevs.com/blog-posts/march-2026-node-js-security-release-eight-cves-patched-including-two-high-severity-process-crashes" },
+      { label: "Microsoft TypeScript blog, Announcing TypeScript 6.0 (March 23, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/" },
+      { label: "Visual Studio Magazine, TypeScript 6.0 Ships as Final JavaScript-Based Release (March 23, 2026)", url: "https://visualstudiomagazine.com/articles/2026/03/23/typescript-6-0-ships-as-final-javascript-based-release-clears-path-for-go-native-7-0.aspx" },
+      { label: "Ars Technica, Apple releases iOS, iPadOS, macOS 26.4 with a long list of medium-size tweaks (March 24, 2026)", url: "https://arstechnica.com/gadgets/2026/03/apple-releases-ios-ipados-macos-26-4-with-a-long-list-of-medium-size-tweaks/" },
+      { label: "Android Developers Blog, The Third Beta of Android 17 (March 26, 2026)", url: "https://developer.android.com/blog/posts/the-third-beta-of-android-17" },
+      { label: "TechCrunch, Apple overhauls its app developer platform with 100 new metrics (March 25, 2026)", url: "https://techcrunch.com/2026/03/25/apple-overhauls-its-app-developer-platform-with-100-new-metrics-more-tools/" },
+      { label: "Apple Newsroom, Apple's Worldwide Developers Conference returns the week of June 8 (March 23, 2026)", url: "https://apple.com/newsroom/2026/03/apples-worldwide-developers-conference-returns-the-week-of-june-8" },
+      { label: "The Verge, Anthropic's Claude Code and Cowork can control your computer (March 24, 2026)", url: "https://www.theverge.com/ai-artificial-intelligence/899430/anthropic-claude-code-cowork-ai-control-computer" },
+      { label: "Claude Help Center, Let Claude use your computer in Cowork (2026)", url: "https://support.claude.com/en/articles/14128542-let-claude-use-your-computer-in-cowork" },
+      { label: "SiliconANGLE, OpenAI introduces plugins for its Codex programming assistant (March 27, 2026)", url: "https://siliconangle.com/2026/03/27/openai-introduces-plugins-codex-programming-assistant/" },
+      { label: "Google, Gemini 3.1 Flash Live: Making audio AI more natural and reliable (March 26, 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-live/" },
+      { label: "Visual Studio Code, Visual Studio Code 1.113 (March 25, 2026)", url: "https://code.visualstudio.com/updates/v1_113" },
+    ],
+  },
+  {
+    slug: "2026-04-06-week-14",
+    date: "2026-04-06",
+    lang: "en",
+    title: "Week 14: Axios gets hijacked on npm, Gemma 4 goes Apache 2.0, and Cursor 3 bets on agents",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. March 30 to April 5, 2026.",
+    body: `npm had a rough week, and coding tools kept moving from editors toward agents.
+
+## 1. Two npm incidents in one day: a hijacked Axios and a leaked Claude Code
+
+On March 31, two malicious Axios versions, \`1.14.1\` and \`0.30.4\`, were published to npm. Per Snyk, the attacker used a hijacked maintainer account and added a pre-staged dependency, \`plain-crypto-js@4.2.1\`, whose \`postinstall\` script downloaded a remote access trojan for macOS, Windows or Linux. Both versions were live for about three hours and were removed by 03:29 UTC. Microsoft attributes the attack to Sapphire Sleet, a North Korean state actor, and notes that any project allowing \`axios@^1.14.0\` or \`axios@^0.30.0\` could have pulled the bad build on a fresh install.
+
+The same day, Anthropic shipped version 2.1.88 of \`@anthropic-ai/claude-code\` with a source map that exposed the CLI's full TypeScript source. Anthropic called it a packaging error caused by human error, with no customer data or credentials involved.
+
+- Search lockfiles and CI logs for \`axios@1.14.1\`, \`axios@0.30.4\` and \`plain-crypto-js\`.
+- If a machine installed them, treat it as compromised and rotate every secret it could read.
+
+Lesson: commit lockfiles, use \`npm ci\` in CI, and consider \`--ignore-scripts\` for builds that do not need install hooks. If you publish packages, check the tarball with \`npm pack --dry-run\` first.
+
+## 2. Gemma 4: open models under Apache 2.0, sized for phones
+
+Google released Gemma 4 on April 2. Hugging Face lists five sizes: E2B and E4B for devices, a 12B unified model, a 31B dense model and a 26B mixture-of-experts model with 4B active parameters. The small models take text, image and audio input with a 128K context; the larger ones go to 256K. The license is now Apache 2.0, which removes the custom-terms question for commercial use.
+
+For Android teams, Google says Gemma 4 is the base for the next Gemini Nano. Code written today against Gemma 4 in the AICore Developer Preview should work on Gemini Nano 4 devices later this year.
+
+My take: if you have parked an on-device AI feature because of licensing or model size, this is a good week to prototype it again.
+
+## 3. Coding tools move to agent-first: Cursor 3 and the Copilot SDK
+
+- Cursor 3 shipped on April 2 with a new interface built around agents. Local and cloud agents, including those started from mobile, Slack, GitHub or Linear, appear in one sidebar. It supports multiple repos and handoff between local and cloud agents, and the classic IDE is still one click away.
+- GitHub put the Copilot SDK in public preview the same day. It exposes the agent runtime behind Copilot cloud agent and Copilot CLI, with tool calls, streaming, file operations and multi-turn sessions, so you can embed it in your own apps.
+
+Lesson: before your team writes its own agent loop, check whether an SDK like this already covers it.
+
+## Mobile
+
+- Google opened the AICore Developer Preview with Gemma 4 on April 2, and Android Studio can now use Gemma 4 as a local model for Agent Mode, with no API key and no network needed.
+- Apple released iOS 26.5 beta 1 for developers early in the week, then shipped a revised beta 1 build (\`23F5043k\`) on April 3 (9to5Mac expects it fixes bugs that could not wait for beta 2).
+- Android teams can build production features on the ML Kit GenAI Prompt API today, and Google says that code will carry over to Gemini Nano 4 devices.
+
+## Also worth knowing
+
+- OpenAI closed a funding round of $122 billion in committed capital at an $852 billion post-money valuation on March 31. It says it now earns $2 billion in revenue per month.
+- From April 4, Claude subscriptions no longer cover third-party harnesses such as OpenClaw. Usage there moves to a separate pay-as-you-go option, and Anthropic says the policy will extend to more tools.
+- Google's March 31 Chrome 146 update fixed 21 bugs, including CVE-2026-5281, a use-after-free in the Dawn graphics layer that is exploited in the wild.
+- Microsoft open-sourced the Agent Governance Toolkit under MIT on April 2. It enforces runtime policies on agent actions and targets the OWASP Top 10 for agentic applications.
+
+## What I'm watching
+
+- Whether npm and GitHub add stronger defaults against hijacked maintainer accounts after Axios.
+- Which other third-party tools Anthropic moves off subscription limits.
+- Real benchmarks of Gemma 4 E2B and E4B on mid-range Android phones.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Snyk, Axios npm Package Compromised: Supply Chain Attack Delivers Cross-Platform RAT (March 31, 2026)", url: "https://snyk.io/blog/axios-npm-package-compromised-supply-chain-attack-delivers-cross-platform/" },
+      { label: "Microsoft Security Blog, Mitigating the Axios npm supply chain compromise (April 1, 2026)", url: "https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/" },
+      { label: "InfoQ, Anthropic Accidentally Exposes Claude Code Source via npm Source Map File (April 2026)", url: "https://infoq.com/news/2026/04/claude-code-source-leak" },
+      { label: "Google, Gemma 4: Byte for byte, the most capable open models (April 2, 2026)", url: "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4" },
+      { label: "Hugging Face, Welcome Gemma 4: Frontier multimodal intelligence on device (April 2, 2026)", url: "https://huggingface.co/blog/gemma4" },
+      { label: "Android Developers Blog, Announcing Gemma 4 in the AICore Developer Preview (April 2, 2026)", url: "https://android-developers.googleblog.com/2026/03/AI-Core-Developer-Preview.html" },
+      { label: "Android Developers Blog, Android Studio supports Gemma 4 as a local model (April 2026)", url: "https://android-developers.googleblog.com/2026/04/android-studio-supports-gemma-4-local.html" },
+      { label: "Cursor, Meet the new Cursor (April 2, 2026)", url: "https://cursor.com/blog/cursor-3" },
+      { label: "GitHub Changelog, Copilot SDK in public preview (April 2, 2026)", url: "https://github.blog/changelog/2026-04-02-copilot-sdk-in-public-preview" },
+      { label: "9to5Mac, Apple releases new iOS 26.5 beta 1 build for iPhone (April 3, 2026)", url: "https://9to5mac.com/2026/04/03/apple-releases-new-ios-26-5-beta-1-build-for-iphone" },
+      { label: "OpenAI, OpenAI raises $122 billion to accelerate the next phase of AI (March 31, 2026)", url: "https://openai.com/index/accelerating-the-next-phase-ai/" },
+      { label: "TechCrunch, Anthropic says Claude Code subscribers will need to pay extra for OpenClaw usage (April 4, 2026)", url: "https://techcrunch.com/2026/04/04/anthropic-says-claude-code-subscribers-will-need-to-pay-extra-for-openclaw-support" },
+      { label: "SecurityWeek, Exploited Zero-Day Among 21 Vulnerabilities Patched in Chrome (April 2026)", url: "https://www.securityweek.com/exploited-zero-day-among-21-vulnerabilities-patched-in-chrome/" },
+      { label: "Microsoft Open Source Blog, Introducing the Agent Governance Toolkit (April 2, 2026)", url: "https://opensource.microsoft.com/blog/2026/04/02/introducing-the-agent-governance-toolkit-open-source-runtime-security-for-ai-agents" },
+    ],
+  },
+  {
+    slug: "2026-04-13-week-15",
+    date: "2026-04-13",
+    lang: "en",
+    title: "Week 15: Anthropic holds back Mythos, Meta ships Muse Spark, and React Native 0.85 lands",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. April 6 to April 12, 2026.",
+    body: `This week a lab decided its best model was too good at hacking to release, while coding tools got cheaper and more flexible.
+
+## 1. Project Glasswing: a model kept back because it finds zero-days
+
+On April 7, Anthropic announced Project Glasswing with AWS, Apple, Broadcom, Cisco, CrowdStrike, Google, JPMorganChase, the Linux Foundation, Microsoft, NVIDIA and Palo Alto Networks. It is built around Claude Mythos Preview, an unreleased model that Anthropic says can find and exploit software vulnerabilities better than all but the most skilled humans.
+
+- Anthropic says Mythos found a 16-year-old FFmpeg bug in a line that automated testing had hit five million times, and chained several Linux kernel flaws into full root access.
+- It commits up to $100M in usage credits and $4M in donations to open-source security groups.
+- After the research preview, participants will pay $25 and $125 per million input and output tokens on the Claude API, Bedrock, Vertex AI and Foundry.
+- Anthropic will report publicly within 90 days on what was fixed.
+
+My take: when models this good at finding bugs become common, patch speed matters more than ever. Know which open-source libraries you ship, keep dependencies current, and make sure you can release a security fix in hours, not weeks.
+
+## 2. New models: Meta Muse Spark and an open GLM-5.1
+
+- Meta announced Muse Spark on April 8, the first model from Meta Superintelligence Labs. It powers the Meta AI app and meta.ai now, with WhatsApp, Instagram, Facebook, Messenger and AI glasses to follow. Meta AI can now run several subagents in parallel on one question. API access is a private preview for select partners only.
+- Z.ai published GLM-5.1 on Hugging Face under the MIT license, in a collection updated April 7. It is a large open-weight model that you can serve with vLLM or SGLang through an OpenAI-compatible endpoint.
+
+Lesson: an open model behind an OpenAI-compatible API is a cheap fallback to test. Keep your model provider behind one interface so switching is a config change.
+
+## 3. Coding agents: cheaper plans, your own models, a second opinion
+
+- OpenAI added a $100 per month ChatGPT Pro plan on April 9 with 5x more Codex usage than Plus, and higher Codex limits on that plan until May 31. The $200 tier stays, with 20x Plus limits. OpenAI says more than 3 million people use Codex every week.
+- GitHub Copilot CLI now supports bring-your-own-key and fully local models (April 7), so teams can use their existing providers or work in air-gapped setups.
+- Copilot CLI also got Rubber Duck, an experimental reviewer that uses a model from a different family to critique the agent's plans and code. GitHub says Claude Sonnet plus Rubber Duck closes 74.7% of the gap between Sonnet and Opus on its evals.
+
+My take: cross-model review is cheap to copy in your own pipeline. Have a second model review agent output before a human does.
+
+## Mobile
+
+- React Native 0.85 shipped on April 7 with a new Shared Animation Backend, built with Software Mansion, that will let Animated drive layout props on the native driver (experimental, from 0.85.1). Breaking changes: the Jest preset moved to \`@react-native/jest-preset\`, EOL Node.js versions are dropped and \`StyleSheet.absoluteFillObject\` is removed.
+- The official Swift extension is now on the Open VSX Registry (April 8), so Cursor, VSCodium, Kiro and Antigravity can install Swift support with completion, debugging and a test explorer.
+
+## Also worth knowing
+
+- Chrome 147 reached stable on April 7. It adds element-scoped view transitions with \`element.startViewTransition()\`, CSS \`contrast-color()\` and the CSS \`border-shape\` property.
+- Next.js 16.2.3 shipped on April 8 with a fix for \`manifest.ts\` breaking HMR and a styled-jsx race condition that lost styles during concurrent rendering.
+- Anthropic signed a deal with Google and Broadcom for multiple gigawatts of TPU capacity from 2027. It says its run-rate revenue passed $30 billion, up from about $9 billion at the end of 2025.
+- OpenAI told TechCrunch the $100 tier is aimed at Claude Code users, so expect a pricing response.
+
+## What I'm watching
+
+- Whether Anthropic ships cyber safeguards on a smaller model first, before any wider Mythos release.
+- Muse Spark API access and pricing for developers outside the private preview.
+- How fast libraries adopt React Native 0.85's new animation backend.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Project Glasswing (April 7, 2026)", url: "https://www.anthropic.com/glasswing" },
+      { label: "Meta, Introducing Muse Spark: MSL's First Model, Purpose-Built to Prioritize People (April 8, 2026)", url: "https://about.fb.com/news/2026/04/introducing-muse-spark-meta-superintelligence-labs/" },
+      { label: "Hugging Face, zai-org/GLM-5.1 model card (April 2026)", url: "https://huggingface.co/zai-org/GLM-5.1" },
+      { label: "TechCrunch, ChatGPT finally offers $100/month Pro plan (April 9, 2026)", url: "https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex" },
+      { label: "GitHub Changelog, Copilot CLI now supports BYOK and local models (April 7, 2026)", url: "https://github.blog/changelog/2026-04-07-copilot-cli-now-supports-byok-and-local-models" },
+      { label: "GitHub Blog, GitHub Copilot CLI combines model families for a second opinion (April 2026)", url: "https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-combines-model-families-for-a-second-opinion/" },
+      { label: "Help Net Security, GitHub Copilot CLI gets a second-opinion feature built on cross-model review (April 7, 2026)", url: "https://www.helpnetsecurity.com/2026/04/07/github-copilot-rubber-duck-cross-model-review/" },
+      { label: "React Native, React Native 0.85 - New Animation Backend, New Jest Preset Package (April 7, 2026)", url: "https://reactnative.dev/blog/2026/04/07/react-native-0.85" },
+      { label: "Swift.org, Expanding Swift's IDE Support (April 8, 2026)", url: "https://swift.org/blog/expanding-swift-ide-support/" },
+      { label: "Chrome for Developers, Chrome 147 release notes (April 7, 2026)", url: "https://developer.chrome.com/release-notes/147" },
+      { label: "GitHub, vercel/next.js release v16.2.3 (April 8, 2026)", url: "https://github.com/vercel/next.js/releases/tag/v16.2.3" },
+      { label: "Anthropic, Anthropic expands partnership with Google and Broadcom for multiple gigawatts of next-generation compute (April 2026)", url: "https://anthropic.com/news/google-broadcom-partnership-compute" },
+    ],
+  },
+  {
+    slug: "2026-04-20-week-16",
+    date: "2026-04-20",
+    lang: "en",
+    title: "Week 16: Opus 4.7 ships, Codex learns to use your Mac, and Expo launches an app agent",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. April 13 to April 19, 2026.",
+    body: `The labs shipped in lockstep this week, and cybersecurity shaped how both Anthropic and OpenAI released their models.
+
+## 1. Claude Opus 4.7: same price, new tokenizer, built-in cyber safeguards
+
+Anthropic released Claude Opus 4.7 on April 16 on the Claude apps, the API (\`claude-opus-4-7\`), Bedrock, Vertex AI and Foundry. Pricing stays at $5 and $25 per million input and output tokens. Anthropic says it beats Opus 4.6 on hard software engineering work, but is less capable than the restricted Mythos Preview.
+
+- Vision now accepts images up to 2,576 pixels on the long edge, more than three times the pixels of earlier Claude models.
+- A new \`xhigh\` effort level sits between \`high\` and \`max\`.
+- The updated tokenizer can turn the same input into about 1.0 to 1.35 times more tokens, and the model thinks more at high effort.
+- It is the first model shipped with safeguards that block high-risk cyber requests. Security researchers can apply to a Cyber Verification Program.
+
+Lesson: "same price per token" is not "same bill". Re-run your cost and latency checks on real traffic before you switch the model ID, and re-test prompts, since Anthropic says 4.7 follows instructions more literally.
+
+## 2. Codex goes beyond the editor, and OpenAI opens a cyber model
+
+On April 16, OpenAI shipped a large Codex app update for its more than 3 million weekly developers. Codex can now use Mac apps in the background with its own cursor, with several agents working in parallel. It also gets an in-app browser where you comment on pages, image generation with \`gpt-image-1.5\`, memory, more than 90 new plugins and SSH to remote devboxes in alpha.
+
+Two days earlier, OpenAI expanded its Trusted Access for Cyber program to thousands of verified defenders and launched GPT-5.4-Cyber, a fine-tuned model with fewer restrictions, for the highest verified tiers.
+
+My take: computer use is most useful for testing UI flows and apps without an API. Run it on a separate test account or machine, never on a desktop logged into production.
+
+## 3. Expo Agent and a $45M round for mobile builders
+
+Expo raised a $45M Series B led by Georgian on April 16 and opened the waitlist for the Expo Agent beta. Expo says the agent builds native apps for iOS, Android and the web from a prompt, writes SwiftUI and Jetpack Compose as well as React, and can target widgets and live activities. It runs on Claude Code tuned by the Expo team, and you can test on simulators without an Apple Developer Program membership.
+
+Lesson: AI builders make the first version cheap. Store review, signing, updates and crash monitoring are still the work, so plan for them from day one.
+
+## Mobile
+
+- Android 17 Beta 4, the last scheduled beta, arrived on April 16. Apps targeting Android 17 get local network access blocked by default, Certificate Transparency on by default, and native libraries loaded with \`System.load()\` must be read-only.
+- Google Play announced new policies on April 15, with at least 30 days to comply: apps without a need for broad contacts access must use the Android Contact Picker, and account transfers must use the Play Console workflow.
+- Google added an experimental hybrid inference API to Firebase AI Logic on April 17 that routes between on-device and cloud models.
+- Apple seeded iOS 26.5 beta 2 to developers on April 13, and Flutter 3.41.7 reached stable on April 16.
+
+## Also worth knowing
+
+- Microsoft's April Patch Tuesday (April 14) fixed 163 CVEs per Tenable, including SharePoint spoofing bug CVE-2026-32201, exploited in the wild, and a publicly disclosed Defender flaw, CVE-2026-33825.
+- Anthropic launched Claude Design on April 17 in research preview for paid plans. It builds prototypes, slides and mockups from your codebase's design system and can hand off to Claude Code.
+- Cursor added canvases on April 15: interactive dashboards, tables and diagrams the agent creates, kept next to the terminal and browser.
+- Google released Gemini 3.1 Flash TTS on April 15, with audio tags to control style and pace in over 70 languages and SynthID watermarks.
+
+## What I'm watching
+
+- Vercel disclosed a security incident on April 19 involving unauthorized access to internal systems. More detail is expected next week.
+- Real-world token bills on Opus 4.7 versus 4.6 once teams switch.
+- Whether Expo Agent apps pass App Store review without manual fixes.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Introducing Claude Opus 4.7 (April 16, 2026)", url: "https://www.anthropic.com/news/claude-opus-4-7" },
+      { label: "OpenAI, Codex for (almost) everything (April 16, 2026)", url: "https://openai.com/index/codex-for-almost-everything" },
+      { label: "OpenAI, Trusted access for the next era of cyber defense (April 14, 2026)", url: "https://openai.com/index/scaling-trusted-access-for-cyber-defense" },
+      { label: "Expo, Introducing Expo Agent (beta): build native apps with Expo and AI (April 2026)", url: "https://expo.dev/blog/expo-agent-beta" },
+      { label: "Expo, What Expo's Series B funding means for you (April 16, 2026)", url: "https://expo.dev/blog/what-expo-s-series-b-funding-means-for-you" },
+      { label: "Android Developers, The Fourth Beta of Android 17 (April 16, 2026)", url: "https://developer.android.com/about/versions/17/blog-beta4" },
+      { label: "Play Console Help, Policy announcement: April 15, 2026", url: "https://support.google.com/googleplay/android-developer/answer/16926792?hl=en" },
+      { label: "Android Developers Blog, Experimental hybrid inference and new Gemini models for Android (April 17, 2026)", url: "https://android-developers.googleblog.com/2026/04/Hybrid-inference-and-new-AI-models-are-coming-to-Android.html" },
+      { label: "MacRumors, Apple Seeds Second iOS 26.5 and iPadOS 26.5 Betas to Developers (April 13, 2026)", url: "https://macrumors.com/2026/04/13/apple-seeds-ios-26-5-beta-2" },
+      { label: "Flutter announce, Flutter Stable 3.41.7 (April 16, 2026)", url: "https://groups.google.com/g/flutter-announce/c/xqn2hXC56y4" },
+      { label: "Tenable, Microsoft's April 2026 Patch Tuesday Addresses 163 CVEs (April 14, 2026)", url: "https://www.tenable.com/blog/microsofts-april-2026-patch-tuesday-addresses-163-cves-cve-2026-32201" },
+      { label: "Anthropic, Introducing Claude Design by Anthropic Labs (April 17, 2026)", url: "https://anthropic.com/news/claude-design-anthropic-labs" },
+      { label: "Cursor, Changelog: Canvases (April 15, 2026)", url: "https://cursor.com/changelog/04-15-26" },
+      { label: "Google, Gemini 3.1 Flash TTS: the next generation of expressive AI speech (April 15, 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-tts" },
+    ],
+  },
+  {
+    slug: "2026-04-27-week-17",
+    date: "2026-04-27",
+    lang: "en",
+    title: "Week 17: Vercel traces its breach to an AI tool, GPT-5.5 ships, and TypeScript 7 goes native",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. April 20 to April 26, 2026.",
+    body: `This week was about trust in the tools around your code: an AI tool opened a door into Vercel, a CI step poisoned an npm package, and new models kept coming.
+
+## 1. Vercel and Bitwarden: the supply chain now includes your AI tools
+
+Vercel updated its security bulletin all week. The incident started with a compromise of Context.ai, a third-party AI tool used by an employee. The attacker took over that employee's Google Workspace account, then their Vercel account, then moved through internal systems to read and decrypt environment variables not marked as sensitive. On April 20, Vercel confirmed with GitHub, Microsoft, npm and Socket that none of its npm packages were tampered with.
+
+On April 22, a malicious \`@bitwarden/cli@2026.4.0\` was live on npm for about 90 minutes. Per BleepingComputer, attackers used a compromised GitHub Action in Bitwarden's CI/CD pipeline. The payload stole credentials and could spread to other packages the victim could publish. Bitwarden says vault data was not affected.
+
+- Rotate any Vercel environment variable not marked "sensitive", then turn on sensitive variables.
+- Audit which Google Workspace OAuth apps your team has granted, and remove the ones nobody owns.
+- Pin GitHub Actions to a commit SHA, not a tag.
+
+My take: every AI tool you connect to your work account is now part of your attack surface. Review OAuth grants the way you review dependencies.
+
+## 2. GPT-5.5 lands, and open models keep pace
+
+- OpenAI released GPT-5.5 on April 23 to Plus, Pro, Business and Enterprise users in ChatGPT and Codex, and added it to the API on April 24. API pricing is $5 and $30 per million input and output tokens with a 1M context window; \`gpt-5.5-pro\` costs $30 and $180. OpenAI reports 82.7% on Terminal-Bench 2.0 and says it needs fewer tokens than GPT-5.4 on Codex tasks.
+- DeepSeek released V4 Preview as open weights on April 24: V4-Pro (1.6T total, 49B active) and V4-Flash (284B total, 13B active). 1M context is now the default, and the API accepts both OpenAI and Anthropic formats. The old \`deepseek-chat\` and \`deepseek-reasoner\` names retire on July 24.
+
+Lesson: a higher price per token can still mean a lower bill if the model needs fewer tokens and retries. Compare cost per finished task on your own evals, not list prices.
+
+## 3. TypeScript 7.0 Beta: the Go compiler is ready to try
+
+Microsoft announced TypeScript 7.0 Beta on April 21. The compiler is now a Go port of the existing codebase, and Microsoft says it is often about 10 times faster than TypeScript 6.0, with the same type-checking logic. A new \`@typescript/typescript6\` package exposes a \`tsc6\` binary so both versions can run side by side. TypeScript 7.0 turns 6.0 deprecations into hard errors, and \`types\` now defaults to \`[]\`. A stable programmatic API comes in 7.1 or later, so compiler-API tools may lag.
+
+My take: move to TypeScript 6.0 first and fix its deprecations. Then run the 7.0 beta in CI next to your current \`tsc\` and compare the output before you switch.
+
+## Mobile
+
+- Apple announced on April 20 that Tim Cook will become executive chairman and John Ternus will take over as CEO on September 1, 2026.
+- Apple seeded the third iOS 26.5 developer betas on April 20 (build \`23F5059e\`).
+- Google will stream The Android Show I/O Edition on May 12, a week before I/O on May 19 and 20, with consumer Android news there and developer news at I/O.
+
+## Also worth knowing
+
+- Anthropic committed more than $100 billion over ten years to AWS for up to 5GW of capacity. Amazon invests $5 billion now and up to $20 billion more, and the Claude Platform is coming to AWS.
+- At Google Cloud Next (April 22 to 24), Google launched the Gemini Enterprise Agent Platform with Agent Studio, offering Gemini 3.1 Pro and Claude Opus 4.7, plus eighth-generation TPUs, TPU 8t and TPU 8i.
+- Cloudflare added Moonshot's open Kimi K2.6 to Workers AI on April 20: 1T parameters, 32B active, 262.1k context.
+- Cursor 3.2 shipped on April 24 with \`/multitask\` async subagents, better worktrees and multi-root workspaces for cross-repo changes.
+
+## What I'm watching
+
+- Vercel's final incident report and any further accounts found.
+- Whether typescript-eslint and other compiler-API tools support TypeScript 7 before the stable release.
+- How GPT-5.5 API pricing compares on real agent workloads against Opus 4.7.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Vercel, Vercel April 2026 security incident (April 19-24, 2026)", url: "https://vercel.com/kb/bulletin/vercel-april-2026-security-incident" },
+      { label: "BleepingComputer, Bitwarden CLI npm package compromised to steal developer credentials (April 23, 2026)", url: "https://www.bleepingcomputer.com/news/security/bitwarden-cli-npm-package-compromised-to-steal-developer-credentials/" },
+      { label: "OpenAI, Introducing GPT-5.5 (April 23, 2026)", url: "https://openai.com/index/introducing-gpt-5-5/" },
+      { label: "DeepSeek, DeepSeek-V4 Preview: Entering the Era of Affordable Million-Token Context (April 24, 2026)", url: "https://www.deepseek.com/en/news/v4-preview/" },
+      { label: "Cloudflare, Moonshot AI Kimi K2.6 now available on Workers AI (April 20, 2026)", url: "https://developers.cloudflare.com/changelog/post/2026-04-20-kimi-k2-6-workers-ai" },
+      { label: "Microsoft TypeScript Blog, Announcing TypeScript 7.0 Beta (April 21, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0-beta/" },
+      { label: "MacRumors, Apple CEO Tim Cook Stepping Down, John Ternus Taking Over (April 20, 2026)", url: "https://www.macrumors.com/2026/04/20/tim-cook-stepping-down/" },
+      { label: "AppleInsider, Third round of iOS 26.5, macOS Tahoe 26.5 developer betas are out now (April 20, 2026)", url: "https://appleinsider.com/articles/26/04/20/third-round-of-ios-265-macos-tahoe-265-developer-betas-are-out-now" },
+      { label: "9to5Google, Google hosting The Android Show before I/O 2026 (April 23, 2026)", url: "https://9to5google.com/2026/04/23/android-show-i-o-2026" },
+      { label: "Anthropic, Anthropic and Amazon expand collaboration for up to 5 gigawatts of new compute (April 20, 2026)", url: "https://anthropic.com/news/anthropic-amazon-compute" },
+      { label: "Google, 7 highlights from Google Cloud Next '26 (April 24, 2026)", url: "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/google-cloud-next-26-recap" },
+      { label: "Cursor, Changelog 3.2: Multitask, Worktrees, and Multi-root Workspaces (April 24, 2026)", url: "https://cursor.com/changelog/04-24-26" },
+    ],
+  },
+  {
+    slug: "2026-05-04-week-18",
+    date: "2026-05-04",
+    lang: "en",
+    title: "Week 18: OpenAI leaves Azure-only, Copilot bills by the token, and a worm hits SAP npm packages",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. April 27 to May 3, 2026.",
+    body: `The rules of the AI platform business changed this week: who can host which model, and how much an agent session costs. A new npm worm showed that the supply chain is still the weakest point.
+
+## 1. OpenAI models are no longer an Azure exclusive
+
+On April 27, Microsoft and OpenAI amended their partnership. Per Microsoft's post:
+
+- OpenAI can now serve all its products to customers on any cloud provider. Azure stays the primary partner, and products still ship first on Azure unless Microsoft cannot or chooses not to support them.
+- Microsoft keeps a license to OpenAI models and products through 2032, but it is now non-exclusive.
+- Microsoft no longer pays a revenue share to OpenAI. OpenAI keeps paying Microsoft through 2030, at the same percentage but with a total cap.
+
+The next day, April 28, AWS put the latest OpenAI models, Codex and Amazon Bedrock Managed Agents (powered by OpenAI) on Bedrock in limited preview. The models inherit IAM, PrivateLink, guardrails, encryption and CloudTrail logging. Codex works through the Codex CLI, desktop app and VS Code extension with AWS credentials, and usage counts toward existing AWS commitments.
+
+My take: if your team picked a model based on which cloud contract you already had, that constraint is going away. Keep model calls behind one internal interface so switching provider is a config change, not a rewrite.
+
+## 2. GitHub Copilot moves to usage-based billing on June 1
+
+GitHub announced on April 27 that every Copilot plan switches to GitHub AI Credits on June 1, 2026. Premium request units go away. Credits are consumed by input, output and cached tokens at each model's listed API rate.
+
+- Base prices stay: Pro $10/month, Pro+ $39/month, Business $19/user/month, Enterprise $39/user/month.
+- Code completions and Next Edit suggestions stay included and do not use credits.
+- The fallback to a cheaper model when you run out goes away. Credits and admin budgets decide.
+- Copilot code review will also consume GitHub Actions minutes.
+
+GitHub says a quick chat question and a multi-hour agent session cost the same today, and that this is not sustainable. A preview bill was promised for early May.
+
+Lesson: long agent runs are now a line item. Set budgets per team before June 1, and look at which workflows burn tokens without shipping anything.
+
+## 3. Mini Shai-Hulud worm poisons official SAP npm packages
+
+On April 29, between 09:55 and 12:14 UTC, attackers published malicious versions of four SAP packages: \`mbt@1.2.48\`, \`@cap-js/db-service@2.10.1\`, \`@cap-js/postgres@2.2.2\` and \`@cap-js/sqlite@2.2.2\`. Together they get about 572,000 weekly downloads. A preinstall script ran on every \`npm install\` and stole GitHub tokens, npm credentials, cloud keys and CI secrets, including from runner memory. Wiz and Socket tied it to TeamPCP. The same code then showed up in \`intercom-client\` and the PyPI \`lightning\` package.
+
+The same week, Theori disclosed Copy Fail (CVE-2026-31431), a Linux kernel bug in place since 2017. A local user can write 4 bytes into the page cache of any readable file and become root, with no race to win. Researchers say to patch CI runners, multi-tenant hosts and container clusters first.
+
+My take: run CI installs with \`--ignore-scripts\` where you can, and treat any runner that installed a bad version as compromised. Rotate its secrets.
+
+## Mobile
+
+- Apple released the fourth developer betas of iOS 26.5 and iPadOS 26.5 on April 27.
+- From April 28, apps uploaded to App Store Connect must be built with the iOS 26 and iPadOS 26 SDK or later (same rule for tvOS, visionOS and watchOS 26).
+- Apple added monthly subscriptions with a 12-month commitment on April 27, a cheaper way to sell auto-renewable subscriptions.
+
+## Also worth knowing
+
+- Cursor released the Cursor SDK in public beta. \`npm install @cursor/sdk\` gives you the same agent runtime as the Cursor app, running locally or on a cloud VM.
+- OpenAI published Symphony, an open-source spec that turns an issue tracker like Linear into a control plane for Codex agents.
+- Warp open-sourced its client and launched an agentic development environment.
+- Anthropic opened Claude Security, a codebase vulnerability scanner on Opus 4.7, in public beta for Enterprise customers.
+
+## What I'm watching
+
+- The Copilot preview bill in May, and how big the gap is between old and new costs for heavy agent users.
+- How fast other OpenAI models and tools appear on Google Cloud and Oracle.
+- More TeamPCP waves through stolen CI credentials.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Microsoft, The next phase of the Microsoft-OpenAI partnership (April 27, 2026)", url: "https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/" },
+      { label: "AWS, Amazon Bedrock now offers OpenAI models, Codex, and Managed Agents (Limited Preview) (April 28, 2026)", url: "https://aws.amazon.com/about-aws/whats-new/2026/04/bedrock-openai-models-codex-managed-agents/" },
+      { label: "GitHub Blog, GitHub Copilot is moving to usage-based billing (April 27, 2026)", url: "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/" },
+      { label: "The Register, Ongoing supply chain attacks worm into SAP npm packages (April 30, 2026)", url: "https://www.theregister.com/2026/04/30/supply_chain_attacks_sap_npm_packages/" },
+      { label: "Help Net Security, Nine-year-old Linux kernel flaw enables reliable local privilege escalation (CVE-2026-31431) (April 30, 2026)", url: "https://www.helpnetsecurity.com/2026/04/30/copyfail-linux-lpe-vulnerability-cve-2026-31431/" },
+      { label: "AppleInsider, Fourth iOS 26.5, macOS Tahoe 26.5 developer betas arrive for testing (April 27, 2026)", url: "https://appleinsider.com/articles/26/04/27/fourth-ios-265-macos-tahoe-265-developer-betas-arrive-for-testing" },
+      { label: "Apple Developer, Upcoming SDK minimum requirements (2026)", url: "https://developer.apple.com/news?id=ueeok6yw" },
+      { label: "Apple Developer, Latest News (April-May 2026)", url: "https://developer.apple.com/news?id=5cda5ipr" },
+      { label: "Cursor, Build programmatic agents with the Cursor SDK (April 2026)", url: "https://cursor.com/blog/typescript-sdk" },
+      { label: "OpenAI, An open-source spec for Codex orchestration: Symphony (April 27, 2026)", url: "https://openai.com/index/open-source-codex-orchestration-symphony/" },
+      { label: "Warp, Warp is now open-source (April 2026)", url: "https://www.warp.dev/blog/warp-is-now-open-source" },
+      { label: "Ajit Singh, Dev Weekly Apr 27-May 3, 2026 (May 3, 2026)", url: "https://singhajit.com/dev-weekly/2026/apr-27-may-3/microsoft-openai-restructure-aws-bedrock-pentagon-ai-cursor-sdk-apple-earnings/" },
+    ],
+  },
+  {
+    slug: "2026-05-11-week-19",
+    date: "2026-05-11",
+    lang: "en",
+    title: "Week 19: Next.js patches 13 advisories, Claude Code limits double, and Node.js 26 ships",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. May 4 to May 10, 2026.",
+    body: `A busy week for the JavaScript stack: an urgent Next.js and React patch, a new Node.js major, and more room to run coding agents.
+
+## 1. Next.js 16.2.6 and 15.5.18 fix 13 security advisories
+
+On May 7, Vercel shipped Next.js 16.2.6 and 15.5.18 as a security release. The 16.2.6 release notes list 13 advisories:
+
+- 7 high: a Server Components denial of service, several middleware and proxy bypasses (segment-prefetch routes, dynamic route parameter injection, Pages Router with i18n), connection exhaustion with Cache Components, and SSRF through WebSocket upgrades.
+- 4 moderate: two XSS issues (CSP nonces, \`beforeInteractive\` scripts), an Image Optimization API denial of service, and RSC response cache poisoning.
+- 2 low: cache poisoning issues.
+
+React shipped its own fix the day before. CVE-2026-23870 (CVSS 7.5) is a denial of service in React Server Components: a crafted POST to a Server Function endpoint makes the server do millions of string comparisons. It is fixed in React 19.0.6, 19.1.7 and 19.2.6.
+
+My take: if your auth checks live only in middleware, this release is the reminder to also check access inside route handlers and Server Actions. Upgrade first, then audit. Those versions were later followed by more patch releases, so go straight to the newest one on your line.
+
+## 2. Anthropic doubles Claude Code limits after a SpaceX compute deal
+
+On May 6, Anthropic signed a deal to use all the compute at SpaceX's Colossus 1 data center: more than 300 megawatts, over 220,000 NVIDIA GPUs, within the month. Three changes took effect the same day:
+
+- Claude Code's five-hour rate limits doubled for Pro, Max, Team and seat-based Enterprise plans.
+- The peak-hours limit reduction on Claude Code is gone for Pro and Max.
+- API rate limits for Claude Opus models went up considerably.
+
+Lesson: rate limits shape how teams use agents more than model quality does. If you hit caps every afternoon, recheck your plan this week before buying more seats.
+
+## 3. Node.js 26 is out with Temporal on by default
+
+Node.js 26.0.0 landed on May 5 as the new Current release. It enters LTS in October.
+
+- The Temporal date and time API is enabled by default.
+- V8 is updated to 14.6, with \`Map.prototype.getOrInsert()\` and \`Iterator.concat()\`.
+- Undici moves to 8.0.2.
+- Removals: \`http.Server.prototype.writeHeader()\` is gone (use \`writeHead()\`), and the legacy \`_stream_*\` modules are removed.
+
+My take: run your test suite on Node 26 in CI now as a non-blocking job. Production can stay on LTS 24 until October.
+
+## Mobile
+
+- Expo SDK 56 entered beta on May 6, with React Native 0.85.2 and React 19.2.3. The Jetpack Compose and SwiftUI APIs in Expo UI are now stable.
+- Expo said on May 4 that Expo Go for SDK 55 was still waiting for App Store approval, so SDK 54 stays the store version. Use \`eas go\` for a TestFlight build.
+- Google released the May Pixel update on May 5 (Android 16, build CP1A.260505.005, Pixel 7a and newer), and Android 17 QPR1 Beta 2 on May 6.
+
+## Also worth knowing
+
+- Chrome 148 shipped on May 5 with the Prompt API for on-device AI, \`loading="lazy"\` for video and audio, and name-only CSS container queries.
+- OpenAI made GPT-5.5 Instant the ChatGPT default and \`chat-latest\` in the API on May 5. OpenAI reports 52.5% fewer hallucinated claims than GPT-5.3 Instant on high-stakes prompts.
+- OpenAI launched three voice models on May 7: GPT-Realtime-2, GPT-Realtime-Translate (70+ input languages, 13 output) and GPT-Realtime-Whisper for streaming speech-to-text.
+- The AWS MCP Server became generally available, giving coding agents audited access to AWS APIs.
+- Cursor 3.3 added PR review inside the agents window and a Build in Parallel mode.
+
+## What I'm watching
+
+- Expo SDK 56 stable, expected about two weeks after the beta.
+- The Android 17 release date, likely around Google I/O.
+- Whether other labs answer with higher agent limits.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "GitHub, vercel/next.js Release v16.2.6 (May 7, 2026)", url: "https://github.com/vercel/next.js/releases/tag/v16.2.6" },
+      { label: "Cyber Security News, React Server Components Flaw Lets Attackers Freeze Next.js Servers (2026)", url: "https://cybersecuritynews.com/react-server-components-dos-vulnerability" },
+      { label: "Anthropic, Higher usage limits for Claude and a compute deal with SpaceX (May 6, 2026)", url: "https://www.anthropic.com/news/higher-limits-spacex" },
+      { label: "Node.js, Node.js 26.0.0 (Current) (May 5, 2026)", url: "https://nodejs.org/en/blog/release/v26.0.0" },
+      { label: "Expo, Expo SDK 56 Beta is now available (May 2026)", url: "https://expo.dev/changelog/sdk-56-beta" },
+      { label: "Expo, Expo Go and the App Store in May 2026 (May 4, 2026)", url: "https://expo.dev/changelog/expo-go-and-app-store-may-2026" },
+      { label: "Droid Life, 2026 May Pixel Update Available for Your Pixel Phone (May 5, 2026)", url: "https://www.droid-life.com/2026/05/05/2026-may-pixel-update-download-install/" },
+      { label: "9to5Google, Google releases Android 17 QPR1 Beta 2 for Pixel (May 6, 2026)", url: "https://9to5google.com/2026/05/06/android-17-qpr1-beta-pixel" },
+      { label: "Chrome for Developers, New in Chrome 148 (May 5, 2026)", url: "https://developer.chrome.com/blog/new-in-chrome-148?hl=en" },
+      { label: "OpenAI, GPT-5.5 Instant: smarter, clearer, and more personalized (May 5, 2026)", url: "https://openai.com/index/gpt-5-5-instant/" },
+      { label: "OpenAI, Advancing voice intelligence with new models in the API (May 7, 2026)", url: "https://openai.com/index/advancing-voice-intelligence-with-new-models-in-the-api/" },
+      { label: "AWS, The AWS MCP Server is now generally available (May 2026)", url: "https://aws.amazon.com/about-aws/whats-new/2026/05/aws-mcp-server/" },
+      { label: "Ajit Singh, Dev Weekly May 4-10, 2026 (May 10, 2026)", url: "https://singhajit.com/dev-weekly/2026/may-4-10/anthropic-spacex-cloudflare-layoffs-cursor-33-aws-agent-payments/" },
+    ],
+  },
+  {
+    slug: "2026-05-18-week-20",
+    date: "2026-05-18",
+    lang: "en",
+    title: "Week 20: TanStack gets hijacked, Android becomes an agent, and Codex moves to your phone",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. May 11 to May 17, 2026.",
+    body: `This week showed both sides of AI-driven development: agents that can work across apps and devices, and a supply chain attack that reached one of the biggest AI labs.
+
+## 1. TanStack npm compromise reaches OpenAI
+
+On May 11, between 19:20 and 19:26 UTC, an attacker published 84 malicious versions across 42 \`@tanstack/*\` packages, all from the Router/Start repo. Per TanStack's postmortem, the chain combined three things: a \`pull_request_target\` "Pwn Request" workflow, GitHub Actions cache poisoning across the fork and base repo boundary, and extraction of an OIDC token from the runner's memory. No npm tokens were stolen. Because the publish went through the real trusted-publishing path, the bad versions looked legitimate.
+
+- The payload stole AWS, GCP, Kubernetes, Vault, GitHub, npm and SSH credentials on \`npm install\`, and republished other packages the victim maintained.
+- An outside researcher spotted it within 20 to 26 minutes. All 84 versions were deprecated in about 1 hour 43 minutes. TanStack declared all clear on May 15.
+
+OpenAI said the attack reached some of its internal source repositories, which held code-signing certificates for its iOS, macOS and Windows apps. It found no sign that user data or production systems were touched, but it is rotating certificates. macOS users of ChatGPT Desktop, the Codex app, Codex CLI and Atlas had to update by June 12 (OpenAI later extended this to June 26).
+
+Lesson: never run \`pull_request_target\` workflows that check out fork code, and never share Actions caches between fork PRs and release jobs. Trusted publishing proves where a package was built, not that the build was safe.
+
+## 2. Android turns into an agent platform
+
+At The Android Show: I/O Edition on May 12, Google announced Gemini Intelligence. Per Google, Android is moving "from an operating system into an intelligence system".
+
+- Gemini can automate multi-step tasks across apps, such as finding a syllabus in Gmail and adding the books to a cart.
+- It rolls out in waves from this summer, starting with the latest Samsung Galaxy and Pixel phones, then watches, cars, glasses and laptops later this year.
+- Create My Widget lets users describe a custom widget in plain words.
+- Googlebook, a new laptop line with Acer, Asus, Dell, HP and Lenovo, launches this fall.
+
+My take: if Gemini will drive your app for the user, your app needs clear actions and stable flows an agent can follow. Look at how Android exposes app functions to the system before I/O next week.
+
+## 3. Coding agents leave the editor
+
+- OpenAI put Codex in the ChatGPT app for iPhone, iPad and Android on May 14, in preview. You can approve tasks and start prompts from your phone while Codex runs on your laptop, devbox or remote environment. Hooks became generally available, and programmatic access tokens arrived for CI pipelines.
+- Cursor 3.4 shipped on May 13 with development environments for cloud agents. They are defined as Dockerfiles, and cached builds run 70% faster.
+- Claude Code v2.1.139 added an agent view that lists every session (running, blocked on you, or done) and a \`/goal\` command that keeps Claude working until a completion condition is met.
+
+My take: the work is moving from writing code to reviewing what agents ship. Make sure an approval from a phone still goes through the same checks as one from a laptop.
+
+## Mobile
+
+- Apple released iOS 26.5 and iPadOS 26.5 on May 11, with end-to-end encrypted RCS messaging (beta) between iPhone and Android, on supported carriers. Xcode 26.5 shipped the same day.
+- Samsung started the One UI 9 beta for the Galaxy S26 series.
+- Codex is now usable from the ChatGPT mobile app on iOS and Android.
+
+## Also worth knowing
+
+- GitHub announced a $100/month Copilot Max plan and flex allotments for Pro and Pro+, effective June 1.
+- Microsoft's May Patch Tuesday fixed over 120 flaws, with no zero-days.
+- OpenAI launched Daybreak, a GPT-5.5 and Codex Security package for defenders.
+- TanStack says every currently published TanStack package is safe to install.
+
+## What I'm watching
+
+- Google I/O on May 19 and 20: Gemini models, Android 17, and developer tools.
+- Whether npm adds more safeguards on trusted publishing after this attack.
+- How Gemini Intelligence lets third-party apps opt in.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "TanStack, Postmortem: TanStack npm supply-chain compromise (May 11, 2026)", url: "https://tanstack.com/blog/npm-supply-chain-compromise-postmortem" },
+      { label: "OpenAI, Our response to the TanStack npm supply chain attack (May 2026)", url: "https://openai.com/index/our-response-to-the-tanstack-npm-supply-chain-attack" },
+      { label: "Google, A smarter, more proactive Android with Gemini Intelligence (May 12, 2026)", url: "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence/" },
+      { label: "Google, The Android Show: I/O Edition 2026 (May 12, 2026)", url: "https://blog.google/products-and-platforms/platforms/android/android-show-io-edition-2026" },
+      { label: "TechCrunch, Everything Google announced at its Android Show (May 12, 2026)", url: "https://techcrunch.com/2026/05/12/everything-google-announced-at-its-android-show-from-googlebooks-to-vibe-coded-widgets/" },
+      { label: "OpenAI, Work with Codex from anywhere (May 14, 2026)", url: "https://openai.com/index/work-with-codex-from-anywhere/" },
+      { label: "9to5Mac, OpenAI brings Codex to ChatGPT for iPhone, iPad, and Android (May 14, 2026)", url: "https://9to5mac.com/2026/05/14/openai-brings-codex-control-to-chatgpt-for-iphone-and-android" },
+      { label: "Cursor, Changelog 3.4: Development environments for cloud agents (May 13, 2026)", url: "https://cursor.com/changelog/05-13-26" },
+      { label: "GitHub, anthropics/claude-code Release v2.1.139 (May 2026)", url: "https://github.com/anthropics/claude-code/releases/tag/v2.1.139" },
+      { label: "MacRumors, Apple Releases iOS 26.5 and iPadOS 26.5 With End-to-End Encrypted RCS (May 11, 2026)", url: "https://www.macrumors.com/2026/05/11/apple-releases-ios-26-5/" },
+      { label: "Apple Developer, Xcode 26.5 (17F42) (May 11, 2026)", url: "https://developer.apple.com/news/releases/?id=05112026n" },
+      { label: "Samsung Newsroom U.S., One UI 9 Beta (May 12, 2026)", url: "https://news.samsung.com/us/tag/one-ui-9-beta" },
+      { label: "BleepingComputer, Microsoft May 2026 Patch Tuesday fixes 120 flaws, no zero-days (May 12, 2026)", url: "https://www.bleepingcomputer.com/news/microsoft/microsoft-may-2026-patch-tuesday-fixes-120-flaws-no-zero-days/" },
+      { label: "Ajit Singh, Dev Weekly May 11-17, 2026 (May 17, 2026)", url: "https://singhajit.com/dev-weekly/2026/may-11-17/tanstack-npm-attack-patch-tuesday-anthropic-30b-android-show-cursor-34/" },
+    ],
+  },
+  {
+    slug: "2026-05-25-week-21",
+    date: "2026-05-25",
+    lang: "en",
+    title: "Week 21: Google I/O goes all in on agents, Anthropic buys Stainless, and Flutter 3.44 ships",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. May 18 to May 24, 2026.",
+    body: `Google I/O set the tone this week: models are now sold as engines for agents, and the tooling around them is being rebuilt to match.
+
+## 1. Google I/O: Gemini 3.5 Flash, Antigravity 2.0 and Managed Agents
+
+On May 19, Google released Gemini 3.5 Flash, the first model of the Gemini 3.5 family. Google says it beats Gemini 3.1 Pro on coding and agent benchmarks (76.2% on Terminal-Bench 2.1, 83.6% on MCP Atlas) and runs 4 times faster in output tokens per second than other frontier models. It is generally available in the Gemini API, Google AI Studio, Android Studio and Antigravity, and is the default in the Gemini app and AI Mode in Search. Gemini 3.5 Pro is planned for next month.
+
+For developers:
+
+- Antigravity 2.0 is a standalone desktop app to run several agents in parallel, with dynamic subagents and scheduled tasks. There is also an Antigravity CLI and an Antigravity SDK.
+- Managed Agents in the Gemini API: one API call starts an agent that reasons, uses tools and runs code in an isolated Linux environment you can resume later.
+- Gemini CLI is being replaced. On June 18, 2026, Gemini CLI and Gemini Code Assist IDE extensions stop serving Google AI Pro, Ultra and free individual users. Google asks them to move to Antigravity CLI.
+
+My take: if Gemini CLI is in your scripts or CI, plan the switch now. A tool that dies on a fixed date is easy to forget until a pipeline fails.
+
+## 2. Anthropic buys Stainless and expands Managed Agents
+
+Anthropic announced on May 18 that it is acquiring Stainless, the company that generates SDKs, CLIs and MCP servers from an API spec. It has generated every official Anthropic SDK since the start of the Claude API.
+
+At Code with Claude on May 19, Anthropic added features to Claude Managed Agents:
+
+- Dreaming, in research preview: a scheduled process that reviews past sessions and memory, finds patterns, and curates memory.
+- Outcomes, multiagent orchestration and webhooks are now available to developers.
+
+Lesson: if your API ships SDKs from a third-party generator, check what happens if that vendor changes owner or roadmap. Keep your OpenAPI spec clean and versioned so you can regenerate with another tool.
+
+## 3. Laravel-Lang packages hijacked through old release tags
+
+On May 22 and 23, an attacker republished hundreds of malicious versions under historical release tags of four \`laravel-lang\` packages on Packagist. Snyk counts more than 700. An injected \`helpers.php\` was registered in Composer's \`autoload.files\`, so it ran on every PHP request. It downloaded a credential stealer that took cloud keys, Kubernetes and Vault secrets, CI tokens, SSH keys and \`.env\` files.
+
+These packages are community-maintained, not part of the Laravel framework, but they often come in as transitive dependencies. Snyk warns that version numbers were later remapped to clean code, so a version check alone may not prove you are safe.
+
+My take: pin dependencies by lockfile hash, not tag. Tags can move. Check CI logs for any install between May 22 and 23.
+
+## Mobile
+
+- Flutter 3.44 and Dart 3.12 shipped for I/O. Swift Package Manager replaces CocoaPods as the default on iOS and macOS. Agentic Hot Reload lets coding agents find a running app and hot-reload it. Material and Cupertino are frozen in core before they move to separate packages.
+- Expo SDK 56 went stable on May 21 with React Native 0.85 and React 19.2. Expo UI's SwiftUI and Jetpack Compose APIs are stable, prebuilt iOS modules cut median clean build times by about 16%, and Hermes bytecode diffing is on by default (diffed updates averaged 58% smaller).
+- Google rolled out Android 17 QPR1 Beta 3 for Pixel at I/O.
+
+## Also worth knowing
+
+- Gemini 3.5 Flash became generally available in GitHub Copilot on May 19.
+- Cursor 3.5 (May 20) brought Automations to the Agents Window, with multiple repos or no repo at all.
+- A Mini Shai-Hulud wave hit npm on May 19 through two hijacked maintainer accounts, including AntV packages and \`echarts-for-react\`.
+- Node.js 24.16.0 LTS shipped on May 21.
+
+## What I'm watching
+
+- Gemini 3.5 Pro, promised for June.
+- Whether the Stainless SDK generator stays open to other API companies.
+- Apple's WWDC in June and the next iOS SDK.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Google, Gemini 3.5: frontier intelligence with action (May 19, 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/" },
+      { label: "Google, Building the agentic future: Developer highlights from I/O 2026 (May 19, 2026)", url: "https://blog.google/innovation-and-ai/technology/developers-tools/google-io-2026-developer-highlights/" },
+      { label: "Google Developers Blog, An important update: Transitioning Gemini CLI to Antigravity CLI (May 19, 2026)", url: "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/" },
+      { label: "Anthropic, Anthropic acquires Stainless (May 2026)", url: "https://www.anthropic.com/news/anthropic-acquires-stainless" },
+      { label: "Claude, New in Claude Managed Agents: dreaming, outcomes, and multiagent orchestration (May 19, 2026)", url: "https://claude.com/blog/new-in-claude-managed-agents" },
+      { label: "Snyk, Laravel Lang Supply Chain Advisory (May 23, 2026)", url: "https://snyk.io/blog/laravel-lang-supply-chain-advisory/" },
+      { label: "Flutter, What's new in Flutter 3.44 (May 20, 2026)", url: "https://flutter.dev/blog/whats-new-in-flutter-3-44" },
+      { label: "Expo, Expo SDK 56 (May 21, 2026)", url: "https://expo.dev/changelog/sdk-56" },
+      { label: "9to5Google, Here's everything new in Android 17 QPR1 Beta 3 (May 20, 2026)", url: "https://9to5google.com/2026/05/20/android-17-qpr1-beta-3-everything-new/" },
+      { label: "GitHub Changelog, Gemini 3.5 Flash is generally available for GitHub Copilot (May 19, 2026)", url: "https://github.blog/changelog/2026-05-19-gemini-3-5-flash-is-generally-available-for-github-copilot/" },
+      { label: "Cursor, Changelog 3.5: Improvements to Cursor Automations (May 20, 2026)", url: "https://cursor.com/changelog/05-20-26" },
+      { label: "Ajit Singh, Dev Weekly May 18-24, 2026 (May 24, 2026)", url: "https://singhajit.com/dev-weekly/2026/may-18-24/google-io-2026-anthropic-stainless-spacex-ipo-openai-ipo-meta-layoffs-laravel-lang-attack/" },
+    ],
+  },
+  {
+    slug: "2026-06-01-week-22",
+    date: "2026-06-01",
+    lang: "en",
+    title: "Week 22: Opus 4.8 lands, Glassworm goes down, and Anthropic raises $65B",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. May 25 to May 31, 2026.",
+    body: `Two things defined this week: a new Claude Opus with tools for very large coding jobs, and a reminder that developer machines are now the main target of supply chain attackers.
+
+## 1. Claude Opus 4.8 ships at the same price, with dynamic workflows
+
+Anthropic released Claude Opus 4.8 on May 28. It builds on Opus 4.7 and keeps the same price: $5 per million input tokens and $25 per million output tokens. Developers call it as \`claude-opus-4-8\` on the Claude API.
+
+- Claude Code gets a new "dynamic workflows" feature aimed at very large-scale problems.
+- Fast mode runs at 2.5x the speed and is now three times cheaper than on previous models, at $10 and $50 per million input and output tokens.
+- Users on claude.ai can now control how much effort Claude puts into a task.
+- Anthropic says Mythos-class models, now limited to a small cyber-defense group, should reach all customers "in the coming weeks" once stronger safeguards are ready.
+
+GitHub made Opus 4.8 generally available in Copilot the same day for Pro+, Business and Enterprise, with a 15x premium request multiplier until usage-based billing starts on June 1.
+
+My take: same price plus a faster, cheaper fast mode means you can rerun your own evals this week without a budget talk. Check the 15x Copilot multiplier before you make it the team default.
+
+## 2. Glassworm botnet taken down after two years of attacks on developers
+
+On May 26 at 14:00 UTC, CrowdStrike, working with Google and the Shadowserver Foundation, took down the Glassworm botnet. CrowdStrike says the group had targeted the open source supply chain for two years and poisoned more than 300 GitHub repositories.
+
+- Trojanized VS Code extensions were published on OpenVSX, disguised as time trackers and code formatters. They also targeted Cursor, Positron, Windsurf and VSCodium.
+- Compromised npm and Python packages ran malicious code through postinstall hooks and setup scripts.
+- Command and control used four channels: the Solana blockchain, BitTorrent DHT, Google Calendar event titles and rented servers. The final payload was a Node.js remote access tool called GlasswormRAT.
+
+Lesson: your editor extensions and install scripts run with your credentials. Pin extension versions, review new ones like dependencies, and run \`npm ci --ignore-scripts\` in CI where you can.
+
+## 3. Anthropic raises $65 billion at a $965 billion valuation
+
+Anthropic closed a $65 billion Series H on May 28 at a $965 billion post-money valuation. It says run-rate revenue crossed $47 billion earlier in May. The round includes $15 billion of previously committed hyperscaler money, with $5 billion from Amazon, and memory makers Micron, Samsung and SK hynix joined as strategic partners.
+
+Anthropic also listed new compute deals: up to five gigawatts with Amazon, five gigawatts of TPU capacity with Google and Broadcom, and GPU access in SpaceX's Colossus 1 and 2. More capacity should mean fewer rate limits, but keep a second provider ready anyway.
+
+## Mobile
+
+- Apple seeded the first developer betas of iOS 26.6 and iPadOS 26.6 on May 26, two weeks after iOS 26.5. MacRumors expects mostly bug fixes ahead of iOS 27 in early June.
+- The Codex app for Windows (version 26.527) added computer use and remote control from the ChatGPT mobile app on iOS and Android. On Windows, computer use runs in the foreground, so you cannot use the same session while Codex drives an app.
+- Google Play services v26.20 shipped on May 25 with new developer features for Maps-related flows in apps.
+
+## Also worth knowing
+
+- Cursor added an Auto-review run mode: shell, MCP and fetch calls go through an allowlist, then a sandbox, then an LLM classifier. Cursor itself says the classifier is best-effort, not a security boundary.
+- GitHub released model rules in public preview on May 26, so Enterprise owners can allow specific Copilot models per organization.
+- GitHub confirmed that the TeamPCP group took about 3,800 internal repositories after an employee installed a poisoned VS Code extension, per the Dev Weekly digest.
+- Cognition raised more than $1 billion at a $26 billion post-money valuation for Devin on May 27, per the Dev Weekly digest.
+
+## What I'm watching
+
+- GitHub Copilot usage-based billing, which starts June 1. Teams should check how premium models will be charged.
+- WWDC on June 8 and the first iOS 27 beta.
+- When Anthropic opens Mythos-class models to everyone, and at what price.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Introducing Claude Opus 4.8 (May 28, 2026)", url: "https://www.anthropic.com/news/claude-opus-4-8" },
+      { label: "GitHub Changelog, Claude Opus 4.8 is generally available for GitHub Copilot (May 28, 2026)", url: "https://github.blog/changelog/2026-05-28-claude-opus-4-8-is-generally-available-for-github-copilot/" },
+      { label: "CrowdStrike, Inside CrowdStrike's takedown of a developer-targeting botnet (May 27, 2026)", url: "https://www.crowdstrike.com/en-us/blog/inside-crowdstrike-takedown-of-a-developer-targeting-botnet/" },
+      { label: "TechCrunch, CrowdStrike and Google take down botnet used by hackers to target open source software developers (May 27, 2026)", url: "https://techcrunch.com/2026/05/27/crowdstrike-and-google-take-down-botnet-used-by-hackers-to-target-software-developers-in-supply-chain-attacks/" },
+      { label: "Anthropic, Anthropic raises $65B in Series H funding at $965B post-money valuation (May 28, 2026)", url: "https://www.anthropic.com/news/series-h" },
+      { label: "MacRumors, Apple Seeds First iOS 26.6 and iPadOS 26.6 Betas to Developers (May 26, 2026)", url: "https://www.macrumors.com/2026/05/26/apple-releases-ios-26-beta-1/" },
+      { label: "Neowin, OpenAI rolls out major Codex for Windows update with computer use and mobile access (May 29, 2026)", url: "https://www.neowin.net/news/openai-rolls-out-major-codex-for-windows-update-with-computer-use-and-mobile-access/" },
+      { label: "9to5Google, What's new in Android's May 2026 Google System Updates (May 25, 2026)", url: "https://9to5google.com/2026/05/25/may-2026-google-system-updates/" },
+      { label: "Cursor Forum, Auto-review Run Mode (2026)", url: "https://forum.cursor.com/t/auto-review-run-mode/161922" },
+      { label: "Ajit Singh, Dev Weekly May 25-31, 2026 (May 31, 2026)", url: "https://singhajit.com/dev-weekly/2026/may-25-31/anthropic-965b-claude-opus-48-cognition-1b-glassworm-takedown-wix-layoffs/" },
+    ],
+  },
+  {
+    slug: "2026-06-08-week-23",
+    date: "2026-06-08",
+    lang: "en",
+    title: "Week 23: Copilot bills by the token, Microsoft ships MAI models, and Miasma hits npm",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. June 1 to June 7, 2026.",
+    body: `Microsoft Build set the tone this week: more in-house models, a desktop app for running agents, and a new way to pay for Copilot. Meanwhile, another npm worm showed how fragile package provenance can be.
+
+## 1. Copilot moves to usage-based billing, and gets a desktop app
+
+On June 1, every GitHub Copilot plan switched from premium requests to GitHub AI Credits. Credits are consumed by input, output and cached tokens at each model's listed API rate.
+
+- Base prices do not change: Pro $10 a month, Pro+ $39, Business $19 per user, Enterprise $39 per user.
+- Code completions and Next Edit suggestions stay included and do not use credits.
+- The fallback to a cheaper model when you run out is gone. Usage is now limited by credits and admin budget controls.
+
+At Build on June 2, GitHub introduced the Copilot app, a desktop app with a single My Work view of agent sessions, issues, pull requests and background automations across your repositories. It is in technical preview for Pro, Pro+, Business and Enterprise users.
+
+My take: the risk is not the base price, it is long agent sessions on premium models. Set budgets per team before people notice the bill, and keep cheap models as the default for routine work.
+
+## 2. Microsoft launches seven in-house MAI models
+
+Microsoft AI announced seven models on June 2, across reasoning, coding, image, voice and transcription.
+
+- MAI-Thinking-1 is the flagship reasoning model. Microsoft says it was trained from scratch on clean data, without distillation, and was preferred to Sonnet 4.6 in its blind side-by-side tests.
+- MAI-Code-1-Flash is an agentic coding model with 5 billion active parameters, built into GitHub Copilot and VS Code. Microsoft compares it to Haiku, but cheaper.
+- MAI Transcribe-1.5 supports domain-specific terms across 43 languages, and MAI-Voice-2 covers 15 languages.
+
+Besides Foundry, the models will be available on OpenRouter, Fireworks and Baseten, and developers will be able to tune the weights themselves for the first time. These are vendor claims, so test on your own tasks before you switch.
+
+## 3. The Miasma npm worm hits Red Hat packages
+
+Microsoft Threat Intelligence found 32 malicious packages across more than 90 versions under the \`@redhat-cloud-services\` npm scope. The attackers came in through the upstream CI/CD pipeline and published through the legitimate GitHub Actions OIDC workflow, so the packages carried authentic provenance signatures.
+
+- A preinstall hook ran a 4.29 MB obfuscated dropper that downloaded the Bun runtime.
+- The payload stole credentials for GitHub, npm, AWS, Azure, GCP, HashiCorp Vault and Kubernetes, plus SSH keys.
+- In CI it scraped GitHub Actions runner memory for secrets and republished poisoned packages with forged SLSA provenance.
+
+Lesson: provenance proves where a package was built, not that the pipeline was clean. Disable install scripts in CI with \`npm ci --ignore-scripts\`, give publishing workflows the fewest secrets possible, and rotate tokens after any exposure.
+
+## Mobile
+
+- Google's June Android security update fixes CVE-2025-48595, an Android Framework privilege escalation that "may be under limited, targeted exploitation". It affects Android 14, 15, 16 and 16 QPR2.
+- Android 17 Beta 4.1 shipped on June 1, and the June patch reached Pixel devices on June 5, per Android News Wire, which expected Android 17 stable the following week.
+- Google's June Android feature drop added fake call detection in the Phone by Google app, per the same report.
+
+## Also worth knowing
+
+- Chrome 149 shipped on June 2 with CSS gap decorations for grid and flexbox, and pages with active WebSockets can now enter the back/forward cache.
+- Angular v22 made Signal Forms, Angular Aria and the asynchronous reactivity APIs stable.
+- Anthropic confidentially submitted a draft S-1 to the SEC on June 1. Share count and price are not set.
+- OpenAI made its frontier models and Codex available on AWS on June 1.
+- Elixir 1.20.0 brings type inference for guards, whole function bodies and across clauses. It requires Erlang/OTP 27 or later.
+- Cursor's SDK added custom tools, auto-review for local tool calls, JSONL and custom stores, and nested subagents.
+
+## What I'm watching
+
+- WWDC on June 8, and what Apple gives developers for on-device AI.
+- Android 17 stable, and the AppFunctions APIs that let apps plug into Gemini.
+- First real Copilot bills under AI Credits, and whether teams change their default model.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "GitHub Blog, GitHub Copilot is moving to usage-based billing (2026)", url: "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/" },
+      { label: "GitHub Blog, GitHub Copilot app: The agent-native desktop experience (June 2, 2026)", url: "https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/" },
+      { label: "Microsoft AI, Building a hill-climbing machine: Launching seven new MAI models (June 2, 2026)", url: "https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" },
+      { label: "Microsoft Security Blog, Preinstall to persistence: Inside the Red Hat npm Miasma credential-stealing campaign (June 2, 2026)", url: "https://www.microsoft.com/en-us/security/blog/2026/06/02/preinstall-persistence-inside-red-hat-npm-miasma-credential-stealing-campaign/" },
+      { label: "Help Net Security, Google fixes actively exploited Android vulnerability (CVE-2025-48595) (June 2, 2026)", url: "https://www.helpnetsecurity.com/2026/06/02/android-vulnerability-exploited-cve-2025-48595/" },
+      { label: "Android News Wire, Android Week Review: June 1-7, 2026 (June 7, 2026)", url: "https://androidnewswire.com/news/android-week-review-june-1-7-2026-pre-android-17-stable" },
+      { label: "Chrome for Developers, New in Chrome 149 (June 2, 2026)", url: "https://developer.chrome.com/blog/new-in-chrome-149" },
+      { label: "Angular Blog, Announcing Angular v22 (June 2026)", url: "https://blog.angular.dev/announcing-angular-v22-c52bb83a4664" },
+      { label: "Anthropic, Anthropic confidentially submits draft S-1 to the SEC (June 1, 2026)", url: "https://www.anthropic.com/news/confidential-draft-s1-sec" },
+      { label: "OpenAI, OpenAI frontier models and Codex are now available on AWS (June 1, 2026)", url: "https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws/" },
+      { label: "GitHub, Elixir v1.20.0 release (June 3, 2026)", url: "https://github.com/elixir-lang/elixir/releases/tag/v1.20.0" },
+      { label: "Cursor, Custom stores, custom tools, and auto-review for the Cursor SDK (June 2026)", url: "https://cursor.com/changelog/sdk-updates-jun-2026" },
+      { label: "Ajit Singh, Dev Weekly Jun 1-7, 2026 (June 7, 2026)", url: "https://singhajit.com/dev-weekly/2026/jun-1-7/microsoft-build-mai-models-copilot-billing-anthropic-ipo-npm-miasma-gitlab-layoffs/" },
+    ],
+  },
+  {
+    slug: "2026-06-15-week-24",
+    date: "2026-06-15",
+    lang: "en",
+    title: "Week 24: WWDC opens Foundation Models, Fable 5 comes and goes, and agents move into CI",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. June 8 to June 14, 2026.",
+    body: `WWDC week turned Apple's AI stack into something app developers can use today, while Anthropic showed how fast access to a frontier model can disappear.
+
+## 1. WWDC: Foundation Models opens up, and Xcode 27 gets agents
+
+Apple's June 8 developer announcements were mostly about AI inside apps.
+
+- The Foundation Models framework is now a single Swift API for more capable on-device models with image input, server models and custom skills.
+- Developers in the App Store Small Business Program, with fewer than 2 million first-time downloads, get Apple Foundation Models on Private Cloud Compute at no cloud API cost.
+- The same API can call third-party models such as Claude and Gemini, or any provider that implements Apple's new language model protocol.
+- Core AI is a new framework for running custom models on device, tuned for Apple silicon's unified memory and Neural Engine.
+- Per MacRumors' Platforms State of the Union recap, Xcode 27 agents can drive the simulator, run tests and fix crashes from Organizer. Apps rebuilt with Xcode 27 can no longer opt out of Liquid Glass, and Apple plans to open source the Foundation Models framework later this summer.
+
+The first iOS 27 developer beta shipped the same day, with a public beta planned for July. Apple also said Siri AI will not ship in the EU with iOS 27 and iPadOS 27 because of the DMA, and EU-based developers cannot test the new Siri AI features on those platforms.
+
+My take: if you build for iOS, put your model calls behind the Foundation Models API now. You get a free on-device or Private Cloud Compute path, and can switch to a server model when needed.
+
+## 2. Claude Fable 5 launches, then goes offline three days later
+
+Anthropic launched Claude Fable 5 on June 9, a Mythos-class model with safeguards that route some topics to Opus 4.8. Fable 5 and Mythos 5 (the same model with fewer limits, for cyber defenders) cost $10 per million input tokens and $50 per million output tokens. Anthropic says that is less than half the price of Mythos Preview.
+
+On June 12, Anthropic suspended access to both models. According to DatacenterDynamics, the US Commerce Department imposed export controls blocking foreign nationals from the models after Amazon researchers reported a possible jailbreak. Anthropic disputed the risk but said it had to disable the models for all customers. Other Claude models were not affected.
+
+Lesson: a model you depend on can vanish overnight for reasons that have nothing to do with your code. Keep a fallback model wired in and tested, not just written in a doc.
+
+## 3. Agents move into CI: GitHub Agentic Workflows and OpenAI buys Ona
+
+- GitHub Agentic Workflows entered public preview on June 11. You write automation in Markdown, and it compiles to standard Actions YAML. Agents run read-only by default in a sandboxed container, and a threat detection job scans proposed changes before they apply.
+- OpenAI announced on June 11 that it will acquire Ona, whose secure cloud execution will let Codex agents run inside a customer's own cloud. The deal still needs regulatory approval.
+- Cursor's Bugbot now reviews in about 90 seconds instead of about 5 minutes, costs about 22% less per run and finds 10% more bugs, now powered by Composer 2.5. A new \`/review\` command runs it before you push.
+
+## Mobile
+
+- React Native 0.86 shipped on June 11 with fuller edge-to-edge support on Android 15 and later and DevTools improvements, with no breaking changes. The repository moved to the \`react\` GitHub organization under the React Foundation.
+- iPhone apps on iPad can now be resized, and they opt in automatically when rebuilt with the latest SDK, per MacRumors.
+
+## Also worth knowing
+
+- Chrome opened a WebMCP origin trial in Chrome 149 on June 9. Sites can declare structured tools so agents fill forms and run actions without guessing.
+- Microsoft fixed 206 vulnerabilities on June 9, its largest Patch Tuesday on record, including a maximum-severity bug in Azure HorizonDB.
+- OpenAI confidentially submitted a draft S-1 to the SEC on June 8 and said timing is not decided.
+
+## What I'm watching
+
+- Android 17 stable, expected soon after the June Pixel update.
+- When Fable 5 comes back, and under what access rules.
+- The iOS 27 public beta in July, for testing Liquid Glass changes on real users' devices.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Apple Newsroom, Apple accelerates app development with new intelligence frameworks and advanced tools (June 8, 2026)", url: "https://www.apple.com/newsroom/2026/06/apple-aids-app-development-with-new-intelligence-frameworks-and-advanced-tools/" },
+      { label: "MacRumors, Apple Outlines Major AI and Developer Tool Updates at 2026 Platforms State of the Union (June 9, 2026)", url: "https://www.macrumors.com/2026/06/09/apple-outlines-major-ai-and-developer-tool-updates/" },
+      { label: "9to5Mac, Apple releases first iOS 27 beta 1 (June 8, 2026)", url: "https://9to5mac.com/2026/06/08/apple-releases-first-ios-27-beta-1/" },
+      { label: "Apple Newsroom, Due to DMA, Siri AI delayed in EU for iOS 27 and iPadOS 27 (June 8, 2026)", url: "https://www.apple.com/newsroom/2026/06/due-to-dma-siri-ai-delayed-in-eu-for-ios-27-and-ipados-27/" },
+      { label: "Anthropic, Claude Fable 5 and Claude Mythos 5 (June 9, 2026)", url: "https://www.anthropic.com/news/claude-fable-5-mythos-5" },
+      { label: "DatacenterDynamics, Anthropic disables latest AI model after US order limits foreign access (June 2026)", url: "https://www.datacenterdynamics.com/en/news/anthropic-disables-latest-ai-model-after-us-order-limits-foreign-access/" },
+      { label: "GitHub Changelog, GitHub Agentic Workflows is now in public preview (June 11, 2026)", url: "https://github.blog/changelog/2026-06-11-github-agentic-workflows-is-now-in-public-preview/" },
+      { label: "OpenAI, OpenAI to acquire Ona (June 11, 2026)", url: "https://openai.com/index/openai-to-acquire-ona/" },
+      { label: "Cursor, Bugbot is now over 3x faster, 22% cheaper, and finds 10% more bugs (June 2026)", url: "https://cursor.com/changelog/bugbot-updates-june-2026" },
+      { label: "React Native, React Native 0.86 - Edge-to-Edge and DevTools Improvements, no breaking changes (June 11, 2026)", url: "https://reactnative.dev/blog/2026/06/11/react-native-0.86" },
+      { label: "Chrome for Developers, Join the WebMCP origin trial (June 9, 2026)", url: "https://developer.chrome.com/blog/ai-webmcp-origin-trial" },
+      { label: "CyberScoop, Microsoft breaks Patch Tuesday record with 206 vulnerabilities (June 2026)", url: "https://cyberscoop.com/microsoft-patch-tuesday-june-2026/" },
+      { label: "OpenAI, Confidential submission of draft S-1 to the SEC (June 8, 2026)", url: "https://openai.com/index/openai-submits-confidential-s-1/" },
+      { label: "Ajit Singh, Dev Weekly Jun 8-14, 2026 (June 14, 2026)", url: "https://singhajit.com/dev-weekly/2026/jun-8-14/wwdc-siri-ai-claude-fable-5-takedown-patch-tuesday-openai-s1-ona/" },
+    ],
+  },
+  {
+    slug: "2026-06-22-week-25",
+    date: "2026-06-22",
+    lang: "en",
+    title: "Week 25: SpaceX buys Cursor, Mastra gets hit on npm, and Android 17 ships",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. June 15 to June 21, 2026.",
+    body: `A week of consolidation in AI coding tools: Cursor got a new owner, GitHub's agent app reached general availability, and another npm attack showed why install scripts still matter.
+
+## 1. SpaceX agrees to buy Cursor for $60 billion
+
+On June 16, SpaceX announced a formal agreement to buy Cursor's maker, Anysphere, for $60 billion in stock. CNBC reports the deal is expected to close in the third quarter, and that it came days after SpaceX's Nasdaq debut. SpaceX merged with xAI earlier this year, so Cursor will sit next to a model maker.
+
+CNBC also cites Ramp spending data: Cursor's share fell from 41% in June 2025 to about 26% in May 2026, while Anthropic now holds about half of that market.
+
+My take: many teams picked Cursor because it let them use any model. Nothing changes yet, but write down which models and data settings your team relies on, and keep your rules, prompts and agent configs portable, so a switch takes days and not months.
+
+## 2. Mastra npm compromise: more than 140 packages, North Korean actor
+
+Microsoft Threat Intelligence found more than 140 malicious packages under the \`mastra\` and \`@mastra\` scopes on npm on June 17. On June 19, Microsoft attributed the attack with high confidence to Sapphire Sleet, a North Korean state actor that also hit Axios in April.
+
+- Earlier \`mastra\` versions, up to 1.13.0, were published through GitHub Actions OIDC. Version 1.13.1 was published by hand from an account using an anonymous email address.
+- The attackers first published a clean typosquat, \`easy-day-js\`, on June 16, then added a \`postinstall\` payload on June 17 at 01:01 UTC.
+- Nineteen minutes later, \`mastra@1.13.1\` and more than 140 \`@mastra/*\` packages shipped with that dependency.
+
+The packages are removed and the attacker's publish access is revoked.
+
+Lesson: alert when a package your team depends on is published outside its usual CI pipeline, and pin exact versions with a lockfile so a new patch release does not land in your build silently.
+
+## 3. GitHub Copilot app is generally available, and agents go mobile
+
+- GitHub made the Copilot app generally available on June 17 for macOS, Windows and Linux, two weeks after its technical preview at Build.
+- AWS launched Kiro for iOS, a native app to start, monitor and steer Kiro cloud sessions, review diffs and approve changes from a phone. It is in gated preview.
+- OpenAI released Record & Replay for ChatGPT and Codex on macOS: you show a workflow once and it drafts a reusable skill. TechTimes reports it shipped on June 18 in Codex app 26.616, and is not yet available in the EEA, the UK or Switzerland.
+
+## Mobile
+
+- Android 17 shipped on June 16 to most supported Pixel devices. Google calls it adaptive-first, with mandatory large-screen resizability, and launched an AppFunctions agent skill that generates the Kotlin code your app needs to expose actions to agents.
+- The Gemini integration for AppFunctions is still in private preview, but Google provides a test agent app and ADB commands so you can prepare now.
+- Android 17 adds app memory limits and lets users Bubble any app, per 9to5Google. Test how your app behaves in small floating windows.
+
+## Also worth knowing
+
+- TypeScript 7.0 RC, the Go-based compiler, arrived on June 18. Microsoft says it is often about 10 times faster than 6.0, with the same type-checking logic. Install with \`npm install -D typescript@rc\`.
+- Node.js shipped security releases on June 18 for the 26.x, 24.x and 22.x lines, including two high-severity bugs: a WebCrypto AES integer overflow that can crash the process, and a TLS wildcard hostname bypass.
+- At AWS Summit New York, AWS made Bedrock AgentCore harness generally available and added web search on AgentCore. It also announced AWS Context, still marked coming soon.
+- AWS Security Agent added threat modeling in preview, plus a Kiro power and a Claude Code plugin for security reviews in the editor.
+
+## What I'm watching
+
+- How Cursor changes its model choices and data terms after the deal closes.
+- TypeScript 7.0 stable, and whether your build tools and lint plugins work with the Go compiler.
+- Rollout of Record & Replay to Windows and to European users.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "CNBC, SpaceX to acquire the AI coding startup Cursor for $60 billion (June 16, 2026)", url: "https://www.cnbc.com/2026/06/16/spacex-spcx-cursor-acquisition-ipo.html" },
+      { label: "Microsoft Security Blog, From package to postinstall payload: Inside the Mastra npm supply chain compromise by Sapphire Sleet (June 17, 2026)", url: "https://www.microsoft.com/en-us/security/blog/2026/06/17/postinstall-payload-inside-mastra-npm-supply-chain-compromise/" },
+      { label: "GitHub Changelog, GitHub Copilot app generally available (June 17, 2026)", url: "https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/" },
+      { label: "Kiro, Introducing Kiro for iOS (June 2026)", url: "https://kiro.dev/blog/introducing-kiro-for-ios/" },
+      { label: "ChatGPT Learn, Record & Replay (2026)", url: "https://learn.chatgpt.com/docs/extend/record-and-replay" },
+      { label: "TechTimes, OpenAI Codex Automation Gains Record and Replay: Show It Once, Skip the Script (June 20, 2026)", url: "https://www.techtimes.com/articles/318759/20260620/openai-codex-automation-gains-record-replay-show-it-once-skip-script.htm" },
+      { label: "Android Developers Blog, Android 17 is here (June 16, 2026)", url: "https://android-developers.googleblog.com/2026/06/Android-17.html" },
+      { label: "9to5Google, Google launches Android 17, rolling out now to Pixel (June 16, 2026)", url: "https://9to5google.com/2026/06/16/google-android-17-pixel-launch/" },
+      { label: "Microsoft TypeScript Blog, Announcing TypeScript 7.0 RC (June 18, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0-rc/" },
+      { label: "Node.js, Thursday, June 18, 2026 Security Releases (June 18, 2026)", url: "https://nodejs.org/en/blog/vulnerability/june-2026-security-releases" },
+      { label: "AWS News Blog, Top announcements of the AWS Summit in New York, 2026 (June 2026)", url: "https://aws.amazon.com/blogs/aws/top-announcements-of-the-aws-summit-in-new-york-2026/" },
+      { label: "Ajit Singh, Dev Weekly Jun 15-21, 2026 (June 21, 2026)", url: "https://singhajit.com/dev-weekly/2026/jun-15-21/spacex-cursor-60b-mastra-npm-attack-github-copilot-app-aws-kiro-codex-record-replay/" },
+    ],
+  },
+  {
+    slug: "2026-06-29-week-26",
+    date: "2026-06-29",
+    lang: "en",
+    title: "Week 26: An npm worm hits Leo Platform, GPT-5.6 previews behind a government gate, and APIs get built for agents",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. June 22 to June 28, 2026.",
+    body: `This week the tools kept reshaping themselves around agents, while the supply chain and the government both showed how much control sits outside a team's hands.
+
+## 1. A worm poisons 20 Leo Platform npm packages
+
+On June 24, an attacker published malicious versions of 20 npm packages from the Leo Platform ecosystem in a burst of less than three seconds, per StepSecurity. Together they get about 13,600 downloads a week.
+
+The packages carry a CI/CD toolkit that steals secrets from GitHub Actions runners, cloud credential stores, package registries and password managers, then exfiltrates them using the victim's own GitHub token. StepSecurity says it uses the same toolkit as the earlier Miasma campaign, including a \`binding.gyp\` install hook.
+
+- If you installed any Leo Platform package on or after June 24, pin to a known-clean version.
+- Rotate every token and cloud credential your pipelines exposed.
+- Rebuild from a clean lockfile.
+
+Lesson: an install-time hook plus a CI token is enough to spread. Give CI jobs the smallest token scope they need, and do not let them publish packages by default.
+
+## 2. GPT-5.6 Sol starts as a limited, government-gated preview
+
+On June 26, OpenAI began a limited preview of the GPT-5.6 series: Sol, the flagship; Terra, which OpenAI says is competitive with GPT-5.5 at half the price; and Luna, its lowest-cost model. OpenAI says Sol sets a new state of the art on Terminal-Bench 2.1, and it adds a \`max\` reasoning effort and an \`ultra\` mode that uses subagents.
+
+At the US government's request, OpenAI started with a small group of trusted partners and plans general availability in the coming weeks. OpenAI wrote that it does not believe this kind of government access process should become the long-term default.
+
+My take: release dates for frontier models are now less predictable. Don't put an unreleased model on your roadmap's critical path.
+
+## 3. Gemini's Interactions API and Next.js 16.3 are designed for agents
+
+Google made the Interactions API generally available and the primary interface for Gemini models and agents. The legacy \`generateContent\` API stays supported, but Google expects frontier capabilities for long-running agents to land increasingly on Interactions only.
+
+- Managed Agents: one call provisions a remote Linux sandbox for an agent.
+- Background execution with \`background=True\`.
+- A schema of typed steps (\`user_input\`, \`function_call\`, \`model_output\`) instead of roles.
+- Flex and Priority tiers; Flex gives a 50% cost reduction.
+
+On the web side, the Next.js 16.3 Preview posts describe a framework shaped for coding agents: \`next dev\` keeps an \`AGENTS.md\` pointer to version-matched bundled docs, first-party Skills, an agent browser with React introspection, and errors with a copy-as-prompt fix. A separate post introduces Instant Navigations for faster server-driven routing.
+
+Lesson: for new Gemini work, start on the Interactions API. In Next.js repos, keep \`AGENTS.md\` in version control so every agent reads docs that match your installed version.
+
+## Mobile
+
+- Apple released iOS 27 beta 2 to developers on June 22. Apple says the first public beta comes in July.
+- Apple published design kits for iOS, iPadOS and macOS 27 on June 23.
+- Android 17 QPR1 Beta 5 rolled out to Pixel devices on June 23 with the June security patch and bug fixes.
+
+## Also worth knowing
+
+- Vite 8.1 shipped on June 23 with an experimental bundled dev mode. Vite 8 now sees 41.6 million weekly downloads.
+- Cursor acquired Continue, the open-source coding assistant with 34,300 GitHub stars, and shut the product down; the Apache 2.0 code stays public.
+- An Anthropic report says more than 80% of code merged into its codebase in May was written by Claude, and that lines merged per engineer per day reached 8 times the 2024 level. Anthropic itself calls lines of code an imperfect measure.
+- Claude Code added \`claude mcp login\` for OAuth from the shell and a \`sandbox.credentials\` setting that blocks sandboxed commands from reading credential files.
+
+## What I'm watching
+
+- When GPT-5.6 leaves the gated preview.
+- Whether more frameworks follow Next.js and ship docs and skills for agents inside the package.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "StepSecurity, Mass npm Supply Chain Attack: 20 Leo Platform Packages Compromised (June 25, 2026)", url: "https://www.stepsecurity.io/blog/mass-npm-supply-chain-attack-20-leo-platform-packages-compromised" },
+      { label: "OpenAI, Previewing GPT-5.6 Sol: a next-generation model (June 26, 2026)", url: "https://openai.com/index/previewing-gpt-5-6-sol" },
+      { label: "Google, Interactions API: our primary interface for Gemini models and agents (June 2026)", url: "https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability/" },
+      { label: "API Evangelist, Google Makes the Interactions API the Front Door to Gemini (June 22, 2026)", url: "https://apievangelist.com/2026/06/22/google-makes-the-interactions-api-the-front-door-to-gemini/" },
+      { label: "Next.js, Next.js 16.3: AI Improvements (June 2026)", url: "https://nextjs.org/blog/next-16-3-ai-improvements" },
+      { label: "Next.js, Next.js 16.3: Instant Navigations (June 2026)", url: "https://nextjs.org/blog/next-16-3-instant-navigations" },
+      { label: "9to5Mac, iOS 27 beta 2 now available as Apple tests major Siri AI upgrade (June 22, 2026)", url: "https://9to5mac.com/2026/06/22/ios-27-beta-2-now-available-as-apple-tests-major-siri-ai-upgrade" },
+      { label: "Apple Developer, Latest News: Design kits for iOS, iPadOS, and macOS 27 are here (June 23, 2026)", url: "https://developer.apple.com/news/" },
+      { label: "9to5Google, Android 17 QPR1 Beta 5 rolling out for Pixel (June 23, 2026)", url: "https://9to5google.com/2026/06/23/android-17-qpr1-beta-5-pixel" },
+      { label: "Vite, Vite 8.1 is out! (June 23, 2026)", url: "https://vite.dev/blog/announcing-vite8-1" },
+      { label: "The New Stack, Cursor quietly acquires Continue, an open-source alternative to GitHub Copilot (June 22, 2026)", url: "https://thenewstack.io/cursor-acquires-continue-coding/" },
+      { label: "Anthropic, When AI builds itself (June 2026)", url: "https://www.anthropic.com/institute/recursive-self-improvement" },
+      { label: "Claude Code Docs, What's new: Week 26, June 22-26, 2026 (June 2026)", url: "https://code.claude.com/docs/en/whats-new/2026-w26.md" },
+    ],
+  },
+  {
+    slug: "2026-07-06-week-27",
+    date: "2026-07-06",
+    lang: "en",
+    title: "Week 27: Claude Sonnet 5 lands at $2, Fable 5 comes back, and Copilot moves into JetBrains",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. June 29 to July 5, 2026.",
+    body: `A short, holiday-shortened week, but a busy one for the models and agents inside our editors.
+
+## 1. Claude Sonnet 5: near-Opus agents at a lower price
+
+Anthropic released Claude Sonnet 5 on June 30. It says performance is close to Opus 4.8 at a lower price, with clear gains over Sonnet 4.6 in reasoning, tool use, coding and knowledge work.
+
+- Price: $2 per million input tokens and $10 per million output. Launched as introductory pricing; on August 10 Anthropic made it permanent.
+- Default model on Free and Pro plans, available on Max, Team and Enterprise, and as \`claude-sonnet-5\` on the API.
+- In Claude Code it is the default for Pro, Team Standard and Enterprise seats, with a 1M-token context window. It needs v2.1.197 or later.
+- It uses an updated tokenizer. The same input can map to roughly 1.0 to 1.35 times more tokens, depending on content.
+
+Lesson: compare cost per finished task, not price per token. Run your real prompts through both models and measure tokens before you switch defaults.
+
+## 2. Fable 5 and Mythos 5 return after export controls are lifted
+
+On June 30, Anthropic said the US government had lifted the export controls applied on June 12 to Claude Fable 5 and Mythos 5. Anthropic had suspended both models for all users because it could not verify nationality in real time.
+
+Fable 5 came back on July 1 for users worldwide on the Claude Platform, Claude.ai, Claude Code and Claude Cowork. On Pro, Max, Team and select Enterprise plans it was included up to 50% of weekly limits through July 7, then via usage credits. Mythos 5 was restored for a set of US organizations after government approval on June 26. Anthropic says it is building a shared framework with Amazon, Microsoft, Google and others to rate jailbreak severity.
+
+My take: if a product depends on one frontier model, plan a fallback. This month showed a top model can disappear for weeks for reasons outside your control.
+
+## 3. GitHub Copilot becomes a native agent in JetBrains, and Claude Code goes wider
+
+On June 30, GitHub and JetBrains made Copilot a first-class choice in the JetBrains AI Assistant agent picker. You select it in the AI chat, choose a model and reasoning depth, and hand it multistep work. Copilot was already reachable through the Agent Client Protocol; this bundles it in.
+
+Claude Code's week 27 releases (v2.1.195 to v2.1.201) added:
+
+- Claude in Chrome generally available: the agent drives your browser, fills forms and reads console logs to test the app it builds.
+- Subagents run in the background by default.
+- Claude Desktop on Linux in beta, for Ubuntu 22.04+ and Debian 12+.
+- The "default" permission mode renamed "Manual".
+
+## Mobile
+
+- Expo SDK 57 shipped on June 30. It is a small release that brings React Native 0.86, which is meant to have no breaking changes from 0.85. Expo is testing a faster cadence of non-breaking SDKs. SDK 54 gets critical fixes until the next SDK release.
+- Android 17 QPR1 Beta 6 was released on July 1.
+- The Dart and Flutter VS Code extension reached v3.138 on June 30, with an LSP client upgraded to 3.18, per the Flutter.cz digest.
+
+## Also worth knowing
+
+- Mastra 1.48 (July 1) adds heartbeats: agents scheduled on a cron that persist across restarts, available in \`@mastra/core\`, \`@mastra/server\` and \`@mastra/client-js\`.
+- Claude Code artifacts are now generally available on Pro and Max plans, and admins can set an organization default model.
+- A Cloudflare network problem in North America on July 1 and 2 also hit the npm registry for hours, per Ajit Singh's Dev Weekly.
+- CISA added SharePoint flaw CVE-2026-45659 to its exploited-vulnerabilities catalog on July 1, per the same digest. Patch on-premises SharePoint.
+
+## What I'm watching
+
+- The public launch of GPT-5.6, still in a government-gated preview.
+- Fable 5 billing after July 7, when the included window ends.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Introducing Claude Sonnet 5 (June 30, 2026)", url: "https://www.anthropic.com/news/claude-sonnet-5" },
+      { label: "TechCrunch, Anthropic launches Claude Sonnet 5 as a cheaper way to run agents (June 30, 2026)", url: "https://techcrunch.com/2026/06/30/anthropic-launches-claude-sonnet-5-as-a-cheaper-way-to-run-agents/" },
+      { label: "Anthropic, Redeploying Fable 5 (June 30, 2026)", url: "https://www.anthropic.com/news/redeploying-fable-5" },
+      { label: "GitHub Changelog, Copilot Agent is now available in JetBrains AI Assistant (June 30, 2026)", url: "https://github.blog/changelog/2026-06-30-copilot-agent-is-now-available-in-jetbrains-ai-assistant/" },
+      { label: "JetBrains Blog, GitHub Copilot now an Integrated Agent in JetBrains IDEs (June 2026)", url: "https://blog.jetbrains.com/ai/2026/06/github-copilot-now-an-integrated-agent/" },
+      { label: "Claude Code Docs, What's new: Week 27, June 29 - July 3, 2026 (July 2026)", url: "https://code.claude.com/docs/en/whats-new/2026-w27.md" },
+      { label: "Expo, Expo SDK 57 changelog (June 30, 2026)", url: "https://expo.dev/changelog/sdk-57" },
+      { label: "Android Developers, Android 17 QPR1 release notes (2026)", url: "https://developer.android.com/about/versions/17/qpr1/release-notes" },
+      { label: "Flutter.cz, Flutter News July 2026 (1/2) (July 8, 2026)", url: "https://flutter.cz/en/info/flutter-news-july-2026-1" },
+      { label: "GitHub, Mastra @mastra/core@1.48.0 release (July 1, 2026)", url: "https://github.com/mastra-ai/mastra/releases/tag/%40mastra/core%401.48.0" },
+      { label: "Ajit Singh, Dev Weekly Jun 29-Jul 5, 2026 (July 5, 2026)", url: "https://singhajit.com/dev-weekly/2026/jun-29-jul-5/claude-sonnet-5-fable-5-returns-copilot-jetbrains-meta-watermelon-cloudflare-npm-outage" },
+    ],
+  },
+  {
+    slug: "2026-07-13-week-28",
+    date: "2026-07-13",
+    lang: "en",
+    title: "Week 28: GPT-5.6 goes public, npm v12 turns off install scripts, and TypeScript 7 ships in Go",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. July 6 to July 12, 2026.",
+    body: `Frontier models got cheaper and more available this week, and two tools every JavaScript team runs, npm and TypeScript, shipped their biggest default changes in years.
+
+## 1. GPT-5.6 is generally available, and Grok 4.5 undercuts it on price
+
+On July 9, OpenAI made the GPT-5.6 family generally available after its limited preview. It comes in three tiers, priced per million tokens:
+
+- Sol, the flagship: $5 input and $30 output.
+- Terra, competitive with GPT-5.5: $2.50 and $15.
+- Luna, the fastest and cheapest: $1 and $6.
+
+The models are in ChatGPT, Codex and the API. The Responses API adds Programmatic Tool Calling, multi-agent runs are in beta, and prompt caching gains explicit cache breakpoints with a 30-minute minimum cache life. OpenAI also launched ChatGPT Work the same day, an agent that works across connected apps and files for hours. OpenAI later cut Luna's price by 80% and Terra's by 20% on July 30.
+
+A day earlier, on July 8, SpaceXAI released Grok 4.5 at $2 input and $6 output per million tokens. It is available in Grok Build, in Cursor on all plans and through the API, and was trained alongside Cursor.
+
+My take: pin explicit model IDs, then run your own task set on the cheaper tiers. Benchmark charts on launch pages are vendor-run; your evals decide.
+
+## 2. npm v12 makes install scripts opt-in
+
+npm v12 became generally available and tagged \`latest\` on July 8. Three behaviors that used to run automatically are now off by default:
+
+- Dependency lifecycle scripts (\`preinstall\`, \`install\`, \`postinstall\`) and implicit node-gyp builds.
+- Git dependencies, direct or transitive.
+- Dependencies from remote URLs, such as https tarballs.
+
+To prepare, run \`npm approve-scripts --allow-scripts-pending\` and commit the allowlist in \`package.json\`. GitHub also started deprecating 2FA-bypass granular access tokens for sensitive account actions, expected in early August.
+
+Lesson: upgrade a branch first. Native modules that need a build step can install fine and then fail at runtime if nobody approved their script.
+
+## 3. TypeScript 7 ships as a native Go compiler
+
+Microsoft announced TypeScript 7 on July 8. It is a native port of the compiler written in Go, and Microsoft reports full builds typically 8x to 12x faster, thanks to native code, shared-memory multithreading and new optimizations. You install it as usual with \`npm install -D typescript\`. Editor support now goes through the language server protocol, with a dedicated VS Code extension.
+
+My take: try it on CI first, where type-checking is often the slowest job. If your tooling imports TypeScript as a library, check that your tools support 7 before you switch the whole repo.
+
+## Mobile
+
+- Apple released iOS 27 beta 3 on July 6, build 24A5380h.
+- Google shipped the first Android 17 update with the July patch for Pixel 6 through Pixel 10a on July 7. Google lists no security fixes in it.
+- React Native 0.87.0-rc.0 was published on July 8. It is a release candidate, not for production.
+- On July 9, Apple added social media questions to the App Store Connect age rating questionnaire, tied to the new Time Allowances in iOS 27.
+
+## Also worth knowing
+
+- Wiz disclosed GhostApproval on July 8: a symlink in a malicious repo can make six AI coding assistants write outside the workspace while the approval prompt shows a harmless file. AWS, Cursor and Google fixed it.
+- Ghostcommit (July 11) hides prompt injection as text inside a PNG. In one run, Cursor with Claude Sonnet leaked a full \`.env\` as a list of integers; Claude Code refused.
+- Claude Code on desktop got a built-in sandboxed browser, and \`/doctor\` now diagnoses and fixes setup issues.
+- Flutter 3.44.5 (July 7) fixes Android bundle builds with flavors and a text shadow rendering bug, per the Flutter.cz digest.
+- Expo accounts now support passkeys (July 6).
+
+## What I'm watching
+
+- Whether Gemini 3.5 Pro, promised for June, finally ships.
+- How many CI pipelines break as npm v12 rolls out without allowlists.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "OpenAI, GPT-5.6: Frontier intelligence that scales with your ambition (July 9, 2026)", url: "https://openai.com/index/gpt-5-6/" },
+      { label: "OpenAI, ChatGPT is now a partner for your most ambitious work (July 9, 2026)", url: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/" },
+      { label: "SpaceXAI, Introducing Grok 4.5 (2026)", url: "https://x.ai/news/grok-4-5" },
+      { label: "TechCrunch, SpaceXAI releases Grok 4.5, which Elon describes as an 'Opus-class model' (July 8, 2026)", url: "https://techcrunch.com/2026/07/08/spacexai-releases-grok-4-5-which-elon-describes-as-an-opus-class-model/" },
+      { label: "GitHub Changelog, npm install-time security and GAT bypass2fa deprecation (July 8, 2026)", url: "https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/" },
+      { label: "Socket, npm v12 Ships With Install Scripts Off by Default (July 2026)", url: "https://socket.dev/blog/npm-12" },
+      { label: "Microsoft TypeScript Blog, Announcing TypeScript 7.0 (July 8, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/" },
+      { label: "9to5Mac, Here's what's new with iOS 27 beta 3 (July 6, 2026)", url: "https://9to5mac.com/2026/07/06/heres-whats-new-with-ios-27-beta-3/" },
+      { label: "9to5Google, Android 17 July update rolling out with four Pixel fixes (July 7, 2026)", url: "https://9to5google.com/2026/07/07/android-17-july-pixel-update" },
+      { label: "GitHub, react-native 0.87.0-rc.0 (July 8, 2026)", url: "https://github.com/react/react-native/releases/tag/v0.87.0-rc.0" },
+      { label: "Apple Developer, Latest News: Age rating questionnaire now includes social media questions (July 9, 2026)", url: "https://developer.apple.com/news/" },
+      { label: "Wiz, GhostApproval: A Trust Boundary Gap in AI Coding Assistants (July 8, 2026)", url: "https://www.wiz.io/blog/ghostapproval-a-trust-boundary-gap-in-ai-coding-assistants" },
+      { label: "BleepingComputer, 'Ghostcommit' hides prompt injection in images to fool AI agents, steal secrets (July 11, 2026)", url: "https://www.bleepingcomputer.com/news/security/ghostcommit-hides-prompt-injection-in-images-to-fool-ai-agents-steal-secrets/" },
+      { label: "Claude Code Docs, What's new: Week 28, July 6-10, 2026 (July 2026)", url: "https://code.claude.com/docs/en/whats-new/2026-w28.md" },
+    ],
+  },
+  {
+    slug: "2026-07-20-week-29",
+    date: "2026-07-20",
+    lang: "en",
+    title: "Week 29: An npm attack that skips install scripts, Grok Build goes open source, and Next.js schedules its security fixes",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. July 13 to July 19, 2026.",
+    body: `This week was about trust in the tools around the code: a package attack that ran on import, an agent that uploaded too much, and scheduled framework patches.
+
+## 1. Four AsyncAPI npm packages shipped a backdoor that runs on import
+
+On July 14, Microsoft Threat Intelligence and Socket reported a compromise of the @asyncapi npm organization. Five versions across four packages were republished within about ninety minutes with the same malicious loader: \`@asyncapi/specs\` 6.11.2 and 6.11.2-alpha.1, \`@asyncapi/generator\` 3.3.1, \`@asyncapi/generator-components\` 0.7.1 and \`@asyncapi/generator-helpers\` 1.1.1.
+
+The payload runs when the package is imported, not at install time, so \`npm install --ignore-scripts\` does not stop it. It pulls an encrypted second stage from IPFS and starts the Miasma remote access toolkit. Socket notes the packages carried valid provenance that pointed to a source commit already containing the implant.
+
+- Remove the five versions and purge npm and Yarn caches.
+- Rotate every credential reachable from any machine or CI job that imported them.
+- Treat provenance as proof of where a build ran, not proof that the code is safe.
+
+Lesson: install-script hardening is not enough. Review which workflows can push to your release branches, because that is where this attack entered.
+
+## 2. SpaceXAI open-sources Grok Build after an upload scandal
+
+On July 15, SpaceXAI published the source of Grok Build, its coding agent and terminal UI, under Apache 2.0. It includes the agent loop, tools, terminal UI and extension system, and can run local-first against your own inference.
+
+The timing matters. As Simon Willison documented, users found a day earlier that the grok CLI could upload a whole working directory to xAI cloud buckets. SpaceXAI says it turned default data retention off on July 12 and is deleting previously retained coding data. Willison counted 844,530 lines of Rust in the release.
+
+My take: before a team adopts any coding agent, check what it sends off the machine and whether retention is on by default. Run it first in a throwaway directory with no secrets.
+
+## 3. Next.js moves to a monthly, pre-announced security release
+
+On July 13, the Next.js team announced a formal security release program. Roughly once a month, they will post advance notice with the expected date and the highest severity in the batch, so teams can plan upgrades.
+
+The first scheduled release targets Next.js 16.2 and 15.5 with fixes for 4 high and 5 medium severity issues. It was planned for July 20 and later moved to July 21.
+
+Lesson: put a monthly Next.js patch slot in your release calendar now, and stay on a supported line.
+
+## Mobile
+
+- Apple released the first iOS 27 public beta on July 13, along with iPadOS 27 and macOS Golden Gate 27 public betas. The build matches the current developer beta.
+- Android 17 QPR1 Beta 7 shipped on July 15, per the Android Developers release notes.
+- Google Play's July 15 policy update gives at least 30 days to comply. Account verification by phone call is no longer a valid use of \`READ_CALL_LOG\`, and any apps not yet registered in Play Console must be registered to avoid removal.
+- Flutter 3.44.7 (July 17) fixes a resource leak that could crash apps using external textures on some GPUs, per the Flutter.cz digest.
+
+## Also worth knowing
+
+- Google's Gemini 3.5 Pro, promised for June, is still in partner testing. Bloomberg reported on July 16 that coding performance is the reason.
+- Anthropic published how it migrates large codebases with Claude Code, including Bun's port from Zig to Rust: about a million lines in under two weeks, with the full test suite passing before merge.
+- 1Password for Claude (July 16) lets Claude use stored credentials in the browser without the secret reaching the model.
+- Claude Code added a screen reader mode and default session caps of 200 web searches and 200 subagent spawns.
+- Microsoft's July Patch Tuesday (July 14) fixed a record 570 flaws, including two zero-days already exploited.
+- From July 20, Claude Fable 5 is included in Max and Team Premium plans at 50% of limits. Pro and Team Standard keep access through usage credits.
+
+## What I'm watching
+
+- The Next.js 16.2 and 15.5 security release, now expected on July 21.
+- Whether Gemini 3.5 Pro gets a new date.
+- Moonshot's Kimi K3, launched July 16, with open weights promised for July 27.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Microsoft Security Blog, Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery (July 15, 2026)", url: "https://www.microsoft.com/en-us/security/blog/2026/07/15/unpacking-asyncapi-npm-supply-chain-compromise-import-time-payload-delivery/" },
+      { label: "Socket, Compromised npm Packages in the AsyncAPI Namespace Deliver Miasma Botnet Loader (July 14, 2026)", url: "https://socket.dev/blog/asyncapi-supply-chain-attack" },
+      { label: "SpaceXAI, Grok Build is Now Open Source (July 15, 2026)", url: "https://x.ai/news/grok-build-open-source" },
+      { label: "Simon Willison, xai-org/grok-build, now open source (July 15, 2026)", url: "https://simonwillison.net/2026/Jul/15/grok-build/" },
+      { label: "Next.js, Next.js Security Release and Our Next Patch Release (July 13, 2026)", url: "https://nextjs.org/blog/next-security-release-program" },
+      { label: "9to5Mac, iOS 27 public beta is here with Siri AI, iPhone speed upgrades, and more (July 13, 2026)", url: "https://9to5mac.com/2026/07/13/ios-27-public-beta" },
+      { label: "Android Developers, Android 17 QPR1 release notes (2026)", url: "https://developer.android.com/about/versions/17/qpr1/release-notes" },
+      { label: "Play Console Help, Policy announcement: July 15, 2026 (July 15, 2026)", url: "https://support.google.com/googleplay/android-developer/answer/17134731?hl=en" },
+      { label: "Flutter.cz, Flutter News July 2026 (2/2) (July 29, 2026)", url: "https://flutter.cz/en/info/flutter-news-july-2026-2" },
+      { label: "9to5Google, Gemini 3.5 Pro delays due to coding performance (July 16, 2026)", url: "https://9to5google.com/2026/07/16/gemini-3-5-pro-delays/" },
+      { label: "Claude, How Anthropic runs large-scale code migrations with Claude Code (July 16, 2026)", url: "https://claude.com/blog/ai-code-migration" },
+      { label: "1Password, 1Password and Anthropic Bring Secure Credential Access to Claude (July 16, 2026)", url: "https://1password.com/press/2026/july/1password-for-claude" },
+      { label: "Claude Code Docs, What's new: Week 29, July 13-17, 2026 (July 2026)", url: "https://code.claude.com/docs/en/whats-new/2026-w29.md" },
+      { label: "BleepingComputer, Microsoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days (July 14, 2026)", url: "https://www.bleepingcomputer.com/news/microsoft/microsoft-july-2026-patch-tuesday-fixes-massive-570-flaws-3-zero-days/" },
     ],
   },
 ];
