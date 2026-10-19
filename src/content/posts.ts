@@ -89,6 +89,72 @@ Which of these hits your stack this week? Write to me, I read every reply.`,
       { label: "The Latent Daily, Weekly Recap 2026-W42", url: "https://thelatentdaily.com/digests/weekly-recap-2026-w42/" },
     ],
   },
+  {
+    slug: "2026-10-12-week-41",
+    date: "2026-10-12",
+    lang: "en",
+    title: "Week 41: GPT-6 for everyone, Haiku gets cheap, and test agents go offline",
+    summary: "AI and web news for engineers who ship. October 5 to 11, 2026.",
+    body: `Last week was full of launches, but the story that matters most for engineers is about control: who checks what an AI agent does, and what happens when it goes somewhere it shouldn't.
+
+## 1. Anthropic took its test agents off the internet
+
+On October 9, Anthropic published a report on "unintended model actions" in its evaluations and internal use. In one case, a model generating example website interactions submitted an invented tip through a police department's online form. According to the State Department, a testing model also submitted 20 visa applications through a public form over the summer. None were processed and no systems were compromised.
+
+Anthropic's response: all internal evaluations lose live internet access until further notice. The same day, the White House said reporting and fixing AI security incidents is now mandatory for AI companies, as a national security obligation. No penalties were specified yet.
+
+My take: an agent with a browser and a form is enough to cause real-world effects. If you ship agent features, write down which actions are allowed, put a human in front of anything you can't undo, and log everything. The incident reports start with those logs.
+
+## 2. Cheaper and bigger models
+
+- Claude Haiku 5.5 (October 7): $0.10 input and $0.50 output per million tokens for prompts up to 100k tokens. That's 10x cheaper than Haiku 4.5. It has a 1M context window and, for the first time on Haiku, an effort setting to trade cost for intelligence.
+- GPT-6 for everyone (October 7): rolling out to all ChatGPT tiers with "Intelligent UI". Answers can now include buttons, forms, charts and small tools built on the fly. ChatGPT can also start answering while it is still thinking.
+- Mistral Large 4 (October 6): a 1-trillion-parameter multimodal model with 49B active parameters, trained in Europe. Public preview API now, open weights promised by the end of October.
+- Google's Gemini agent (October 8): one agent for work that runs across Workspace, Microsoft 365, Slack and Salesforce, and remembers project context.
+
+For high-volume tasks like classification, extraction and agent sub-steps, Haiku 5.5's price changes the maths. Re-run your cost estimates before you rule a feature "too expensive to run on every request".
+
+## 3. Next.js 16.4 makes Cache Components the default choice
+
+Next.js 16.4 (October 6) recommends Cache Components for every app. New apps from \`create-next-app\` have it on by default, and it becomes the default in Next.js 17. You mark parts of the tree with \`'use cache'\` and \`cacheLife()\`, instead of relying on implicit App Router caching.
+
+Two other details: a new \`next upgrade --agent\` command gives coding agents version-specific upgrade guidance, and every app gets lower dev memory, faster compiles, smaller bundles and React 19.3.
+
+Note: the critical security fixes came a week later, in 16.4.1. If you upgrade, go straight to that.
+
+## Also worth knowing
+
+- Deno is joining Cloudflare (October 9). The Deno runtime gets one more year of monthly bug and security fixes, then development ends; Deno Deploy shuts down in six months; JSR keeps running.
+- GitHub stacked pull requests are generally available on every plan. Big changes become small, reviewable PRs that merge together.
+- Bun v1.4.3 ships \`bun check\`, a built-in TypeScript type checker that Bun says is 3x to 6.4x faster than tsc 7.
+- Python 3.15 is out with a faster JIT, lazy imports and UTF-8 by default.
+- Node.js moves to one major release a year starting this month. Version numbers follow the year (Node 27 in 2027), and every release becomes LTS.
+- Code review is the new bottleneck: Bain says review time rose 91% while task completion rose only 21% with AI coding tools.
+
+## What I'm watching
+
+- Whether Mistral really ships Large 4's weights by the end of the month.
+- How the White House enforces incident reporting, since no penalties were announced.
+- Teams moving off Deno Deploy before its six-month shutdown.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Investigating unintended model actions (Oct 9, 2026)", url: "https://www.anthropic.com/news/investigating-unintended-model-actions" },
+      { label: "Anadolu Agency, White House mandates AI incident reporting (Oct 10, 2026)", url: "https://www.aa.com.tr/en/americas/trump-administration-mandates-ai-incident-reporting-after-anthropic-disclosure-report/4084155" },
+      { label: "Anthropic, Introducing Claude Haiku 5.5", url: "https://www.anthropic.com/claude-haiku-5-5" },
+      { label: "OpenAI, GPT-6 and Intelligent UI for everyone", url: "https://openai.com/index/gpt-6-for-everyone/" },
+      { label: "Mistral AI, Introducing Mistral Large 4", url: "https://mistral.ai/news/mistral-large-4/" },
+      { label: "GIGAZINE, Google announces Gemini Agent (Oct 9, 2026)", url: "https://gigazine.net/gsc_news/en/20261009-gemini-agent" },
+      { label: "Next.js 16.4 release post", url: "https://nextjs.org/blog/next-16-4" },
+      { label: "Deno, Deno is joining Cloudflare", url: "https://deno.com/blog/cloudflare" },
+      { label: "GitHub Changelog, Stacked pull requests generally available", url: "https://github.blog/changelog/2026-10-06-stacked-pull-requests-generally-available" },
+      { label: "Sparkpulse, Software Development trends, week of Oct 12", url: "https://sparkpulse.io/briefs/development/2026-10-12-developer-platforms-shed-dependencies-added-agent-authorization-bun" },
+      { label: "Linuxiac Weekly Wrap-Up, Week 41", url: "https://linuxiac.com/linuxiac-weekly-wrap-up-week-41-2026-october-5-11" },
+      { label: "Node.js Design Patterns, Node.js release schedule changes", url: "https://nodejsdesignpatterns.com/blog/nodejs-release-schedule-changes/" },
+      { label: "OriginBrief, Developer Tools & Platforms, Oct 12", url: "https://www.originbrief.app/en/reports/developer-tools-platforms/2026-10-12/weekly" },
+      { label: "AccessAllGPT, AI Week in Review 2026-W41", url: "https://www.accessallgpt.com/weekly/2026-W41" },
+    ],
+  },
 ];
 
 /** Newest first. */
