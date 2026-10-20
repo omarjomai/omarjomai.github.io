@@ -2484,6 +2484,677 @@ Which of these changes your plans? Write to me, I read every reply.`,
       { label: "BleepingComputer, Microsoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days (July 14, 2026)", url: "https://www.bleepingcomputer.com/news/microsoft/microsoft-july-2026-patch-tuesday-fixes-massive-570-flaws-3-zero-days/" },
     ],
   },
+  {
+    slug: "2026-01-05-week-1",
+    date: "2026-01-05",
+    lang: "en",
+    title: "Week 1: Meta buys Manus, SoftBank completes its OpenAI round, and India orders fixes to Grok",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. December 29, 2025 to January 4, 2026.",
+    body: `The holiday week was quiet on product launches. The news was about money and consolidation: big checks closed, Meta bought an agent company, and one AI image tool showed what happens without guardrails.
+
+## 1. Meta acquires Manus, the general-purpose agent startup
+
+Manus announced on December 29 that it is joining Meta. Meta said the deal aims to bring advanced automation to its consumer and business products, including Meta AI.
+
+- Manus says its agent has processed more than 147 trillion tokens and created over 80 million virtual computers.
+- It will keep selling its subscription through its app and website, and keep operating from Singapore.
+- Meta said there will be no continuing Chinese ownership interests and it will wind down Manus's remaining operations in China. Terms were not disclosed; the Wall Street Journal reported over $2 billion.
+
+My take: agent products are being absorbed into platforms with distribution. If you depend on a third-party agent API, keep an abstraction layer so you can switch providers if terms change after an acquisition.
+
+## 2. SoftBank completes its OpenAI investment
+
+SoftBank said on December 31 that it completed an additional $22.5 billion investment in OpenAI on December 26 (US time). With $7.5 billion from April and $11 billion from co-investors, the $41 billion round is fully funded. SoftBank now owns about 11% of OpenAI.
+
+Lesson: the money for 2026 model releases and compute is in place. For teams building on these APIs, that points to more frequent model updates. Pin model versions in production and run evals before each upgrade.
+
+## 3. Grok's image editing triggers a government order
+
+On January 2, India's IT ministry ordered X to make immediate changes to Grok after users and lawmakers flagged AI-altered images of women. X got 72 hours to submit an action-taken report, and the order warned that X's safe harbor protection could be at risk. The same day, X acknowledged that lapses in safeguards had led Grok to generate sexualized images involving minors; those images were taken down.
+
+My take: if your product lets users edit photos of real people with AI, abuse filters, rate limits and reporting tools are launch requirements, not later work. Regulators now act within days.
+
+## Mobile
+
+- Samsung announced the Galaxy A17 on December 30: $199 in the US, 6 years of Android OS and security updates, on sale January 7.
+- Asus has no new Zenfone or ROG phones planned for 2026, 9to5Google reported on January 2, citing Digitimes. Support and updates for existing devices continue.
+- Pebble opened pre-orders for the $199 Pebble Round 2 on January 2, shipping in May, with support for apps and watch faces from the original Pebble Time Round.
+
+## Also worth knowing
+
+- DeepSeek posted the mHC (Manifold-Constrained Hyper-Connections) paper on arXiv on December 31. It targets the training instability of hyper-connections, and founder Liang Wenfeng is a co-author.
+- Alibaba's Qwen team released Qwen-Image-2512 weights on December 31, a 20B open text-to-image model with better realism and text rendering.
+- In a year-end post on December 31, Instagram head Adam Mosseri said it will be more practical to fingerprint real media than fake media, with cameras signing images at capture.
+- In the Gemini web app, the @-menu now lets you switch between Fast, Thinking and Pro models, 9to5Google noticed on January 2.
+
+## What I'm watching
+
+- What Meta builds with Manus inside its apps and business tools.
+- Whether other countries follow India with orders on AI image tools.
+- CES next week, and how much of it is relevant to software teams.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Manus, Manus Joins Meta for Next Era of Innovation (December 29, 2025)", url: "https://manus.im/blog/manus-joins-meta-for-next-era-of-innovation" },
+      { label: "CNBC, Meta acquires intelligent agent firm Manus, capping year of aggressive AI moves (December 30, 2025)", url: "https://www.cnbc.com/2025/12/30/meta-acquires-singapore-ai-agent-firm-manus-china-butterfly-effect-monicai.html" },
+      { label: "SoftBank Group, Completion of Additional $22.5 Billion Investment in OpenAI (December 31, 2025)", url: "https://group.softbank/en/news/press/20251231" },
+      { label: "TechCrunch, India orders Musk's X to fix Grok over 'obscene' AI content (January 2, 2026)", url: "https://techcrunch.com/2026/01/02/india-orders-musks-x-to-fix-grok-over-obscene-ai-content/" },
+      { label: "9to5Google, Galaxy A17 launches in January with 6 years of Android updates for $199 (December 30, 2025)", url: "https://9to5google.com/2025/12/30/galaxy-a17-launches-in-january-with-6-years-of-android-updates-for-199/" },
+      { label: "9to5Google, Asus won't make any new Android phones in 2026, but it might not be done yet (January 2, 2026)", url: "https://9to5google.com/2026/01/02/asus-android-phones-2026/" },
+      { label: "9to5Google, The Pebble Round smartwatch is getting a reboot for $199 with big upgrades (January 2, 2026)", url: "https://9to5google.com/2026/01/02/pebble-round-smartwatch-reboot/" },
+      { label: "arXiv, mHC: Manifold-Constrained Hyper-Connections (December 31, 2025)", url: "https://arxiv.org/abs/2512.24880" },
+      { label: "Hugging Face, Qwen/Qwen-Image-2512 model card (December 31, 2025)", url: "https://huggingface.co/Qwen/Qwen-Image-2512" },
+      { label: "The Verge, You can't trust your eyes to tell you what's real anymore, says the head of Instagram (December 31, 2025)", url: "https://www.theverge.com/news/852124/adam-mosseri-ai-images-video-instagram" },
+      { label: "9to5Google, Gemini app gets faster model switching from @-menu (January 2, 2026)", url: "https://9to5google.com/2026/01/02/gemini-model-switch/" },
+    ],
+  },
+  {
+    slug: "2026-01-12-week-2",
+    date: "2026-01-12",
+    lang: "en",
+    title: "Week 2: ChatGPT and Claude go into health, Google opens agent checkout, and Nvidia unveils Rubin",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. January 5 to January 11, 2026.",
+    body: `CES opened the year with hardware, but for software teams the week was about health data and shopping agents.
+
+## 1. OpenAI and Anthropic both launch health products
+
+OpenAI introduced ChatGPT Health on January 7, a separate space in ChatGPT for health and wellness. OpenAI says over 230 million people ask health questions on ChatGPT every week.
+
+- Users can connect medical records and apps such as Apple Health, Function and MyFitnessPal. Medical records and some apps are US only, and Apple Health needs iOS.
+- Health has its own encryption and isolation, and its conversations are not used to train foundation models. OpenAI says it is not intended for diagnosis or treatment.
+- Access starts with a small group of users on Free, Go, Plus and Pro outside the EEA, Switzerland and the UK, via a waitlist.
+
+On January 11, Anthropic announced Claude for Healthcare: HIPAA-ready tools for providers, payers and health tech companies. New connectors cover the CMS Coverage Database and ICD-10 codes. For individuals in the US, Claude Pro and Max users get HealthEx and Function connectors in beta, with Apple Health and Android Health Connect integrations rolling out in beta in the Claude mobile apps.
+
+My take: if your app stores health or fitness data, users will soon ask to share it with an assistant. Decide now what you expose, through which standard (HealthKit, Health Connect, FHIR), and how consent is logged.
+
+## 2. Google publishes the Universal Commerce Protocol
+
+Google released the Universal Commerce Protocol (UCP) on January 11, an open-source standard for agentic commerce. It lets consumer surfaces like AI Mode in Search and the Gemini app talk to merchant backends for discovery, cart and checkout.
+
+- It works with AP2 for agent payments, and businesses can integrate through APIs, A2A or MCP.
+- It was co-developed with Shopify, Etsy, Wayfair, Target and Walmart, and endorsed by over 20 partners including Stripe, Adyen, Visa and Mastercard.
+- Merchants stay the Merchant of Record. Google's own implementation needs a Merchant Center account and lets buyers pay with Google Pay.
+
+Lesson: agents will hit your checkout through structured APIs, not your web UI. Clean product data, real-time inventory and a stable checkout API are becoming as important as page speed.
+
+## 3. Nvidia launches the Rubin platform at CES
+
+On January 5, Nvidia launched Rubin, a platform of six new chips including the Vera CPU and Rubin GPU. Nvidia claims up to 10x lower inference cost per token and 4x fewer GPUs to train MoE models compared with Blackwell. Rubin is in full production, and partner products are due in the second half of 2026. AWS, Google Cloud, Microsoft and OCI are among the first cloud providers planned for 2026.
+
+My take: per-token prices will keep falling through 2026. Build cost tracking per feature now, so you can tell when a cheaper model or tier makes a new feature viable.
+
+## Mobile
+
+- Claude's Apple Health and Android Health Connect integrations started rolling out in beta in the iOS and Android apps, for US Pro and Max users.
+- Flutter 3.38.6 reached the stable channel on January 9.
+- Apple tested its new Background Security Improvements system on iOS 26.3 beta with two test updates, the second on January 8. The updates install from Privacy and Security settings and can be removed.
+- Samsung's Galaxy A17 went on sale in the US on January 7 for $199, with 6 years of Android OS and security updates.
+
+## Also worth knowing
+
+- Gmail added Gemini 3 features on January 8: AI Overviews for long threads, Help Me Write and Suggested Replies for everyone, and an AI Inbox for trusted testers.
+- Claude Code 2.1.0 shipped on January 7.
+- Tailwind Labs laid off 3 of its 4 engineers. CEO Adam Wathan said revenue is down almost 80% and docs traffic down 40% in two years as AI tools answer questions instead.
+- Meta announced nuclear deals with Vistra, TerraPower and Oklo on January 9, for up to 6.6 GW by 2035.
+
+## What I'm watching
+
+- Which health apps open their data to ChatGPT and Claude first, and how app store reviewers treat it.
+- Whether Shopify and other platforms turn UCP on by default for merchants.
+- How open source projects fund themselves when AI tools cut their docs traffic.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "OpenAI, Introducing ChatGPT Health (January 7, 2026)", url: "https://openai.com/index/introducing-chatgpt-health/" },
+      { label: "Anthropic, Advancing Claude in healthcare and the life sciences (January 11, 2026)", url: "https://www.anthropic.com/news/healthcare-life-sciences" },
+      { label: "TechCrunch, Anthropic announces Claude for Healthcare following OpenAI's ChatGPT Health reveal (January 12, 2026)", url: "https://techcrunch.com/2026/01/12/anthropic-announces-claude-for-healthcare-following-openais-chatgpt-health-reveal" },
+      { label: "Google Developers Blog, Under the Hood: Universal Commerce Protocol (UCP) (January 11, 2026)", url: "https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/" },
+      { label: "NVIDIA, NVIDIA Kicks Off the Next Generation of AI With Rubin: Six New Chips, One Incredible AI Supercomputer (January 5, 2026)", url: "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Kicks-Off-the-Next-Generation-of-AI-With-Rubin--Six-New-Chips-One-Incredible-AI-Supercomputer/" },
+      { label: "Flutter Announce, Flutter Stable 3.38.6 (January 9, 2026)", url: "https://groups.google.com/g/flutter-announce/c/QZUp8zbg7VU" },
+      { label: "9to5Mac, Apple releases iOS 26.3 security test for beta users (January 8, 2026)", url: "https://9to5mac.com/2026/01/08/apple-releases-ios-26-3-security-test-for-beta-users-details-here" },
+      { label: "9to5Google, Galaxy A17 launches in January with 6 years of Android updates for $199 (December 30, 2025)", url: "https://9to5google.com/2025/12/30/galaxy-a17-launches-in-january-with-6-years-of-android-updates-for-199/" },
+      { label: "Google, Gmail is entering the Gemini era (January 8, 2026)", url: "https://blog.google/products-and-platforms/products/gmail/gmail-is-entering-the-gemini-era/" },
+      { label: "GitHub, anthropics/claude-code issue #16675 showing version 2.1.0 (2026-01-07) (January 7, 2026)", url: "https://github.com/anthropics/claude-code/issues/16675" },
+      { label: "DEVCLASS, Tailwind Labs lays off 75 percent of its engineers thanks to 'brutal impact' of AI (January 8, 2026)", url: "https://www.devclass.com/ai-ml/2026/01/08/tailwind-labs-lays-off-75-percent-of-its-engineers-thanks-to-brutal-impact-of-ai/4079571" },
+      { label: "Meta, Meta Announces Nuclear Energy Projects, Unlocking Up to 6.6 GW (January 9, 2026)", url: "https://about.fb.com/news/2026/01/meta-nuclear-energy-projects-power-american" },
+    ],
+  },
+  {
+    slug: "2026-01-19-week-3",
+    date: "2026-01-19",
+    lang: "en",
+    title: "Week 3: Siri gets Gemini, Claude Cowork goes beyond code, and Node.js patches 8 CVEs",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. January 12 to January 18, 2026.",
+    body: `This week Apple chose a partner for its next AI models, Anthropic took its agent beyond code, and Node.js shipped a security release that touches most React and Next.js servers.
+
+## 1. Apple will build its next foundation models on Gemini
+
+On January 12, Apple and Google published a joint statement: under a multi-year collaboration, the next generation of Apple Foundation Models will be based on Google's Gemini models and cloud technology. They will help power future Apple Intelligence features, including a more personalized Siri coming this year.
+
+Apple Intelligence will keep running on Apple devices and Private Cloud Compute. The model comes from Google, but the runtime and the privacy boundary stay with Apple.
+
+My take: do not plan around which model sits behind Siri. Plan around what your iOS app exposes to the system, because that is the part you control.
+
+## 2. Claude Cowork: the Claude Code agent loop for non-coding work
+
+Anthropic launched Cowork on January 12 as a research preview for Claude Max subscribers in the macOS app. Other plans get a waitlist.
+
+- You give Claude access to one folder. It can read, edit and create files there, for example build an expense spreadsheet from screenshots.
+- It is built on the same foundations as Claude Code, the Claude Agent SDK. It plans, works through the plan and can run queued tasks in parallel.
+- It can use connectors, an initial set of skills for documents and presentations, and Claude in Chrome for browser tasks.
+- Anthropic warns about destructive actions such as deleting files, and about prompt injection. Windows support is planned.
+
+Lesson: the agent pattern that worked for code (scoped workspace, plan, act, check in) now ships to non-developers. If your product has file-based workflows, expect users to point agents at them, and make access scoped and changes easy to undo.
+
+## 3. Node.js patches 8 vulnerabilities across all active lines
+
+The delayed Node.js security release landed on January 13: 20.20.0, 22.22.0, 24.13.0 and 25.3.0. It fixes 3 high, 4 medium and 1 low severity issues, and updates c-ares and undici.
+
+- CVE-2025-59465 (high): a malformed HTTP/2 HEADERS frame can crash the process if TLS sockets have no error handler.
+- CVE-2025-55131 (high): \`Buffer.alloc\` could return leftover memory when the \`vm\` timeout interrupts allocation.
+- CVE-2025-59466 (medium): with \`async_hooks\` enabled, stack overflow errors become uncatchable and the process exits. The Node team notes that React Server Components, Next.js and most APM tools use \`AsyncLocalStorage\`.
+- Two permission model bypasses matter if you run with \`--permission\`.
+
+My take: upgrade base images this week, attach error handlers to every TLS and HTTP/2 socket, and treat deep recursion on user input as a crash risk.
+
+## Mobile
+
+- Android Studio Otter 3 Feature Drop is stable (January 15). You can bring your own model, remote or local via LM Studio or Ollama, and Agent Mode can connect to remote MCP servers.
+- Gemini Personal Intelligence entered beta on January 14 for Google AI Pro and Ultra subscribers in the US. It connects Gmail, Photos, YouTube and Search, is off by default, and works on Android, iOS and web.
+- Android 16 QPR3 Beta 2 reached Pixels on January 14. The second iOS 26.3 developer beta arrived on January 12.
+- React Native 0.84 will enable Hermes V1 by default, This Week In React reported on January 14.
+
+## Also worth knowing
+
+- OpenAI made ChatGPT Go available everywhere on January 16 ($8 per month in the US) and plans to test ads in the US for Free and Go. Plus, Pro, Business and Enterprise stay ad-free.
+- \`gpt-5.2-codex\` reached the Responses API on January 14, and GitHub made it generally available in Copilot the same day.
+- OpenAI announced Open Responses on January 15, an open spec for multi-provider LLM APIs based on the Responses API.
+- Google released TranslateGemma on January 15: open translation models in 4B, 12B and 27B sizes for 55 languages.
+- Veo 3.1 gained native vertical 9:16 video and 4K upscaling on January 13, including in the Gemini API.
+
+## What I'm watching
+
+- When the Gemini-based Siri ships, and what new hooks developers get.
+- How fast Cowork reaches Windows and other Claude plans.
+- How ads in ChatGPT are labeled.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Google, Joint statement from Google and Apple (January 12, 2026)", url: "https://blog.google/company-news/inside-google/company-announcements/joint-statement-google-apple/" },
+      { label: "Claude, Cowork: Claude Code for the rest of your work (January 12, 2026, Wayback Machine copy)", url: "https://web.archive.org/web/2026011500/https://claude.com/blog/cowork-research-preview" },
+      { label: "Node.js, Tuesday, January 13, 2026 Security Releases (January 13, 2026)", url: "https://nodejs.org/en/blog/vulnerability/december-2025-security-releases" },
+      { label: "Node.js, Mitigating Denial-of-Service Vulnerability from Unrecoverable Stack Space Exhaustion for React, Next.js, and APM Users (January 2026)", url: "https://nodejs.org/en/blog/vulnerability/january-2026-dos-mitigation-async-hooks" },
+      { label: "Android Developers Blog, LLM flexibility, Agent Mode improvements, and new agentic experiences in Android Studio Otter 3 Feature Drop (January 15, 2026)", url: "https://android-developers.googleblog.com/2026/01/llm-flexibility-agent-mode-improvements.html" },
+      { label: "9to5Google, Gemini rolling out 'Personal Intelligence' beta that uses Gmail and your Google apps data (January 14, 2026)", url: "https://9to5google.com/2026/01/14/gemini-personal-intelligence/" },
+      { label: "9to5Google, Here's everything new in Android 16 QPR3 Beta 2 (January 14, 2026)", url: "https://9to5google.com/2026/01/14/android-16-qpr3-beta-2-everything-new/" },
+      { label: "AppleInsider, Second developer betas for iOS 26.3, macOS Tahoe 26.3 have arrived (January 12, 2026)", url: "https://appleinsider.com/articles/26/01/12/second-developer-betas-for-ios-263-macos-tahoe-263-have-arrived" },
+      { label: "This Week In React, #264 (January 14, 2026)", url: "https://thisweekinreact.com/newsletter/264" },
+      { label: "OpenAI, Introducing ChatGPT Go, now available worldwide (January 16, 2026)", url: "https://openai.com/index/introducing-chatgpt-go" },
+      { label: "OpenAI API, Changelog (January 2026 entries)", url: "https://developers.openai.com/api/docs/changelog" },
+      { label: "GitHub Changelog, GPT-5.2-Codex is now generally available in GitHub Copilot (January 14, 2026)", url: "https://github.blog/changelog/2026-01-14-gpt-5-2-codex-is-now-generally-available-in-github-copilot" },
+      { label: "Google, TranslateGemma: A new suite of open translation models (January 15, 2026)", url: "https://blog.google/innovation-and-ai/technology/developers-tools/translategemma" },
+      { label: "Google, Veo 3.1 Ingredients to Video: More consistency, creativity and control (January 13, 2026)", url: "https://blog.google/innovation-and-ai/technology/ai/veo-3-1-ingredients-to-video/" },
+    ],
+  },
+  {
+    slug: "2026-01-26-week-4",
+    date: "2026-01-26",
+    lang: "en",
+    title: "Week 4: Agent skills get a package manager, Codex joins JetBrains, and Gemini aliases move",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. January 19 to January 25, 2026.",
+    body: `This week the tooling around coding agents grew up: skills became installable packages, Codex moved into JetBrains IDEs, and Google quietly changed what its "latest" model names point to.
+
+## 1. Agent skills get a package manager
+
+On January 20, Vercel released \`skills\`, a CLI to install and manage skill packages for agents with \`npx skills add <package>\`. Vercel says it has been used to install skills on 17 agents, including Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and Windsurf. It also launched skills.sh, a directory and leaderboard of skill packages ranked by installs.
+
+On January 21, Vercel added skills support to \`bash-tool\`, so AI SDK agents can load skills with filesystem context and sandboxed Bash, from public packages or your own private ones.
+
+Lesson: a skill is code that runs with your agent's permissions. Review a third-party skill like an npm dependency before you install it, and pin the version.
+
+## 2. Codex comes to JetBrains IDEs
+
+On January 22, JetBrains made OpenAI Codex a native agent in the AI chat of its IDEs, starting from version 2025.3. You can sign in with a JetBrains AI subscription, a ChatGPT account or an OpenAI API key. Through JetBrains AI it is free for a limited time, starting January 22, until the promotional credits run out. The free offer does not apply to ChatGPT or API key logins. You can pick the OpenAI model and reasoning budget in the chat.
+
+On January 23, OpenAI engineer Michael Bolin published "Unrolling the Codex agent loop", the first post in a series on how Codex CLI works. It covers how the harness builds prompts, calls tools and compacts the conversation through the Responses API once \`auto_compact_limit\` is passed.
+
+My take: the post is the best free guide this month to building your own agent loop. Read it before you write one, especially the parts on context growth and compaction.
+
+## 3. Gemini "latest" aliases now point to Gemini 3
+
+On January 21, the Gemini API changed its aliases: \`gemini-pro-latest\` now points to \`gemini-3-pro-preview\` and \`gemini-flash-latest\` to \`gemini-3-flash-preview\`. Any app that calls an alias got a new model overnight, and a preview model at that.
+
+Google also kept pushing personal context. On January 22, it brought Personal Intelligence to AI Mode in Search: Google AI Pro and Ultra subscribers in the US can opt in to connect Gmail and Google Photos. It is a Labs feature, in English, for personal accounts only.
+
+Lesson: pin exact model IDs in production and move to new ones on purpose, after your evals pass. Use aliases only in prototypes.
+
+## Mobile
+
+- Expo SDK 55 beta opened on January 22 for about two weeks. It ships React Native 0.83.1 and React 19.2.0, drops the Legacy Architecture, moves app code to \`/src/app\`, and lets you opt in to Hermes v1.
+- Liquid AI released LFM2.5-1.2B-Thinking on January 20, a reasoning model that runs on-device in about 900 MB of memory on a phone, with day-zero support in llama.cpp, MLX, vLLM and ONNX Runtime.
+- The Gemini app on Android added NotebookLM to its "plus" menu (January 20).
+
+## Also worth knowing
+
+- OpenAI began rolling out age prediction on ChatGPT consumer plans on January 20. Users wrongly flagged as under 18 can verify with a selfie through Persona.
+- Anthropic published a new constitution for Claude on January 22, released under CC0 so anyone can reuse it.
+- Vercel lifted cron jobs to 100 per project on every plan and removed per-team limits (January 20).
+- GitHub made the improved pull request "Files changed" page the default for all users on January 22, with comments on any line and saved drafts.
+
+## What I'm watching
+
+- Whether skills.sh adds signing or verification for skill packages.
+- When Gemini 3 leaves preview, and whether the "latest" aliases move again.
+- How many agents JetBrains adds to its AI chat after Codex.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Vercel Changelog, Introducing skills, the open agent skills ecosystem (January 20, 2026)", url: "https://vercel.com/changelog/introducing-skills-the-open-agent-skills-ecosystem" },
+      { label: "Vercel Changelog, Use skills in your AI SDK agents via bash-tool (January 21, 2026)", url: "https://vercel.com/changelog/use-skills-in-your-ai-sdk-agents-via-bash-tool" },
+      { label: "JetBrains AI Blog, Codex Is Now Integrated Into JetBrains IDEs (January 22, 2026)", url: "https://blog.jetbrains.com/ai/2026/01/codex-in-jetbrains-ides/" },
+      { label: "OpenAI, Unrolling the Codex agent loop (January 23, 2026)", url: "https://openai.com/index/unrolling-the-codex-agent-loop/" },
+      { label: "Google AI for Developers, Gemini API release notes (January 21, 2026 entry)", url: "https://ai.google.dev/gemini-api/docs/changelog" },
+      { label: "Google, Personal Intelligence in AI Mode in Search (January 22, 2026)", url: "https://blog.google/products-and-platforms/products/search/personal-intelligence-ai-mode-search/" },
+      { label: "Expo Changelog, Expo SDK 55 Beta is now available (January 22, 2026)", url: "https://expo.dev/changelog/sdk-55-beta" },
+      { label: "Liquid AI, LFM2.5-1.2B-Thinking: On-Device Reasoning Under 1GB (January 20, 2026)", url: "https://www.liquid.ai/blog/lfm2-5-1-2b-thinking-on-device-reasoning-under-1gb" },
+      { label: "9to5Google, Gemini app 'plus' menu switches to list with NotebookLM addition (January 20, 2026)", url: "https://9to5google.com/2026/01/20/gemini-plus-list-notebooklm" },
+      { label: "OpenAI, Our approach to age prediction (January 20, 2026)", url: "https://openai.com/index/our-approach-to-age-prediction/" },
+      { label: "Anthropic, Claude's new constitution (January 22, 2026)", url: "https://www.anthropic.com/news/claude-new-constitution" },
+      { label: "TechCrunch, Anthropic revises Claude's 'Constitution,' and hints at chatbot consciousness (January 21, 2026)", url: "https://techcrunch.com/2026/01/21/anthropic-revises-claudes-constitution-and-hints-at-chatbot-consciousness/" },
+      { label: "Vercel Changelog, Cron jobs now support 100 per project on every plan (January 20, 2026)", url: "https://vercel.com/changelog/cron-jobs-now-support-100-per-project-on-every-plan" },
+      { label: "GitHub Changelog, Improved pull request Files changed page on by default (January 22, 2026)", url: "https://github.blog/changelog/2026-01-22-improved-pull-request-files-changed-page-on-by-default/" },
+    ],
+  },
+  {
+    slug: "2026-02-02-week-5",
+    date: "2026-02-02",
+    lang: "en",
+    title: "Week 5: Next.js DoS fixes, MCP Apps go live, and Chrome learns to auto browse",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. January 26 to February 1, 2026.",
+    body: `Agents got a real UI this week: tools can now render interactive apps inside the chat, and Chrome started clicking through websites on its own. There was also a Next.js patch to apply first.
+
+## 1. Next.js: two denial-of-service fixes for self-hosted apps
+
+Vercel published two medium-severity advisories (CVSS 5.9 each) for self-hosted Next.js. Both let an attacker crash the Node.js process through memory exhaustion. Apps hosted on Vercel are not affected, and there is no data exposure.
+
+- CVE-2025-59471: the \`/_next/image\` endpoint loads remote images fully into memory when \`remotePatterns\` is set. Affects versions 10 up to 15.5.10 and 16 up to 16.1.5.
+- CVE-2025-59472: the Partial Pre-Rendering resume endpoint buffers unbounded POST bodies. It only applies with \`experimental.ppr\` or \`cacheComponents\` plus \`NEXT_PRIVATE_MINIMAL_MODE=1\`.
+- Fixed in 15.5.10, 15.6.0-canary.61, 16.1.5 and 16.2.0-canary.9.
+
+Lesson: if you self-host, upgrade to 16.1.5 or 15.5.10 now. If you can't, trim \`remotePatterns\` to domains you control and set request size limits at the reverse proxy.
+
+## 2. MCP Apps: interactive UI inside the conversation
+
+On January 26, the MCP maintainers made MCP Apps the first official MCP extension. A tool can declare a UI resource, and the host renders it in a sandboxed iframe in the chat: dashboards, forms, multi-step flows. The spec builds on MCP-UI and the OpenAI Apps SDK, and ChatGPT, Claude, Goose and VS Code already support it.
+
+The same day, Anthropic launched interactive connectors in Claude built on MCP Apps. Asana, Slack, Figma, Canva, Box, Amplitude, Clay, Hex and monday.com now open inside the conversation on web, desktop and mobile, for every plan from Free to Enterprise. Salesforce is listed as coming soon.
+
+My take: this turns an MCP server into a small front-end product. If you already ship an internal MCP server, the cheapest win is a review screen: show the user what the tool is about to do, and let them confirm it in the UI.
+
+## 3. Chrome auto browse and computer use in the Gemini API
+
+On January 28, Google moved Gemini in Chrome into a side panel on macOS, Windows and Chromebook Plus, built on Gemini 3. For Google AI Pro and Ultra subscribers in the US, it added auto browse: Chrome carries out multi-step tasks such as comparing prices or filling forms. It pauses for confirmation on sensitive steps like purchases or social posts, and with permission it can use Google Password Manager to sign in.
+
+The next day, the Gemini API changelog added the Computer Use tool to \`gemini-3-pro-preview\` and \`gemini-3-flash-preview\`.
+
+My take: browser agents will start visiting your web app. Stable labels, real \`button\` elements and clear form errors help them as much as they help screen readers.
+
+## Mobile
+
+- Apple's deadline to answer the new age rating questions in App Store Connect was January 31. Apps that skip them risk interrupted update submissions.
+- iOS 26.2.1 shipped on January 26 with support for the new AirTag and bug fixes. iOS 26.3 beta 3 followed for developers the same day, adding a "Limit precise location" setting for iPhones with the C1 or C1X modem.
+- Flutter 3.38.8 shipped on January 27 as a stable hotfix, with Dart 3.10.7.
+- Claude's new interactive connectors also work in the Claude mobile apps.
+
+## Also worth knowing
+
+- Moonshot AI released Kimi K2.5, an open-source multimodal model with 1T parameters. It can run an agent swarm of up to 100 sub-agents and 1,500 tool calls, and is available in Kimi Code, the app and the API.
+- The open-source assistant formerly called Clawdbot and Moltbot was renamed OpenClaw on January 29, with over 100,000 GitHub stars and 34 security commits in the release.
+- OpenAI launched Prism on January 27, a free LaTeX-based workspace for scientific writing, powered by GPT-5.2.
+- Bun 1.3.7 (January 27) upgrades JavaScriptCore and makes \`Buffer.from()\` up to 50% faster with arrays.
+- Google Search AI Mode and Gemini in Chrome both point to Personal Intelligence, which connects Gmail and Photos for US AI Pro and Ultra users.
+
+## What I'm watching
+
+- Which hosts beyond Claude and ChatGPT render MCP Apps, and how they handle the iframe sandbox.
+- How sites detect and handle Chrome auto browse traffic.
+- Whether Kimi K2.5 becomes a common low-cost option inside coding agents.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Vercel Changelog, Summaries of CVE-2025-59471 and CVE-2025-59472 (January 26, 2026)", url: "https://vercel.com/changelog/summaries-of-cve-2025-59471-and-cve-2025-59472" },
+      { label: "Model Context Protocol Blog, MCP Apps: Bringing UI Capabilities To MCP Clients (January 26, 2026)", url: "https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/" },
+      { label: "Claude, Your favorite work tools are now interactive connectors inside Claude (January 26, 2026)", url: "https://claude.com/blog/interactive-tools-in-claude" },
+      { label: "Google, The new era of browsing: Putting Gemini to work in Chrome (January 28, 2026)", url: "https://blog.google/products-and-platforms/products/chrome/gemini-3-auto-browse/" },
+      { label: "Google AI for Developers, Gemini API release notes (January 29, 2026 entry)", url: "https://ai.google.dev/gemini-api/docs/changelog" },
+      { label: "Apple Developer, Age Rating Updates (deadline January 31, 2026)", url: "https://developer.apple.com/news/upcoming-requirements/?id=07242025a" },
+      { label: "9to5Mac, Apple releases iOS 26.2.1 for iPhone, here's what's new (January 26, 2026)", url: "https://9to5mac.com/2026/01/26/apple-releases-ios-26-2-1-for-iphone/" },
+      { label: "9to5Mac, iOS 26.3 public beta 3 available now, here's what's new (January 27, 2026)", url: "https://9to5mac.com/2026/01/27/ios-26-3-public-beta-3-available-now-heres-whats-new/" },
+      { label: "Flutter Releases, Flutter 3.38.8 (January 27, 2026)", url: "https://flutterreleases.com/release/3.38.8/" },
+      { label: "Kimi, Kimi K2.5: Visual Agentic Intelligence (January 2026)", url: "https://www.kimi.ai/blog/kimi-k2-5" },
+      { label: "Hugging Face, Kimi K2.5: Still Worth It After Two Weeks? (February 23, 2026)", url: "https://huggingface.co/blog/mlabonne/kimik25" },
+      { label: "OpenClaw Blog, Introducing OpenClaw (January 29, 2026)", url: "https://openclaw.ai/blog/introducing-openclaw" },
+      { label: "Bun Blog, Bun v1.3.7 (January 27, 2026)", url: "https://bun.com/blog/release-notes/bun-v1.3.7" },
+      { label: "OpenAI, Introducing Prism (January 27, 2026)", url: "https://openai.com/index/introducing-prism/" },
+    ],
+  },
+  {
+    slug: "2026-02-09-week-6",
+    date: "2026-02-09",
+    lang: "en",
+    title: "Week 6: Opus 4.6 and GPT-5.3-Codex land together, and Xcode opens to agents",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. February 2 to February 8, 2026.",
+    body: `Two frontier coding models shipped on the same Thursday, and Apple opened Xcode to outside agents.
+
+## 1. Claude Opus 4.6: 1M context and agent teams
+
+Anthropic released Claude Opus 4.6 on February 5 on claude.ai, the API and the major cloud platforms. The model ID is \`claude-opus-4-6\`.
+
+- Price stays at $5 per million input tokens and $25 output. Prompts over 200K tokens cost $10 and $37.50, on the Claude Platform only.
+- It is the first Opus-class model with a 1M token context window, in beta, and it supports up to 128K output tokens.
+- New API controls: compaction for long tasks, adaptive thinking, and effort levels. Anthropic suggests medium effort if the model overthinks simple tasks.
+- Claude Code gets agent teams in research preview: several agents work in parallel on tasks that split into independent parts.
+
+GitHub made Opus 4.6 generally available in Copilot the same day; Business and Enterprise admins must enable the policy first.
+
+My take: treat effort as a budget knob, not a quality knob. Run your evals at medium and high, and only pay for high where the difference shows up.
+
+## 2. GPT-5.3-Codex and the Codex app for macOS
+
+On February 2, OpenAI launched the Codex app for macOS, a desktop place to run several agents in parallel. Each agent works in its own git worktree, so they don't collide on one repo. The app also supports skills and scheduled Automations. For a limited time, Codex is included in ChatGPT Free and Go, and rate limits are doubled on paid plans.
+
+On February 5, OpenAI released GPT-5.3-Codex. It combines the coding of GPT-5.2-Codex with the reasoning of GPT-5.2, runs 25% faster for Codex users, and OpenAI reports top scores on SWE-Bench Pro and Terminal-Bench. It works everywhere Codex runs for paid ChatGPT plans. API access is "soon", not yet.
+
+Lesson: parallel agents only help if review keeps up. Set a limit on open agent branches per developer, the same way you limit work in progress.
+
+## 3. Xcode 26.3 brings Claude Agent and Codex into the IDE
+
+Apple announced Xcode 26.3 on February 3 as a release candidate for all Apple Developer Program members. It adds agentic coding with Anthropic's Claude Agent and OpenAI's Codex built in. Agents can search documentation, change project settings, and check their work by capturing Xcode Previews and running builds. Xcode also exposes its features over the Model Context Protocol, so any compatible agent can use them.
+
+The same week, on February 4, GitHub put Claude and Codex coding agents in public preview for Copilot Pro+ and Enterprise. Each session costs one premium request.
+
+My take: the agent is becoming a setting, not a product choice. Write your project rules once, in files any agent can read, and keep them in the repo.
+
+## Mobile
+
+- Xcode 26.3 is the main iOS story: agents can now build, preview and fix SwiftUI code inside Xcode. It was an RC this week, with the App Store release "coming soon".
+- The February Pixel update (February 3) for Android 16 QPR2 has no listed bug fixes, only one high-severity Pixel patch, CVE-2026-0106.
+- Gemini redesigned its Tools menu on Android and iOS (February 6), with a new "Experimental features" section and a per-chat Personal Intelligence toggle for US subscribers.
+- Mistral's Voxtral Realtime is a 4B open-weights speech-to-text model (Apache 2.0) that runs on edge devices, with latency configurable below 200 ms.
+
+## Also worth knowing
+
+- Mistral released Voxtral Transcribe 2 on February 4: the batch model costs $0.003 per audio minute and Realtime $0.006, across 13 languages including Arabic and French.
+- Qwen3-Coder-Next is an open-weight coding model with 80B total and 3B active parameters and a 256K context window, aimed at local coding agents.
+- VS Code 1.109 (February 4) adds Claude agent support, MCP Apps in chat, terminal sandboxing and an integrated browser.
+- OpenAI launched Frontier on February 5, a platform for companies to build, deploy and manage AI agents.
+- Mozilla announced AI controls for Firefox 148 (rolling out February 24), with one toggle to block all generative AI features.
+- Node.js 25.6.0 (Current) shipped on February 3.
+
+## What I'm watching
+
+- When GPT-5.3-Codex reaches the API, and at what price.
+- Whether Xcode 26.3 ships to the App Store unchanged from the RC.
+- How parallel agents change code review load on real teams.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Introducing Claude Opus 4.6 (February 5, 2026)", url: "https://www.anthropic.com/news/claude-opus-4-6" },
+      { label: "GitHub Changelog, Claude Opus 4.6 is now generally available for GitHub Copilot (February 5, 2026)", url: "https://github.blog/changelog/2026-02-05-claude-opus-4-6-is-now-generally-available-for-github-copilot/" },
+      { label: "OpenAI, Introducing the Codex app (February 2, 2026)", url: "https://openai.com/index/introducing-the-codex-app/" },
+      { label: "OpenAI, Introducing GPT-5.3-Codex (February 5, 2026)", url: "https://openai.com/index/introducing-gpt-5-3-codex/" },
+      { label: "Apple Newsroom, Xcode 26.3 unlocks the power of agentic coding (February 3, 2026)", url: "https://www.apple.com/newsroom/2026/02/xcode-26-point-3-unlocks-the-power-of-agentic-coding/" },
+      { label: "GitHub Changelog, Claude and Codex are now available in public preview on GitHub (February 4, 2026)", url: "https://github.blog/changelog/2026-02-04-claude-and-codex-are-now-available-in-public-preview-on-github/" },
+      { label: "9to5Google, Android 16 February 2026 update rolling out: No Pixel bug fixes (February 3, 2026)", url: "https://9to5google.com/2026/02/03/android-16-february-update-pixel/" },
+      { label: "9to5Google, Gemini 'Tools' redesign comes to Android & iOS (February 6, 2026)", url: "https://9to5google.com/2026/02/06/gemini-tools-redesign-android/" },
+      { label: "Mistral AI, Voxtral transcribes at the speed of sound (February 4, 2026)", url: "https://mistral.ai/news/voxtral-transcribe-2/" },
+      { label: "Hugging Face, Qwen/Qwen3-Coder-Next model card (February 2026)", url: "https://huggingface.co/Qwen/Qwen3-Coder-Next" },
+      { label: "Visual Studio Code, January 2026 (version 1.109) release notes (February 4, 2026)", url: "https://code.visualstudio.com/updates/v1_109" },
+      { label: "OpenAI, Introducing OpenAI Frontier (February 5, 2026)", url: "https://openai.com/index/introducing-openai-frontier" },
+      { label: "Mozilla, AI controls are coming to Firefox (February 2, 2026)", url: "https://blog.mozilla.org/en/firefox/ai-controls/" },
+    ],
+  },
+  {
+    slug: "2026-02-16-week-7",
+    date: "2026-02-16",
+    lang: "en",
+    title: "Week 7: Codex-Spark hits 1000 tokens a second, WebMCP opens the web to agents, and Hermes V1 becomes the default",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. February 9 to February 15, 2026.",
+    body: `This week the speed race moved into the editor, the browser got a proposal for talking to agents, and React Native changed its engine by default.
+
+## 1. GPT-5.3-Codex-Spark: coding at more than 1000 tokens per second
+
+On February 12, OpenAI released a research preview of GPT-5.3-Codex-Spark, a smaller version of GPT-5.3-Codex and its first model built for real-time coding. It runs on Cerebras' Wafer Scale Engine 3 and delivers more than 1000 tokens per second.
+
+- It has a 128k context window and is text-only at launch.
+- It is rolling out to ChatGPT Pro users in the Codex app, CLI and VS Code extension, with its own rate limits. API access is limited to a small set of design partners.
+- By default it makes minimal edits and does not run tests unless you ask.
+- OpenAI also cut overhead in its harness with a persistent WebSocket connection: 80% less per round trip, 30% less per token, and half the time-to-first-token. This path will become the default for all models.
+
+My take: a fast model that skips tests by default is a pair programmer, not an agent you leave alone. Use it for small, interactive edits and keep your test suite as the gate before anything merges.
+
+## 2. The web gets an API for agents: WebMCP and Interop 2026
+
+On February 10, Chrome opened an early preview of WebMCP, a proposed standard that lets a site expose structured tools to AI agents instead of letting them guess from the DOM. It has two parts: a declarative API for standard actions defined in HTML forms, and an imperative API for dynamic interactions that need JavaScript.
+
+Two days later, Apple, Google, Igalia, Microsoft and Mozilla announced Interop 2026. Focus areas include anchor positioning, container style queries, \`dialog closedby\`, scroll-driven animations, cross-document view transitions, \`attr()\` and \`contrast-color()\`.
+
+Lesson: list the forms users fill again and again (support, checkout, booking). They are the first candidates to expose as agent tools once WebMCP settles.
+
+## 3. React Native 0.84 makes Hermes V1 the default
+
+React Native 0.84 shipped on February 11. Hermes V1 is now the default JavaScript engine on iOS and Android, after being opt-in since 0.82. Apps on Hermes get it with no config change.
+
+- Precompiled iOS binaries are now on by default, so clean builds no longer compile React Native core from source.
+- Legacy Architecture code is no longer included in iOS builds.
+- Node.js 22.11 is the new minimum.
+- It syncs React 19.2.3 and adds HEIC/HEIF image support.
+
+My take: bump Node in CI before you bump React Native. A version mismatch there is the most boring way to lose a day on this upgrade.
+
+## Mobile
+
+- Flutter 3.41 landed on February 11 with public release windows: four stable releases are planned in 2026 (February, May, August, November). The team warns not to move Flutter Android apps to AGP 9 yet.
+- Android 17 Beta 1 rolled out to Pixel devices on February 13, after a two-day delay. Apps that target API level 37 can no longer opt out of resizing and windowed multitasking on large screens.
+- GitHub Mobile now has a model picker for Copilot coding agent sessions, for Copilot Pro and Pro+ users (February 11).
+
+## Also worth knowing
+
+- TypeScript 6.0 beta (February 11) is the last release on the JavaScript codebase. Options it deprecates will be removed in the native TypeScript 7.0, which is planned soon after 6.0.
+- Chrome 145 reached stable on February 10 with \`text-justify\`, multicol \`column-wrap\`, and customizable select in listbox mode.
+- Go 1.26 shipped on February 10: the Green Tea garbage collector is on by default, cgo overhead is about 30% lower, and \`go fix\` was rewritten with modernizers.
+- GPT-5.3-Codex became generally available in GitHub Copilot on February 9, for Pro, Pro+, Business and Enterprise.
+- Google upgraded Gemini 3 Deep Think on February 12: 84.6% on ARC-AGI-2 and 48.4% on Humanity's Last Exam without tools, for AI Ultra subscribers, with early API access for select users.
+- Anthropic raised $30 billion at a $380 billion valuation on February 12. It says Claude Code run-rate revenue is now over $2.5 billion.
+
+## What I'm watching
+
+- Whether WebMCP gets support from other browser vendors, or stays a Chrome experiment.
+- How long the TypeScript 6.0 to 7.0 gap really is. Clearing the 6.0 deprecations now is cheap insurance.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "OpenAI, Introducing GPT-5.3-Codex-Spark (February 12, 2026)", url: "https://openai.com/index/introducing-gpt-5-3-codex-spark/" },
+      { label: "Chrome for Developers, WebMCP is available for early preview (February 10, 2026)", url: "https://developer.chrome.com/blog/webmcp-epp" },
+      { label: "web.dev, Interop 2026: Continuing to improve the web for developers (February 12, 2026)", url: "https://web.dev/blog/interop-2026" },
+      { label: "React Native, React Native 0.84 - Hermes V1 by Default (February 11, 2026)", url: "https://reactnative.dev/blog/2026/02/11/react-native-0.84" },
+      { label: "Flutter blog, What's new in Flutter 3.41 (February 11, 2026)", url: "https://blog.flutter.dev/whats-new-in-flutter-3-41-302ec140e632" },
+      { label: "Android Developers Blog, The First Beta of Android 17 (February 13, 2026)", url: "https://android-developers.googleblog.com/2026/02/the-first-beta-of-android-17.html" },
+      { label: "Ars Technica, The first Android 17 beta is now available on Pixel devices (February 2026)", url: "https://arstechnica.com/gadgets/2026/02/the-first-android-17-beta-is-now-available-on-pixel-devices/" },
+      { label: "GitHub Changelog, GitHub Mobile: Model picker for Copilot coding agent (February 11, 2026)", url: "https://github.blog/changelog/2026-02-11-github-mobile-model-picker-for-copilot-coding-agent" },
+      { label: "Microsoft TypeScript blog, Announcing TypeScript 6.0 Beta (February 11, 2026)", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-6-0-beta/" },
+      { label: "Chrome for Developers, Chrome 145 release notes (February 10, 2026)", url: "https://developer.chrome.com/release-notes/145" },
+      { label: "Go blog, Go 1.26 is released (February 10, 2026)", url: "https://go.dev/blog/go1.26" },
+      { label: "GitHub Changelog, GPT-5.3-Codex is now generally available for GitHub Copilot (February 9, 2026)", url: "https://github.blog/changelog/2026-02-09-gpt-5-3-codex-is-now-generally-available-for-github-copilot" },
+      { label: "Google, Gemini 3 Deep Think: Advancing science, research and engineering (February 12, 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-deep-think/" },
+      { label: "Anthropic, Anthropic raises $30 billion in Series G funding (February 12, 2026)", url: "https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation" },
+    ],
+  },
+  {
+    slug: "2026-02-23-week-8",
+    date: "2026-02-23",
+    lang: "en",
+    title: "Week 8: Sonnet 4.6 and Gemini 3.1 Pro land, and an npm worm targets AI coding tools",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. February 16 to February 22, 2026.",
+    body: `Two frontier models landed in three days this week, and the same week showed how AI coding tools have become a target of their own.
+
+## 1. Claude Sonnet 4.6: near-Opus work at Sonnet prices
+
+Anthropic released Claude Sonnet 4.6 on February 17. It is now the default model for Free and Pro users in claude.ai and Claude Cowork. API pricing stays at Sonnet 4.5 levels, starting at $3 input and $15 output per million tokens, and it has a 1M token context window in beta.
+
+- In Anthropic's early Claude Code testing, users preferred it to Sonnet 4.5 about 70% of the time, and to Opus 4.5 59% of the time.
+- Testers reported fewer false claims of success, fewer hallucinations and better follow-through on multi-step tasks.
+- Anthropic says resistance to prompt injection in computer use is a major improvement over Sonnet 4.5, and close to Opus 4.6.
+
+My take: if you pay Opus prices for routine coding or agent work, run your own eval set on Sonnet 4.6 this week. Keep Opus for the tasks where the eval shows a real gap.
+
+## 2. Gemini 3.1 Pro arrives in preview
+
+Google released Gemini 3.1 Pro on February 19, in preview in the Gemini API (AI Studio), Gemini CLI, Google Antigravity, Android Studio, Vertex AI and Gemini Enterprise, plus the Gemini app and NotebookLM.
+
+- On ARC-AGI-2 it reached a verified 77.1%, which Google says is more than double Gemini 3 Pro.
+- The model ID is \`gemini-3.1-pro-preview\`, with 1,048,576 input tokens and 65,536 output tokens.
+- A separate \`gemini-3.1-pro-preview-customtools\` endpoint is tuned for agents that mix bash with custom tools such as \`view_file\` or \`search_code\`.
+- JetBrains reported up to 15% better results than its best Gemini 3 Pro Preview runs, with fewer output tokens.
+
+Lesson: preview means the model can change under you. Pin the exact model ID, log which version answered each request, and keep a fallback model wired in.
+
+## 3. AI coding tools are now part of the attack surface
+
+On February 20, Socket disclosed SANDWORM_MODE, a Shai-Hulud-style npm worm. It spread through at least 19 typosquatted packages, with names such as \`claud-code\`, \`cloude-code\` and \`opencraw\`.
+
+- It steals npm and GitHub tokens and CI secrets, and harvests API keys for nine LLM providers.
+- It injects \`pull_request_target\` workflows to dump repository secrets.
+- It installs rogue MCP servers into Claude Desktop, Cursor and VS Code configs, with prompt injection aimed at the coding assistant.
+- A dead switch wipes the home directory if it loses GitHub and npm access at the same time.
+
+The same day, Anthropic opened Claude Code Security as a limited research preview for Enterprise and Team customers, with free expedited access for open-source maintainers. It scans codebases, re-checks its own findings to filter false positives, and gives each one a severity and confidence rating. Nothing is applied without human approval.
+
+My take: treat your MCP config files like your \`.npmrc\`. Review changes to them in code review, and copy package names from the vendor docs instead of typing them.
+
+## Mobile
+
+- iOS 26.4 beta 1 reached developers on February 16 and public beta testers on February 17. The first betas do not include the new Siri.
+- The beta tests end-to-end encrypted RCS between iPhones, adds HLS-based video podcasts and a Playlist Playground AI feature in Apple Music.
+- Gemini 3.1 Pro is available in Android Studio from day one, in preview.
+
+## Also worth knowing
+
+- Figma launched Claude Code to Figma on February 17: capture a working UI from production, staging or localhost and turn it into editable Figma frames.
+- GGML, the team behind llama.cpp, joined Hugging Face on February 20. The project stays fully open source and the maintainers keep technical leadership.
+- Anthropic opened its Bengaluru office on February 16. India is the second-largest market for Claude.ai.
+- The Go team published a guide to the rewritten \`go fix\` on February 17, and recommends running it after every toolchain upgrade.
+
+## What I'm watching
+
+- When Gemini 3.1 Pro leaves preview, and what the stable model ID and pricing look like.
+- Whether npm and editor vendors add signing or allowlists for MCP server configs.
+- How Claude Code Security findings compare with existing static analysis on real repositories.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "Anthropic, Introducing Claude Sonnet 4.6 (February 17, 2026)", url: "https://www.anthropic.com/news/claude-sonnet-4-6" },
+      { label: "Google, Gemini 3.1 Pro: A smarter model for your most complex tasks (February 19, 2026)", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/" },
+      { label: "Google AI for Developers, Gemini 3.1 Pro preview model page (February 2026)", url: "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview" },
+      { label: "Google Cloud blog, Introducing Gemini 3.1 Pro on Google Cloud (February 19, 2026)", url: "https://cloud.google.com/blog/products/ai-machine-learning/gemini-3-1-pro-on-gemini-cli-gemini-enterprise-and-vertex-ai" },
+      { label: "Socket, SANDWORM_MODE: Shai-Hulud-Style npm Worm Hijacks CI Workflows and Poisons AI Toolchains (February 20, 2026)", url: "https://socket.dev/blog/sandworm-mode-npm-worm-ai-toolchain-poisoning" },
+      { label: "Dependency Watch, SANDWORM_MODE: 19 npm typosquats (February 20, 2026)", url: "https://dependencywatch.io/incident/npm-2026-02-20-sandworm-mode" },
+      { label: "Anthropic, Making frontier cybersecurity capabilities available to defenders (February 20, 2026)", url: "https://www.anthropic.com/news/claude-code-security" },
+      { label: "9to5Mac, iOS 26.4 beta 1: Here are the new iPhone features (February 16, 2026)", url: "https://9to5mac.com/2026/02/16/ios-26-4-beta-1-heres-everything-new" },
+      { label: "MacRumors, iOS 26.4 and iPadOS 26.4 Public Beta Now Available (February 17, 2026)", url: "https://www.macrumors.com/2026/02/17/ios-26-4-public-beta-1/" },
+      { label: "Figma blog, From Claude Code to Figma (February 17, 2026)", url: "https://www.figma.com/blog/introducing-claude-code-to-figma/" },
+      { label: "Hugging Face, GGML and llama.cpp join HF (February 20, 2026)", url: "https://huggingface.co/blog/ggml-joins-hf" },
+      { label: "Anthropic, Anthropic opens Bengaluru office and announces new partnerships across India (February 16, 2026)", url: "https://www.anthropic.com/news/bengaluru-office-partnerships-across-india" },
+      { label: "Go blog, Using go fix to modernize Go code (February 17, 2026)", url: "https://go.dev/blog/gofix" },
+    ],
+  },
+  {
+    slug: "2026-03-02-week-9",
+    date: "2026-03-02",
+    lang: "en",
+    title: "Week 9: Copilot CLI goes GA, React moves to its own foundation, and Anthropic stands firm with the Pentagon",
+    tags: weeklyTags,
+    summary: "AI, web and mobile news for engineers who ship. February 23 to March 1, 2026.",
+    body: `Coding agents reached more GitHub plans and more tools this week, React got a new owner, and Anthropic's dispute with the Pentagon became a question for every team that builds on Claude.
+
+## 1. Coding agents spread across GitHub, Figma and the terminal
+
+GitHub made Copilot CLI generally available for all Copilot subscribers on February 25.
+
+- Plan mode builds a plan before writing code. Autopilot mode runs commands without asking at each step.
+- Prefix a prompt with \`&\` to hand the work to the cloud coding agent.
+
+On February 26, Claude and Codex became available as coding agents for Copilot Business and Pro, after Enterprise and Pro+. No extra subscription is needed, and each agent session uses one premium request during the preview. You can assign one issue to several agents, and output lands as draft pull requests.
+
+The same day, OpenAI and Figma launched a Codex to Figma integration through the Figma MCP Server: implement Figma designs in code, or turn UI from code into editable Figma designs.
+
+My take: assigning one issue to three agents is a cheap way to run your own benchmark. Pick five real issues from your backlog and compare the pull requests before you choose a default.
+
+## 2. React and React Native now belong to the React Foundation
+
+On February 24, the React Foundation officially launched under the Linux Foundation. React, React Native and JSX are no longer owned by Meta.
+
+- Eight Platinum founding members: Amazon, Callstack, Expo, Huawei, Meta, Microsoft, Software Mansion and Vercel.
+- Seth Webster is executive director. Technical direction stays independent from the board, and a provisional leadership council will define it.
+
+Lesson: nothing changes in your \`package.json\` today. Watch the governance update, because it will decide how RFCs and releases get approved.
+
+## 3. Anthropic and the Department of War: what it means for Claude users
+
+On February 26, Dario Amodei said Anthropic would not accept two uses in its Department of War contracts: mass domestic surveillance and fully autonomous weapons. On February 27, Secretary Pete Hegseth said he was directing the department to designate Anthropic a supply chain risk. Anthropic said it will challenge any such designation in court.
+
+- Anthropic says individual and commercial customers keep full access through the API, claude.ai and its products.
+- For Department of War contractors, a formal designation would only affect use of Claude on Department of War contract work.
+
+My take: if you sell to defense or government buyers, ask your legal team now which model providers your contracts allow. For everyone else, it is a reminder to keep a second model provider tested and ready.
+
+## Mobile
+
+- Expo SDK 55 shipped on February 25 with React Native 0.83 and React 19.2. The Legacy Architecture is gone, Hermes v1 is opt-in, and the new template puts code in \`/src/app\`. Expo Go in the stores stays on SDK 54 for a short transition period.
+- Android 17 Beta 2 arrived on February 26 with a system EyeDropper API, a privacy-preserving contacts picker and app Bubbles.
+- Google introduced Android AppFunctions on February 25: apps expose functions that Gemini and other agents can discover and call on the device, with an early preview on the Galaxy S26.
+- From February 24, Apple blocks users in Australia, Brazil and Singapore from downloading 18+ apps unless they are confirmed adults. Declared Age Range API updates are in beta.
+
+## Also worth knowing
+
+- OpenAI and Amazon announced a partnership on February 27: a Stateful Runtime Environment for agents on Amazon Bedrock, expected in the next few months, and a $50 billion Amazon investment.
+- Google launched Nano Banana 2 (Gemini 3.1 Flash Image) on February 26, with 512px to 4K output and consistency for up to five characters.
+- Claude Code got Remote Control on February 24: drive a local session from the web or the Claude mobile app while code runs on your machine.
+- Meta signed a deal with AMD on February 24 for up to 6GW of AMD Instinct GPUs, with first shipments in the second half of 2026.
+
+## What I'm watching
+
+- When Expo Go for SDK 55 reaches the App Store, and how fast teams move to development builds.
+- How quickly AppFunctions and WebMCP converge on a shared tool model for agents.
+- Whether the supply chain risk designation is formally adopted, and what the courts say.
+
+Which of these changes your plans? Write to me, I read every reply.`,
+    sources: [
+      { label: "GitHub Changelog, GitHub Copilot CLI is now generally available (February 25, 2026)", url: "https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available" },
+      { label: "GitHub Changelog, Claude and Codex now available for Copilot Business & Pro users (February 26, 2026)", url: "https://github.blog/changelog/2026-02-26-claude-and-codex-now-available-for-copilot-business-pro-users" },
+      { label: "OpenAI, OpenAI Codex and Figma launch seamless code-to-design experience (February 26, 2026)", url: "https://openai.com/index/figma-partnership/" },
+      { label: "React blog, The React Foundation: A New Home for React Hosted by the Linux Foundation (February 24, 2026)", url: "https://react.dev/blog/2026/02/24/the-react-foundation" },
+      { label: "Anthropic, Statement from Dario Amodei on our discussions with the Department of War (February 26, 2026)", url: "https://www.anthropic.com/news/statement-department-of-war" },
+      { label: "Anthropic, Statement on the comments from Secretary of War Pete Hegseth (February 27, 2026)", url: "https://www.anthropic.com/news/statement-comments-secretary-war" },
+      { label: "Expo, Expo SDK 55 changelog (February 25, 2026)", url: "https://expo.dev/changelog/sdk-55" },
+      { label: "Android Developers Blog, The Second Beta of Android 17 (February 26, 2026)", url: "https://android-developers.googleblog.com/2026/02/the-second-beta-of-android-17.html" },
+      { label: "Android Developers Blog, The Intelligent OS: Making AI agents more helpful for Android apps (February 25, 2026)", url: "https://android-developers.googleblog.com/2026/02/the-intelligent-os-making-ai-agents.html" },
+      { label: "Apple Developer News, Age requirements for apps distributed in Brazil, Australia, Singapore, Utah, and Louisiana (February 24, 2026)", url: "https://developer.apple.com/news/?id=f5zj08ey" },
+      { label: "OpenAI, OpenAI and Amazon announce strategic partnership (February 27, 2026)", url: "https://openai.com/index/amazon-partnership/" },
+      { label: "Google, Nano Banana 2: Combining Pro capabilities with lightning-fast speed (February 26, 2026)", url: "https://blog.google/innovation-and-ai/technology/ai/nano-banana-2/" },
+      { label: "Simon Willison, Claude Code Remote Control (February 25, 2026)", url: "https://simonwillison.net/2026/Feb/25/claude-code-remote-control/" },
+      { label: "Meta, Meta and AMD Partner for Longterm AI Infrastructure Agreement (February 24, 2026)", url: "https://about.fb.com/news/2026/02/meta-amd-partner-longterm-ai-infrastructure-agreement/" },
+    ],
+  },
 ];
 
 /** Newest first. */
