@@ -25,6 +25,21 @@ export const tagLabels: Record<string, string> = {
   ai: "AI",
   web: "Web",
   mobile: "Mobile",
+  agents: "Agents",
+  verification: "Verification",
+  ci: "CI",
+  "x-talks": "Talks from X",
+  "ci-cd": "CI/CD",
+  "code-review": "Code review",
+  "context-engineering": "Context engineering",
+  "prompt-caching": "Prompt caching",
+  architecture: "Architecture",
+  memory: "Memory",
+  mcp: "MCP",
+  "developer-tools": "Developer tools",
+  automation: "Automation",
+  evals: "Evals",
+  "llm-engineering": "LLM engineering",
 };
 
 /** Tags of the weekly AI, web and mobile newsletter. */
@@ -3488,6 +3503,614 @@ Which of these changes your plans? Write to me, I read every reply.`,
       { label: "This Week In React, #270: Next.js, React Router, TanStack, Ink, Async, AI (February 25, 2026)", url: "https://thisweekinreact.com/newsletter/270" },
       { label: "Tech World With Milan, What I learned from the book Software Engineering at Google (February 26, 2026)", url: "https://newsletter.techworld-with-milan.com/p/what-i-learned-at-swe-at-google-book" },
       { label: "The Pragmatic Engineer, Mitchell Hashimoto's new way of writing code (February 25, 2026)", url: "https://newsletter.pragmaticengineer.com/p/mitchell-hashimoto" },
+    ],
+  },
+  {
+    slug: "2026-10-22-how-coding-agents-earn-trust",
+    date: "2026-10-22",
+    lang: "en",
+    title: "How coding agents earn trust: verification, feature maps, strict CI",
+    summary: "Six talks shared on X agree on one thing: you trust agents once they can check their own work and the codebase makes the wrong path hard.",
+    tags: ["ai","agents","verification","ci","x-talks"],
+    body: `Most teams using coding agents hit the same wall. The agent writes code fast, but a human still has to read every line, run the app and check that it works. The human is the bottleneck. Several talks shared on X deal with that problem, and they share a common answer. You don't trust an agent because the model got smarter. You trust it because you built an environment where it can prove its work, and where the wrong path is hard to take.
+
+This post pulls together six of those talks. Most of the detail comes from Lauren Tan, a Cursor engineer who describes going from watching a few agents closely to letting agents auto-merge pull requests that she reviews after they land.
+
+## Verification comes first
+
+In a talk shared on X, [Lauren Tan](https://x.com/0xCodez/status/2091980766372639135) is blunt about priorities: "the most important skill that you should have in your toolbox when you work with agents is verification". By verification she means the agent can actually run the code, take CPU traces or heap snapshots, and drive the app. For Cursor's Electron agent window, her skill does this through the Chrome DevTools Protocol.
+
+She frames this as a trust curve. At the start you babysit one to five agents. She says she shipped about a thousand PRs in the month before the talk, and she ties that to the time spent setting up verification. She warns against jumping straight to hundreds of agents, which just burns tokens.
+
+An Anthropic session makes the same point from the Claude Code side. In a workshop shared on X, [a Claude Code founding engineer](https://x.com/0xCodez/status/2089456515975426297) frames his talk around how to stop babysitting agents. His verification loop has clear steps. Let the agent drive the browser, through a browser-control MCP or Playwright. Then make it prove the fix works with before and after screenshots. Then remove the blockers, usually auth and state. The agent needs an identity it can log in with, and some pre-configured data so the app is in a useful state. His main takeaway is that the goal is to get the agent into a loop by giving it the tools and instructions it needs.
+
+He adds a useful trick. Put the verification loop in a skill, and tell the skill to update itself every time the agent hits a blocker. The skill then documents itself over time, and the whole team can add to it.
+
+## Give the agent a map of the app
+
+Running the app is not enough if the agent can't find anything in it. Tan describes her first version of the control skill. The agent could start a dev build and take traces, but it had no idea how to reach a given feature in the UI. It just kept churning.
+
+Her fix was a file she calls a feature map. In a later talk shared on X, [Tan](https://x.com/0xCodez/status/2102060423067341244) says it was inspired by a sitemap and calls it a form of stored memory of how the app works. It records which features exist, how a user reaches each one, the keyboard shortcuts and the DOM elements to click. With that, an agent can act on a vague bug report instead of guessing.
+
+The same talk describes the second half of the verification skill: a CLI bundled with it. The goal is that agents run the app and collect traces the same way every time, so the evidence is reproducible. In an interview shared on X, [Tan](https://x.com/0xCodez/status/2107155830093078557) explains the reasoning. Some work needs judgment and some is mechanical. Put the deterministic parts into a script or CLI, and leave only the judgment to the agent.
+
+## Test your skills like code
+
+Skills drift, so Tan tests them. Her eval playbook works like this. A coordinator agent writes a rubric for what the skill should do. It spawns sub-agents in directories named so they can't tell they are being evaluated, because agents can tell when they are being tested and change their behavior. A judge agent on a different model cross-checks the scores so one model's bias doesn't decide the result. Then she uses \`/loop\` in Cursor to keep iterating until everything scores 10 out of 10.
+
+An Anthropic engineer explains why the judge should be separate. In a talk shared on X on async agents, [the speaker](https://x.com/0xMovez/status/2079985963862786352) says that when the same context both does the work and grades it, you get confabulation and odd behavior. Their fix is to move verification into its own context window. A verifier holds a goal or rubric, checks the build agent's output, and the loop continues until verification passes. The speaker names the primitives: goal in Claude Code and outcomes in Managed Agents. Both set a measurable end state and use an independent context to grade it.
+
+## Make the wrong path impossible
+
+Verification checks one change. Constraints protect the whole codebase. Tan ranks enforcement in layers. At the top, the architecture makes a mistake impossible. Next come static analysis, lint rules and CI checks that turn the build red. Below that are softer tools: rules, BugBot reviews, skills and style guides. She uses all of them but won't rely on the soft ones alone, because agents can forget them or apply them unevenly.
+
+For the Grokbot Electron app she built a framework called Dune, which she describes as a kind of Next.js for Electron apps, designed for agents to write. CI is strict:
+
+- \`useEffect\` is banned, since she calls it one of React's biggest footguns.
+- Code comments are banned. She says agents mostly write comments about irrelevant history, and that a single workaround comment gets copied by agents until it spreads across the codebase.
+- There are \`electron main\` and \`electron renderer\` directories, and a CI step checks the dependency graph so code doesn't leak across. A frame has to render in 16 milliseconds for 60 FPS, and heavy work pulled into the renderer causes jank.
+- Each feature lives in one directory, so an agent working on onboarding only has to look in one place.
+
+The principle behind all of it: "the shortest path is the best path". Agents take shortcuts, so make the shortcut correct. She treats every repeated human review comment as a code smell. Instead of commenting on the PR again, ask how to turn it into a lint rule, a CI failure or a structural change. When you find tech debt, her advice is to write a lint rule first to stop the bleeding, then clean up.
+
+## Rules should come from failures
+
+In a talk shared on X, [Eric, a Cursor engineer](https://x.com/0xCodez/status/2093356075672064297), lands in the same place from a different direction. He splits factory work into codebase patterns, guardrails such as hooks, rules and tests, and enablers such as skills, MCPs and runnable environments. He argues against installing rules in bulk from shared directories: "if you're finding agents going off the rails you should probably create a rule for that". He also shows agents writing Playwright end-to-end tests to check their own work, and cloud agents returning videos of themselves testing the UI.
+
+## Review moves to sampling
+
+Once the environment holds, review changes shape. Tan says she now reviews pull requests after they land. Her full autopilot mode spawns verifier agents for each PR that click around the running app looking for regressions. She compares the human role to a quality supervisor who samples output rather than inspecting every item. When a mistake repeats, the fix goes into the environment, not into the single PR. In her words, the new job of the engineer is to spend time on the environment.
+
+## What to try this week
+
+- Write a short verification skill for one app: how to start it, log in, seed state and capture proof such as screenshots or traces.
+- Add a feature map for your main UI flows, with routes, shortcuts and stable selectors.
+- Move the mechanical steps of that skill into a script so runs are repeatable.
+- Have a separate agent or model grade the result against a written rubric.
+- Pick the review comment you leave most often and turn it into a lint rule or CI check.
+- Add one import-boundary check between layers that must not depend on each other.
+- Delete or rewrite one workaround in the codebase before agents copy it further.`,
+    sources: [
+      { label: "Lauren Tan, climbing the agent-trust curve to auto-merged PRs", url: "https://x.com/0xCodez/status/2091980766372639135" },
+      { label: "Lauren Tan, trust ladder and verification skills (interview)", url: "https://x.com/0xCodez/status/2107155830093078557" },
+      { label: "Lauren Tan, building a \"Michelin kitchen\" of trusted agents", url: "https://x.com/0xCodez/status/2102060423067341244" },
+      { label: "Anthropic sessions, verification loops and how to stop babysitting agents", url: "https://x.com/0xCodez/status/2089456515975426297" },
+      { label: "Anthropic engineer on async agents and verifier loops", url: "https://x.com/0xMovez/status/2079985963862786352" },
+      { label: "Eric (Cursor), building a software factory with autonomous agents", url: "https://x.com/0xCodez/status/2093356075672064297" },
+    ],
+  },
+  {
+    slug: "2026-10-22-software-factory-harness-gates",
+    date: "2026-10-22",
+    lang: "en",
+    title: "The software factory: harnesses, gates and agent PR pipelines",
+    summary: "Seven talks shared on X on building systems that drive coding agents: hard gates at the end, rules from failures, and evidence-backed PRs.",
+    tags: ["ai","agents","ci-cd","code-review","x-talks"],
+    body: `Most teams using coding agents still pair-program with them. One human, one agent, one chat. Several recent talks shared on X describe a different setup: you write the system that drives the agents, and the agents write the code. The speakers call it a software factory. The work that goes into it is harness engineering.
+
+This post covers seven of them, focused on gates, rules and what an agent PR should carry.
+
+## From the line to the factory
+
+In a talk shared on X, [Chris, an engineering leader now building Cosmos at Augment](https://x.com/0xMovez/status/2092686594268643575), puts the shift in one line: "I'm building the factory system I'm not working on the factory line". He adds that you still need a mental model of the outcome.
+
+[Tariq from the Claude Code team at Anthropic](https://x.com/0xMovez/status/2097364630897086631) calls the same idea loop engineering: "instead of prompting Claude directly you're setting up a system that prompts Claude". His example is around ten loops that triage feedback and implement changes.
+
+On a panel with [Steve, creator of Gastown and Beads, and a host from Tessl](https://x.com/0xMovez/status/2091973661381054875), Steve describes the factory as the point where work becomes a first-class thing. You spend tokens to generate work, swarm agents to fix it, swarm them to review it, then start again.
+
+## Put deterministic checks at the end, not in the middle
+
+The most useful lesson from the Tessl side of that panel is about orchestration. They started very deterministic. The agent built something, the harness opened the PR, and review comments were ferried back to the agent. They pulled most of that out.
+
+The reason: every piece of deterministic orchestration became a source of brittleness. They would assume a flow held for every feature, then find that about 15% of features did not follow it. Stacked PRs were one case their orchestrator had made impossible.
+
+What they kept is a set of hard checks at the end. The agent gets the GitHub CLI and instructions. Hooks and CI do the gating:
+
+- When the agent tries to \`git commit\` or \`git push\`, run the unit tests and linter. If they fail, block the tool call and tell the agent to fix them.
+- When the agent tries to end its session, check that all work is committed and a PR is up. If not, it cannot stop.
+- In CI, check that certain skills were loaded before the agent finishes.
+
+[Eric from Cursor](https://x.com/0xCodez/status/2093356075672064297) groups factory ingredients into three buckets. Primitives and patterns: a modular, co-located codebase with start scripts and test boilerplate the agent can copy. Guardrails: rules, checks and hooks. His hook example is blocking changes to the most sensitive areas, like encryption or authentication. Enablers: skills, MCP servers and an environment the agent can run without a human.
+
+[Chris at Augment](https://x.com/0xMovez/status/2092686594268643575) gives the reason for checkpoints. Agents are non-deterministic. Chain enough steps without verification and you can end up making a U-turn. He designs his systems so each task ends with verification before hand-off to the next agent.
+
+## Grow rules from failures
+
+Eric's advice on rules is direct: "if you're finding agents going off the rails you should probably create a rule for that". He argues rules should emerge from observed failures, not be installed in bulk from shared rule lists. His example: Cursor avoids foreign keys in database migrations for performance reasons, but models keep adding them. So their review bot flags foreign keys on the PR.
+
+The Tessl speaker goes further on linting. Since agents write the code, it is fine to spend 50 lines on a lint rule that a team would never have bothered with before. His case was a side project where the agent inverted the architecture between the harness and the Anthropic client module. The fix was a lint rule saying one module must never import from the other. Tessl also uses what they call verifiers: narrow, LLM-powered checks on a specific file, such as requiring ARIA attributes on every JSX element.
+
+Rules also need pruning. The same speaker warns that piles of prohibitions will accumulate forever unless you keep evals that tell you whether each rule is still needed when the next model ships. He suggests a regular sweep to re-evaluate every rule.
+
+## Fix the harness before you comment on the PR
+
+Tessl has a review rule worth copying. Before leaving any comment on an agent's PR, a reviewer must rewind at least once and change the system: update skills in the codebase, add unit tests or change the architecture. Then re-run. Only if the agent still does not get it right on the second try do you start commenting.
+
+Eric describes a related loop at Cursor. An automation learns from review comments on merged PRs, on the basis that a human comment carries high signal. Cursor also built an agentic code owner. Their code owners were right about 80% of the time, but the other 20% blocked merges, sometimes across time zones. The agent checks a PR's risk. Renaming a variable is low risk and can be approved. Changing something like trial length is high risk, so it pulls in people who changed that code before.
+
+## Tests that prove behavior
+
+The Tessl speaker says coverage alone can be theater. His setup: require near 100% coverage within the PR diff, and run mutation testing on every PR. An agent reads the mutation report and comments on anything the tests missed. You can run it on the diff or across the whole codebase. He says it almost always leads to better tests.
+
+The panel also runs daily or weekly sweeps outside any diff: architecture duplication, test quality, docs. Something always slips through review.
+
+Tariq argues for roughly a hundred times more testing code than before: fixtures pulled from production, mock databases, storybooks for front end. When a PR is submitted to Claude Code, he says, a recording of the feature being used and tested comes back.
+
+## What an agent PR should carry
+
+Several speakers converge on the idea that the PR is evidence, not just a diff.
+
+- [Katia Gil-Guzman from OpenAI's developer experience team](https://x.com/0xMovez/status/2087563129437790518) suggests encoding judgment in the repo with \`AGENTS.md\` plus repo-level skills, and asking Codex to add screenshots to the PR for every UI change. She also mentions Symphony, an open spec OpenAI published where agents pick up tickets from a tracker like Linear and open PRs.
+- Eric shows Cursor cloud agents, each in its own VM, returning a video of themselves testing the UI. At Cursor, every new Linear ticket spawns a cloud agent.
+- Tariq attaches an artifact of every prompt he sent, including failed approaches, so the reviewer can see what was considered.
+
+In a talk shared on X, a speaker the post describes as [Head of Google Cloud AI](https://x.com/0xMovez/status/2072687996151734680) explains why this matters. Citing Sonar research, the speaker says 96% of developers do not fully trust AI code, yet only about half always verify it before committing. The answer is to make verification cheaper and harder to skip. Agents return evidence. Humans own the verdict, with an operating rule that if you cannot explain it, you do not ship it.
+
+## Earn autonomy before you grant it
+
+[Cat Wu, product lead for Claude Code and Cowork](https://x.com/0xMovez/status/2078899537641644438), sets the bar for unattended runs. A new automation might fail 30% of the time at first. You read the errors and fix the prompt or harness. Only when it reaches 100% do you let it run on its own.
+
+Chris describes where this leads: a production exception opens a ticket, an agent fixes it, another reviews it, it goes to a canary, and it rolls out fully if monitors stay green.
+
+## What to try this week
+
+- Add a pre-commit or pre-push hook for your agent that runs tests and lint and blocks the action on failure.
+- Add a stop check: no session ends without committed work and an open PR.
+- Write one pedantic lint rule for an architectural boundary agents keep crossing.
+- Next time you want to comment on an agent PR, first change a skill, rule or test and re-run once.
+- Try mutation testing on one PR diff and have an agent summarize what survived.
+- Require screenshots or a recording on agent PRs that touch UI.
+- List your current agent rules and mark which ones you could test with an eval.`,
+    sources: [
+      { label: "Steve (Gastown, Beads) and Tessl on software factories and harness engineering", url: "https://x.com/0xMovez/status/2091973661381054875" },
+      { label: "Eric (Cursor) on building a software factory with autonomous agents", url: "https://x.com/0xCodez/status/2093356075672064297" },
+      { label: "Chris (Augment) on building the software factory", url: "https://x.com/0xMovez/status/2092686594268643575" },
+      { label: "Katia Gil-Guzman (OpenAI DevEx) on Codex and harness engineering", url: "https://x.com/0xMovez/status/2087563129437790518" },
+      { label: "Tariq (Anthropic, Claude Code) on loop engineering and verification", url: "https://x.com/0xMovez/status/2097364630897086631" },
+      { label: "Cat Wu (Anthropic) on automation and auto mode", url: "https://x.com/0xMovez/status/2078899537641644438" },
+      { label: "Engineers own the verdict (Google Cloud AI speaker)", url: "https://x.com/0xMovez/status/2072687996151734680" },
+    ],
+  },
+  {
+    slug: "2026-10-22-where-coding-agent-tokens-go",
+    date: "2026-10-22",
+    lang: "en",
+    title: "Where your coding-agent tokens go: context and prompt caching",
+    summary: "Five talks shared on X explain how coding agents spend tokens, why the prompt cache matters most, and which habits keep context small.",
+    tags: ["ai","agents","context-engineering","prompt-caching","x-talks"],
+    body: `Most engineers treat a coding agent's bill as a black box. Several talks shared on X this year open that box. They come from Anthropic, Cursor, OpenAI and the agent-framework world, and they agree on the mechanics. This article pulls the practical parts together.
+
+## Every turn resends everything
+
+In a talk shared on X, Santi from Cursor put the core fact plainly: "models have amnesia what I mean by that is that they don't remember what you just said in the previous turn". The harness feeds the whole context back in on every turn.
+
+In an [Anthropic webinar on Claude Code](https://x.com/0xCodez/status/2098782845183410287) shared on X, an Anthropic team member walks through what that context contains. A one-line request to fix a failing test carries the system prompt, the built-in tool definitions, your environment and git state, your CLAUDE.md, and a name and description for each skill and MCP server. Your message sits at the end. The model asks to read a file, the harness runs the tool, the result is appended. Each round trip makes the context longer, and every later request carries all of it.
+
+Santi added in the [Cursor workshop](https://x.com/0xMovez/status/2093063618149433655) that agent actions such as grep do not cost tokens. You pay for what goes into and out of the model.
+
+## Three prices, one lever
+
+The webinar splits tokens into input, output and cached input. Input is processed in one parallel pass, so it is relatively cheap. Output is the most expensive, because the model generates one token at a time with a full pass over the context for each. Cached input is the cheapest.
+
+Caching works on the prefix. Each request repeats everything before it and adds a bit at the end. The server keeps the state it built for the identical front part and only computes from where the new request differs. In a healthy session most input should be cache reads. You can check that share with \`/usage\`.
+
+In another talk shared on X, [Brad Abrams](https://x.com/0xMovez/status/2085403190648819737), a product manager on Anthropic's API team, called prompt caching the most important cost knob: a 90% discount on cached input, with the best customers reaching hit rates in the 90s. For your own API calls, his advice is to first remove what you do not need, then put stable content at the top and dynamic content at the bottom. He also said the 50% batch discount stacks with caching.
+
+## What breaks the cache
+
+The prefix must match from the very first token. Change one token near the front and everything after it is processed at full price. The webinar lists the common causes in Claude Code:
+
+- \`/compact\` and \`/clear\` replace the prefix. That is expected, and after a compact the new prefix is a short summary.
+- Switching model mid-session. The cache is that model's internal state, so a new model rereads the whole conversation.
+- Changing effort level, on most models. The webinar names Fable 5.1 as the exception.
+- Waiting too long. The cache lasts about an hour on subscription plans and about five minutes on API billing, cloud providers and sub-agents. A one-hour TTL can be configured, but those writes cost more.
+
+Editing files or changing permission mode does not touch the request. CLAUDE.md is read once at session start, so edits apply in the next session or after a clear. Santi described the same behaviour in Cursor: changing a rule mid-session busts the cache, and switching model provider means a new cache on the other provider's side.
+
+The advice follows. Pick model and effort at the start of a session or right after a clear. If you must switch models mid-task, compact first so the new model reads a summary. Compact before you step away, while the cache is warm, because compacting rereads the full conversation. Resuming an old session after the cache expired means one full-price read of everything.
+
+## Keep the context small
+
+Cached tokens are cheap, not free. The webinar showed three tasks run two ways. With a clear between tasks, each started small. In one long session, each task carried the previous ones, and that session used twice the tokens.
+
+In a [talk on context engineering](https://x.com/0xMovez/status/2081737537412809077), Lance offered a definition: "Context engineering is just the art and science of filling the context window with just right information at each step of the agent trajectory." He groups harness techniques into offload, reduce and isolate.
+
+Offload what does not apply to every task. The webinar's rule is that CLAUDE.md should hold only what serves every task, because it is sent on every prompt. Instructions for something like database migrations belong in a skill, where only the name and description load by default. Lance described the same progressive disclosure: the skill header sits in the system prompt, and the agent reads the full file with bash when needed. Santi gave the Cursor version: always-on rules load in full every turn, so keep them short. Both suggest turning off MCP servers you are not using. Lance also cited research showing tool selection degrading after around 30 tools and failing at around 100.
+
+Reduce tool output. Claude Code already writes very large command output to a file, but smaller output stays in the conversation. A test runner printing a line for each of 400 passing tests puts all 400 lines into every later request. The webinar's fix is to write the exact quiet commands you run all day into CLAUDE.md, such as a single-file vitest run with the dot reporter. Lance described Manus doing this inside the harness: old tool results are saved to files and replaced with a reference, which is reversible. Summarisation comes later and loses information.
+
+Santi said Cursor compacts at around 90% of the window. It keeps the prefix and your latest ask and summarises the middle. He warned that compacting over and over leaves a blurry conversation. An [OpenAI Codex engineer](https://x.com/0xMovez/status/2086481283404710047) said Codex's compaction can compress context by up to 100 times.
+
+Isolate noisy work. The webinar recommends sub-agents for reading a long log or a whole repo when you only need the conclusion. A sub-agent has its own tokens and its own five-minute cache, so that job can cost a bit more. The gain is that the main conversation stays small, so every later turn is cheaper.
+
+## Say what you want
+
+The webinar notes that @-mentioning a file puts its contents in before the first request, so the first read round trip never happens. Santi compared a vague prompt asking the agent to fix error handling in production with a specific one that @-mentioned the file and named the error. The vague one cost 10 to 12 times more on the same model. He also suggests pasting only the log lines that matter and moving from ask mode to plan mode to build for unfamiliar work. Failed attempts and corrections stay in context and ride along on every turn.
+
+## Model and effort multiply everything
+
+The webinar's summary: "And the model is a multiplier of all of this." A larger model costs more per token, in and out, so it scales every other number here. Higher effort means more output tokens, which become input on later turns. The webinar's test when a result misses: if the model did not know enough, try a stronger model; if it skipped a file or stopped halfway, raise the effort. Brad Abrams likewise suggests adjusting effort before switching models.
+
+## What to try this week
+
+- Start a fresh session, run \`/context\`, and see what loads before you type.
+- Check the cache share in \`/usage\` after a normal working session.
+- Cut CLAUDE.md or always-on rules to what applies to every task. Move the rest into skills.
+- Add your most common test commands to CLAUDE.md, with quiet reporters.
+- Disable MCP servers you did not use today.
+- Choose model and effort at session start and leave them alone.
+- Clear between unrelated tasks, and compact before a break, not after.
+- Send log digging and repo-wide searches to a sub-agent.
+- In your own API calls, put stable content first and dynamic content last, then measure the hit rate.`,
+    sources: [
+      { label: "Anthropic webinar on how Claude Code spends tokens", url: "https://x.com/0xCodez/status/2098782845183410287" },
+      { label: "Santi (Cursor) workshop on token optimisation and model selection", url: "https://x.com/0xMovez/status/2093063618149433655" },
+      { label: "Lance on context engineering for agents", url: "https://x.com/0xMovez/status/2081737537412809077" },
+      { label: "Brad Abrams (Anthropic) on using Claude Fable 5 cost-effectively", url: "https://x.com/0xMovez/status/2085403190648819737" },
+      { label: "OpenAI Codex engineer on how Codex works", url: "https://x.com/0xMovez/status/2086481283404710047" },
+    ],
+  },
+  {
+    slug: "2026-10-22-long-running-agents-memory",
+    date: "2026-10-22",
+    lang: "en",
+    title: "Long-running agents: session logs, memory and the environment",
+    summary: "Seven talks on keeping agents useful across hours and sessions: append-only logs, files as memory, memory hygiene and codebases agents copy.",
+    tags: ["ai","agents","architecture","memory","x-talks"],
+    body: `An agent that works for ten minutes can keep everything in its context window. An agent that works for hours, or across dozens of sessions, cannot. Something has to hold state outside the model. Several talks shared on X ask where that state should live and who may change it.
+
+The short version: keep a durable log, put working memory in plain files, use the repo and its tests as the handoff between sessions, and clean memory up in a separate process.
+
+## Forgetting can be a feature
+
+In a talk shared on X, Anthropic's [Alex and Nadine](https://x.com/0xCodez/status/2084648444195459258) describe a coding agent that builds an app across many sessions, each starting with no memory. Their framing: "If we solve for this memory externally rather than through the model then forgetting becomes a feature not a bug." A fresh session does not carry bad habits or wrong assumptions forward.
+
+The memory lives in the environment instead:
+
+- A feature list the agent derives from the spec, stored as JSON rather than markdown. They say the agent is more likely to edit a markdown file, and they do not want it rewriting the spec. It should only mark tests as passing.
+- A standards file that is read-only to the agent. The human owns style and architecture decisions.
+- A progress file, read at the start of every session, together with git commits, so a new session knows where the last one stopped.
+- An \`init.sh\` script for the deterministic parts, such as starting the dev server.
+
+Each session follows one loop. Read the environment and history. Run the test suite to check nothing from earlier sessions has regressed. Pick the next feature. Build it. Test it end to end with browser automation. Commit and write a progress note.
+
+The loop came from failures. Their first agent tried to build everything at once. Context ran out mid-feature, and the model sometimes declared victory too early and gamed its own success criteria. They had to tell it explicitly that removing or editing tests to make them pass was unacceptable. Working on one feature at a time fixed the context problem. They also cap sessions at one hour and have the agent commit before the session ends, even if the work is unfinished, and leave the environment in a clean state with no errors in the browser logs.
+
+Limits they name: the model can miss visual bugs, Puppeteer or Playwright often can't see native alerts, and human review is still needed.
+
+## The session log as the source of truth
+
+Two Anthropic talks describe the same architecture from the infrastructure side. In a talk shared on X, an [Anthropic engineer](https://x.com/0xMovez/status/2079985963862786352) explains that the harness becomes a stateless process, the session is an append-only event log, and the "hands" are just containers. If the harness or the sandbox dies, nothing is lost, because the session is always backed up in the log. Credentials are never added to the sandbox. They live in a separate vault.
+
+The point for memory is that compaction stops being destructive. A typical compaction step picks what to keep and discards the rest. With an append-only log, the model can always go back.
+
+In a workshop shared on X, Anthropic's [Priyanka and Gabe](https://x.com/0xCodez/status/2109653301021069686) explain why they got there. Their first version put the session log, harness and sandbox in one container. It became a "pet" in the old pets-versus-cattle sense: hard to debug and costly to lose. Splitting it into an append-only session log, an interchangeable harness and on-demand sandboxes made each piece replaceable. Because every event is kept, they can change their compaction strategy without changing the event stream. They have seen ten-hour sessions in production.
+
+Their summary line: "harnesses encode assumptions And assumptions can go stale". Their example is a context-reset workaround needed for Sonnet 4.5 that Opus 4.5 no longer needed. The durable log is the part that should outlast those changes.
+
+## Files as working memory
+
+In a talk shared on X, [Lance from LangChain](https://x.com/0xMovez/status/2081737537412809077) groups context techniques into offload, reduce and isolate. Offloading means moving context to something external, usually a file system, so the agent can save and recall information during long tasks and pull it back only when needed. He notes that Claude Code summarizes when the session reaches around 95% of the context window. He also points out a useful distinction: if raw tool results are already written to files, compacting them is reversible, while summarization always loses information.
+
+## Memory needs hygiene
+
+In a talk shared on X, [Lamis from Anthropic's applied AI team](https://x.com/0xMovez/status/2083911405976076311) describes memory as markdown files that agents search with ordinary tools like bash and grep. Her guiding principle is to do the simple thing that works. Running this across many agents needs a few production rules:
+
+- Versioning, so you can track which agent and context produced an update and roll back a bad one.
+- Concurrency control. The agent takes a hash before drafting an edit and again before writing. If they differ, someone else wrote in the meantime, so it re-pulls the memory and drafts again.
+- Permissions. Organization-wide memory should probably be read-only for agents, while each agent's scratch pad is writable. One bad write to shared context would reach every agent.
+- Portability, through a clean API, so more than one system can use the memory.
+
+She also names the limits of agents writing memory during a task. Memory work competes with the task itself, a single session can't see patterns across sessions, and memories go stale. Anthropic's answer is "dreaming": a batch process with its own resources that reviews past transcripts and the memory store, then proposes changes. In their design it attaches example transcripts and stats on how common the pattern is, so a person can decide whether to accept each change.
+
+The async-agents talk gives a concrete case. Claude wrote an incorrect memory while playing Pokemon, mislocalized itself and fell through a trap door. The engineer saw this in five replicates with the raw memory store. After dreaming, the error was corrected.
+
+## The codebase is memory too
+
+In a talk shared on X, [Lauren Tan](https://x.com/0xCodez/status/2102060423067341244) pushes the idea further: "The code base is really like the best form of memory because agents love to extend existing patterns that they see." That cuts both ways. One workaround, or a comment explaining a workaround, can be copied by agents until it spreads across the codebase within days or weeks. Her framework bans code comments for that reason.
+
+Her order of fixes when an agent keeps making a mistake: make the mistake impossible in the codebase, then enforce it with static analysis and CI, then add guidance through rules, review bots and skills, and only then rely on a style guide. When she spots tech debt, she writes a lint rule first to stop it spreading, and cleans up later. She also keeps a "feature map" inside a verification skill: a stored description of what the app does and how a user reaches each feature, so agents don't guess from a vague bug report.
+
+## Shared memory between runs
+
+The [Cursor Automations webinar](https://x.com/0xCodez/status/2099523119161528649) shows a small, practical use. Automations have a memory tool that writes to a file system later runs can read. A Cursor engineer describes using it as a lock: when CI breaks and 20 agents start, prompt each one to write a memory file while it works on the problem and to abort early if the file already exists.
+
+## What to try this week
+
+- Log every agent event to an append-only store before you compact anything. Build summaries on top of it, not in place of it.
+- Write a progress file and commit at the end of every agent session, even unfinished ones, and have each new session read them first.
+- Put the spec's feature list in JSON and let the agent change only a status field. Keep your standards file read-only.
+- Start each session by running the full test suite, and forbid edits to tests in the instructions.
+- Store agent memory as markdown files. Add a content hash check before writes and keep shared files read-only.
+- Schedule a separate job that reviews recent transcripts against memory and proposes edits for a human to approve.
+- When an agent repeats a mistake, try a lint rule before another prompt line.`,
+    sources: [
+      { label: "Alex and Nadine (Anthropic) - long-horizon coding agents with the environment as memory", url: "https://x.com/0xCodez/status/2084648444195459258" },
+      { label: "Anthropic engineer - async agents, Managed Agents architecture and dreaming", url: "https://x.com/0xMovez/status/2079985963862786352" },
+      { label: "Priyanka and Gabe (Anthropic) - Claude Managed Agents architecture workshop", url: "https://x.com/0xCodez/status/2109653301021069686" },
+      { label: "Lamis (Anthropic) - agent memory in production", url: "https://x.com/0xMovez/status/2083911405976076311" },
+      { label: "Lauren Tan - building a kitchen of trusted agents", url: "https://x.com/0xCodez/status/2102060423067341244" },
+      { label: "Lance (LangChain) - context engineering for agents", url: "https://x.com/0xMovez/status/2081737537412809077" },
+      { label: "Cursor team - Automations webinar", url: "https://x.com/0xCodez/status/2099523119161528649" },
+    ],
+  },
+  {
+    slug: "2026-10-22-mcp-beyond-tools",
+    date: "2026-10-22",
+    lang: "en",
+    title: "MCP beyond tools: prompts, resources, sampling, roots and transports",
+    summary: "Most MCP servers only expose tools. Talks shared on X walk through the other primitives, the transports, and how teams plug MCP into coding agents.",
+    tags: ["ai","agents","mcp","developer-tools","x-talks"],
+    body: `Ask a team what their MCP server does and the answer is almost always a list of tools. That is the part of the protocol everyone uses. Two talks from people who co-created MCP argue that it is also the part that leaves the most value on the table. This post collects what they said about the other primitives and the transports, then looks at how teams actually wire MCP servers into coding agents.
+
+One caveat: the protocol talks describe plans as they stood at the time. Check the current spec before you build on them.
+
+## What MCP is, and what it is not
+
+In a talk shared on X, [David, a co-creator of the Model Context Protocol](https://x.com/0xCodez/status/2088263101158146337), starts with a correction. MCP is a protocol between AI applications and context providers. It is not a protocol between models.
+
+He describes the design as borrowed from LSP. Before language servers, every editor built its own integration for every language. MCP aims at the same M×N problem: build one good integration and use it in many clients. The protocol is released under the MIT license.
+
+## Three primitives, three owners
+
+The spec defines three basic primitives. Almost everyone ships only one. In a talk shared on X, a [member of technical staff at Anthropic and MCP co-creator](https://x.com/0xCodez/status/2088713006095994930) explains the rule that separates them. He calls it the interaction model and says it is buried deep in the specification:
+
+- Prompts are user-driven. They usually show up as slash commands or @ commands.
+- Resources are application-driven. The client decides what to do with them.
+- Tools are model-driven. The model decides when to call them.
+
+Prompts are more than saved text. Under the hood they are code. His example is a prompt that pulls the review comments from a GitHub pull request, so he can drop them into context and ask the model to fix the code. Prompt arguments can be autocompleted. In his demo the autocomplete lists his own open pull requests.
+
+Resources are raw data that the server exposes and the client is free to use however it wants. The demo exposes Postgres database schemas as resources, which Claude Desktop can attach like files. He says resources were also intended as an input primitive for retrieval augmented generation. David makes the same point: he wants people to use resources as a way to abstract RAG pipeline inputs.
+
+If your server has a "how to use this well" workflow, ship it as a prompt. Ship reference data as a resource.
+
+## Sampling: borrow the client's model
+
+Sampling is the feature both speakers push hardest. David says it plainly: "I Wish People Would Experiment More With Something Called Sampling".
+
+The problem it solves is simple. Say your server summarizes a discussion from an issue tracker. Summarizing needs a model. Without sampling, the server bundles its own SDK and asks the user for an API key, possibly for a vendor the user does not use. With sampling, the server asks the client for a completion, and the client runs it with whatever model the user already has. The MCP 201 speaker stresses that the client keeps full control over security and privacy. He also admits the name is confusing: "Naming was certainly not my strength in the protocol".
+
+David goes further. A program can be an MCP server upward and an MCP client downward. Chain several of these, and because sampling requests are passed up the chain, the user at the top still controls the whole inference stack. The graph stays model-agnostic, so you can swap the model and run evals against different ones.
+
+Both speakers note that client support for sampling was limited when they spoke. Check your client before you depend on it.
+
+## Roots: tell the server where to work
+
+Roots let the client tell the server which workspaces or URIs it should care about. The 201 speaker's example is a git server: the editor knows which repository is open, so it passes that path as a root and the server operates there. A root can be any URI, not just a local folder, so it can also restrict a server to part of a remote system. David says VS Code was one of the first clients to support roots, besides Claude Code.
+
+The 201 talk ends with a chat server that combines all of this: a "summarize this discussion" prompt, threads as resources, search tools, and sampling for the summary. The same data can be exposed in more than one way.
+
+## Transports: stdio, remote, and streamable HTTP
+
+David describes two ways to run a server. Local servers work like language servers: the client starts a process and talks to it over standard in and standard out. His example is a server for a local Postgres database in Docker, which any MCP client can then query. Remote servers run over HTTP and are hosted by the SaaS provider, so you connect to a URL and authorize with your account instead of running a third-party process.
+
+The 201 speaker explains why remote matters. You may not want to download a random third-party payments server and hand it your card details. A hosted server from the provider, plus OAuth, fixes that. For enterprises he describes a pattern where users sign in once with SSO through a central identity provider such as Okta or Azure AD. The MCP server then uses token exchange to get a token for the backend.
+
+Streamable HTTP addresses the scaling complaint about the original transport. A server can just take a request and return a result, which looks close to REST and can run in something like a Lambda function. When it needs more, such as notifications or a sampling request, it can open an SSE stream.
+
+Stated roadmap items at the time: async tasks for long-running work, elicitation (asking the user for confirmation or input), an official registry API, streaming of large tool results, and namespacing so tools with the same name do not collide.
+
+## Wiring MCP into coding agents
+
+The other talks show where MCP sits in day-to-day agent work.
+
+In a workshop shared on X, [two Claude Code presenters](https://x.com/0xMovez/status/2087943913319375142) describe MCP as an adapter pattern for external systems. Each tool on a server can be set to run without asking, ask for confirmation, or be blocked. They flag two costs. A large MCP tool catalog is often the second biggest consumer of context after CLAUDE.md, while skills load only their frontmatter until triggered. And third-party MCP servers deserve the same scrutiny as npm modules: check where they come from and what runs inside them.
+
+In a demo shared on X, a [Cursor team member](https://x.com/0xCodez/status/2098097766505341360) shows cloud agents using MCP servers. Asked only to implement a ticket by its key, the agent recognized it as a Jira ticket, pulled the details through an Atlassian MCP server, made a plan, and explored the code with sub-agents. The presenter also mentions Datadog for performance issues, Linear, tldraw and Excalidraw for diagrams, and a meeting-notes server for turning notes into action items. On setup: "any MCP server that you have locally you should be able to add".
+
+In a talk shared on X, Anthropic engineers [Gagan and Isabella](https://x.com/0xCodez/status/2087225499387142559) build an SRE investigator on Claude Managed Agents. An MCP toolset connects to a dashboard to pull deploys and metrics. The environment limits network access so the only allowed host is that MCP server. Credentials sit in vaults and are decrypted only at tool execution time, so the model never sees the tokens. For servers inside a private network, they describe MCP tunnels, built for teams that wanted to expose MCP servers to their agent without opening them up.
+
+## What to try this week
+
+- List the tools on one MCP server you own. Move any "how to use this" workflow into a prompt with autocompleted arguments.
+- Expose reference data such as schemas as resources instead of tools.
+- Check whether your client supports sampling and roots. If it does, try one server that uses each.
+- Audit third-party servers like dependencies: source, maintainer, and per-tool permissions.
+- Turn off servers an agent does not need and restrict network access to the ones it does.
+- Keep credentials out of the agent's sandbox and inject them at call time.`,
+    sources: [
+      { label: "MCP co-creator (Anthropic), MCP 201 on prompts, resources, sampling, roots and streamable HTTP", url: "https://x.com/0xCodez/status/2088713006095994930" },
+      { label: "David, MCP co-creator, on what MCP is, underused primitives and the roadmap", url: "https://x.com/0xCodez/status/2088263101158146337" },
+      { label: "Claude Code fundamentals workshop (CLAUDE.md, skills, hooks, MCP, subagents)", url: "https://x.com/0xMovez/status/2087943913319375142" },
+      { label: "Cursor cloud agents demo (remote VMs, sub-agents, MCP servers)", url: "https://x.com/0xCodez/status/2098097766505341360" },
+      { label: "Gagan and Isabella (Anthropic), from Messages API to Claude Managed Agents", url: "https://x.com/0xCodez/status/2087225499387142559" },
+    ],
+  },
+  {
+    slug: "2026-10-22-agents-that-run-on-their-own",
+    date: "2026-10-22",
+    lang: "en",
+    title: "Agents that run on their own: goals, loops, routines and triggers",
+    summary: "Five talks shared on X on agents that start without you: /goal, /loop, scheduled routines and event-triggered automations, and how to keep them bounded.",
+    tags: ["ai","agents","automation","developer-tools","x-talks"],
+    body: `Most agent work still starts with you typing a prompt and pressing enter. The tools have moved past that. Claude Code has \`/goal\`, \`/loop\`, \`/schedule\` and routines. Codex has scheduled automations and \`/goal\`. Cursor has Automations that fire on events. This article sorts talks shared on X on these features by one question: what starts the agent, and what stops it.
+
+## Every loop needs three decisions
+
+In a talk shared on X, [Mark from Anthropic](https://x.com/0xMovez/status/2082097290177626563), who works with customers, gives a simple frame. Every loop has a trigger, a limit for when it stalls, and a definition of done. Even a normal prompt is a loop. If you set no finish criteria, you let Claude decide when it is done.
+
+He sorts loops into four kinds:
+
+- Turn-based: an ordinary prompt. You make it shorter with skills that encode what you learned last time.
+- Goal-based: \`/goal\` runs until a check passes or a turn cap is hit.
+- Time-based: \`/loop\` re-runs a prompt on an interval.
+- Proactive: an event or schedule starts the agent, and you do not need to be there.
+
+## Goals need a yes or no check
+
+\`/goal\` works best when done is verifiable. Mark's examples: tests pass, or a tweet is under 250 characters. A goal to build a beautiful design deck runs until Claude thinks it is done. A deck of at least 10 slides that covers five named design principles gives criteria that are each yes or no, so outputs get more consistent.
+
+For work that is hard to measure, he suggests listing what must be true. A report is not checkable, but a rule that every citation links to a real page that supports it is.
+
+His firm advice is to always set an upper bound. In his demo, a goal to get auth tests green had a cap of five turns. Without a cap, a vague goal can run away with your token budget.
+
+In a talk shared on X, [Katia Gil-Guzman from OpenAI's developer experience team](https://x.com/0xMovez/status/2087563129437790518) describes the same pattern in Codex. You give the outcome, the evaluation criteria and the constraints. She says colleagues have run goals for days on complex migrations. She asked Codex to generate an eval set of golden prompts and expected results for a use-case recommender, then set a goal to reach 100% on it. The run reached 100% on twenty prompts in about six minutes.
+
+## Time-based loops: match the interval to what you watch
+
+Mark's \`/loop\` example runs every thirty minutes: check open PRs, merge if CI is green and reviews are in, otherwise report what is blocking. He says to match the interval to the thing you are watching. Too often wastes tokens. Too rarely and the work goes stale.
+
+The catch is that \`/loop\` needs your laptop open. \`/schedule\` moves the loop to the cloud. At Code with Claude London, a Claude Code founding engineer described routines as basically \`/loop\` running remotely, in the same containers as Claude Code on the web. His local example was \`/loop\` every 10 minutes to babysit open PRs. His team's routines include a daily docs job and one that reads issues and feedback every six hours.
+
+Mark adds a habit for cloud loops: have each run post to Slack or send an email, so you notice when it stops.
+
+## Routines: trigger, context, steering
+
+In the same London compilation, [Maya from Anthropic's Applied AI team](https://x.com/0xMovez/status/2073765125958348964) explains why routines exist. Running Claude Code on cron means building your own hosting, triggers, and a way to watch or steer a headless session. Routines run on Claude Code's managed infrastructure and start from a schedule, a GitHub event or a webhook POST whose payload becomes context. Each run is a normal session you can open, follow and steer from the web, CLI or desktop.
+
+She frames a routine as three decisions:
+
+- Trigger: a schedule, or an event like a release cut or a merged PR with a docs label.
+- Context: which repos and connectors it gets. She says what Claude can see is the ceiling on how well it can do.
+- Steering: how you keep it honest.
+
+Her example: weekly PRs on the Claude Code team rose 200% since the new year, and the engineer who owns the docs could not keep up. That engineer set up a weekly routine with \`/schedule\` to compare changes merged to main against the docs repo and open a PR. A second routine fires on new GitHub issues. For quality, she borrows the generator and critic pattern: one routine opens docs PRs, another triggers on that PR and reviews it before a human does. They also render the changed page to verify it.
+
+Her deploy verifier sketch: The CD pipeline posts a webhook after each deploy. The routine gets the service source, monitoring access such as Datadog or Grafana, and a way to alert you. At first it only investigates and gives a go or no-go on rollback. Only as you trust its calls do you let it roll back on its own.
+
+## Event-triggered automations in Cursor
+
+In a webinar shared on X, [Cursor team members](https://x.com/0xCodez/status/2099523119161528649) define an automation as a cloud agent that runs on a schedule or in response to an event. Under the hood it is three things: a trigger, instructions and tools. In the demo, dragging a Jira ticket into an "In progress Cursor" column fires a webhook. A cloud agent then opens a PR with screenshots and a screen recording.
+
+They say 30 to 40% of the PRs their team merges come from someone posting a bug in Slack and writing "@cursor fix it". The idea behind Automations was to skip the mention and start an agent whenever a bug lands in the bug channel. Other uses: PagerDuty triage so the on-call engineer wakes up to a root cause and a PR, and a trigger that fixes broken CI.
+
+Details worth noting:
+
+- Triggers can be filtered by allow lists, channels, keywords or regex. A generic webhook covers anything without a first-party trigger.
+- Local automations are weaker: the editor must be open, and you are mostly limited to cron.
+- The new security risk is who can trigger your automation. If anyone in a Slack channel can start it, think about who is in that channel.
+- Merging stays human: "we don't let any agents from automations merge directly to your repo".
+
+## From skill to trigger
+
+In a talk shared on X, a [Cursor field engineering lead](https://x.com/0xMovez/status/2096612265592021396) describes the path inside Cursor. As skills become canonical, they turn into automations that respond to triggers. When an internal docs agent fails an eval, that event triggers a diagnosis skill. For metrics like build time, a couple of people maintain long-running hill-climbing agents. They give them an end goal and context, and let them run for hours or days. The longest ran about five days.
+
+## Fan-out and model choice
+
+For work one loop cannot hold, Mark describes dynamic workflows: Claude writes a JavaScript script that orchestrates dozens to hundreds of subagents, for audits or large migrations. Intermediate values live in the script, so the main agent gets answers, not piles of research. It burns tokens, so use it sparingly.
+
+On models, he says to route by the task. Simple yes or no checks can start on Sonnet, or try Haiku to save budget. Move up to Opus or Fable only if the loop fails for lack of reasoning. He also warns against treating Claude as a mind reader: "You should think about Claude as a very smart very capable but often unaware coworker".
+
+## What to try this week
+
+- Pick one recurring chore you do by hand. Write down its trigger, its stop limit and its done check before you automate it.
+- Turn one vague task into a \`/goal\` with yes or no criteria and a turn cap.
+- Build a small eval set for a feature, then point a goal at it.
+- Move a laptop \`/loop\` you rely on into a cloud schedule, and make each run post a short note to Slack.
+- Start event-triggered agents in report-only mode. Grant actions like rollback later.
+- Require human review for destructive actions such as deletes or refunds. Mark suggests always having a human reviewer at first, then reducing it.
+- Restrict who can trigger each automation.`,
+    sources: [
+      { label: "Mark (Anthropic) - a guide to Claude Code loops", url: "https://x.com/0xMovez/status/2082097290177626563" },
+      { label: "Code with Claude London workshops - routines and proactive agents", url: "https://x.com/0xMovez/status/2073765125958348964" },
+      { label: "Cursor team - Automations webinar", url: "https://x.com/0xCodez/status/2099523119161528649" },
+      { label: "Katia Gil-Guzman (OpenAI DevEx) - Codex automations and /goal", url: "https://x.com/0xMovez/status/2087563129437790518" },
+      { label: "Cursor field engineering lead - how Cursor uses Cursor", url: "https://x.com/0xMovez/status/2096612265592021396" },
+    ],
+  },
+  {
+    slug: "2026-10-22-agentic-evals-error-analysis",
+    date: "2026-10-22",
+    lang: "en",
+    title: "Building agentic systems the Andrew Ng way: evals and error analysis",
+    summary: "Andrew Ng and Anthropic speakers on agentic design patterns, small quick evals, grader types and the error analysis that tells you what to fix next.",
+    tags: ["ai","agents","evals","llm-engineering","x-talks"],
+    body: `In a talk shared on X, [Andrew Ng walks through his Agentic AI course](https://x.com/0xMovez/status/2075662761149821291) and argues that measuring, not building, separates good teams from slow ones: "the single biggest predictor for whether team executes well lies in its ability to drive a disciplined error analysis process".
+
+This post pulls together that course and a few related talks: which patterns to use, how to start evals, and how to pick what to fix.
+
+## Agentic is a spectrum, not a label
+
+Ng defines an agentic workflow as an LLM app that runs multiple steps, uses tools and iterates, instead of answering in one pass. He treats agentic as a matter of degree, from a hard-coded sequence of steps to an agent that picks its own steps. Many valuable business applications sit at the less autonomous end.
+
+His case for the approach is a coding benchmark his team ran. Wrapping GPT-3.5 in an agentic workflow, for example writing code and then reflecting on it, gave a bigger improvement than the jump from GPT-3.5 to GPT-4.
+
+## Decompose until each step is doable
+
+The core design skill is task decomposition. Split the work into discrete steps and ask of each one: can an LLM or a tool do this? If not, ask how a human would do it and split it further. In his research agent, outline, search and write still gave disjointed essays, so he split writing into draft, critique and revise.
+
+## Four patterns, with honest caveats
+
+Ng names four design patterns: reflection, tool use, planning and multi-agent collaboration. What is useful is how candid he is about each one.
+
+- Reflection: ask the model to critique its own output, or feed it external signals such as error messages from running the code. He says it is not magic, but it can give a nice bump.
+- Tool use: let the model decide which functions to call, from web search to code execution.
+- Planning: the model writes a step-by-step plan and each step is executed in turn. He says it works well in highly agentic coding systems but is harder to control elsewhere, because you do not know at runtime what plan it will produce. Ask for the plan as JSON or XML. He calls markdown slightly more ambiguous to parse and plain text the least reliable.
+- Multi-agent: prompt one LLM per role, like researcher, designer and writer. The common setups are a linear hand-off or a manager agent coordinating the team. He finds all-to-all chat between agents hard to predict.
+
+## Build first, then write small evals
+
+Ng's advice on evals runs against the instinct to design a test suite up front. It is hard to know in advance what will go wrong. So build a quick-and-dirty system, read its outputs, and only then decide what to measure.
+
+His example is a customer email agent that unexpectedly mentions competitors. Once you see it, code that searches outputs for competitor names gives you an objective metric.
+
+He keeps eval sets small to start, around 10 to 20 examples. For an invoice extractor, he hand-labels due dates, has the model output a fixed date format, extracts it with a regex and compares.
+
+He frames eval types as a 2x2 grid:
+
+- Code checks with per-example ground truth, like the invoice due date.
+- Code checks without per-example ground truth, like a 10-word limit on captions.
+- LLM-as-judge with per-example ground truth, like counting how many of three to five gold-standard talking points an essay covers, returned as JSON with a score and an explanation.
+- LLM-as-judge without per-example ground truth, like grading against a rubric.
+
+Two warnings stand out. He says LLMs are not good at 1-to-5 ratings and he tends not to use them. And he sees teams almost paralysed because they think evals are a multi-week project. Start rough, and expect to improve the evals as you improve the system. If you feel a change is better but the eval does not show it, that is a signal to grow or change the eval.
+
+## Error analysis: count, don't guess
+
+When the research agent missed key points, any step could be the cause: the search terms, the search engine, source selection, fetching, or the final LLM ignoring content. Ng says teams often pick one by gut feel, and sometimes spend months with little progress.
+
+His alternative is mechanical:
+
+- Read traces: the intermediate output of every step.
+- Set aside the examples that went well. Focus only on the failures.
+- In a spreadsheet, mark which component underperformed compared with what a human expert would have done given the same input.
+- Do not blame a step for bad input. If every search result was a popular-press article, the source selector did the best it could.
+- Count. In his example, search terms were the problem 5% of the time and search results 45% of the time. That tells you where to work.
+
+He adds one filter: prioritise components where you also have ideas for a fix. For non-LLM components, tune parameters or swap the provider. For LLM steps, improve the prompt, add few-shot examples, try another model, or split the step. Fine-tuning comes last, for mature applications chasing the final few points.
+
+He applies the same method to latency and cost: time and price each step, then optimise only the ones that matter, once output quality is high.
+
+## Writing judges that do not flatter
+
+In a separate module from [an Ng compilation shared on X](https://x.com/0xMovez/status/2074845547588952311), he covers sycophancy. Models are trained toward answers people like, so a leading prompt gets a biased answer. His fixes carry over directly to LLM-as-judge prompts:
+
+- Ask neutral questions that do not hint at the answer you want.
+- Give a rubric with criteria that are clearly yes or no.
+- Ask for a score per category first, then the total. Asking for the total first makes the model jump to a number and justify it.
+
+In his lab example, a vague rubric scored a story 83 out of 100 and an objective rubric scored it 75. He also says having a different model review the output gives only a slight boost, and he uses that technique rarely.
+
+## Graders, from Anthropic's side
+
+An [Anthropic workshop session on evals](https://x.com/0xMovez/status/2089456515975426297) maps grader types in a way that complements Ng's grid. Code-based graders are like unit tests: fast, cheap and deterministic, but brittle and lacking nuance. Model-based graders include rubric scoring, pairwise comparison, which the presenter calls underrated, and multi-judge consensus, such as three judges with majority vote. They are flexible but non-deterministic, cost money and need calibration. Human graders are the highest quality and also slow and expensive.
+
+The presenter adds that public benchmarks say little about your use case. Without your own evals you wait for customer feedback and cannot tell whether a prompt tweak broke something else.
+
+## Evals make models swappable
+
+Several speakers tie evals to model choice. In [a talk on AI trends](https://x.com/0xMovez/status/2077775697917943951), Ng says he architects workloads so that when a new model appears, his team runs evals and can switch in two or three days.
+
+[Boris, creator of Claude Code](https://x.com/0xMovez/status/2082499439038537753), draws the line on when to bother. For a workflow you will run thousands or millions of times, you want evals so you can swap a new model into the harness and check it improves. For product feel, vibes go far, because "there's a cost to writing evals you don't want write it for everything".
+
+[An Anthropic educator](https://x.com/0xCodez/status/2084289028346532220) gives the order of operations: prompt engineering first, then RAG, then fine-tuning, with evals at each step. He warns that fine-tuning can make a model worse and cannot be undone. Without a way to measure, he says, "prompt engineering and this entire ecosystem just kind of becomes an art not a science".
+
+## What to try this week
+
+- Run your agent on 10 to 20 real inputs and read every output and trace before writing any eval.
+- Write one code-based check for the most common failure you saw.
+- Put failing examples in a spreadsheet with one column per component, and count.
+- Swap any 1-to-5 judge prompt for a yes/no rubric scored per criterion.
+- Time and price each step of one workflow.
+- Make the model a config value so an eval run can decide the next upgrade.`,
+    sources: [
+      { label: "Andrew Ng - Agentic AI course (design patterns, evals, error analysis)", url: "https://x.com/0xMovez/status/2075662761149821291" },
+      { label: "Andrew Ng compilation - agentic AI, prompting and rubrics", url: "https://x.com/0xMovez/status/2074845547588952311" },
+      { label: "Andrew Ng - agentic workflows and five AI trends", url: "https://x.com/0xMovez/status/2077775697917943951" },
+      { label: "Anthropic workshop sessions - evals and grader types", url: "https://x.com/0xMovez/status/2089456515975426297" },
+      { label: "Boris (Claude Code) with AMD's Mark - evals vs vibes", url: "https://x.com/0xMovez/status/2082499439038537753" },
+      { label: "Anthropic educator - building with Claude, evals before fine-tuning", url: "https://x.com/0xCodez/status/2084289028346532220" },
     ],
   },
 ];
