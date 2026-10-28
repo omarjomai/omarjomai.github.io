@@ -4113,6 +4113,89 @@ Several speakers tie evals to model choice. In [a talk on AI trends](https://x.c
       { label: "Anthropic educator - building with Claude, evals before fine-tuning", url: "https://x.com/0xCodez/status/2084289028346532220" },
     ],
   },
+  {
+    slug: "2026-10-26-week-43",
+    date: "2026-10-26",
+    lang: "en",
+    title: "Week 43: patch PHP and Node, and agents get a new rulebook",
+    tags: weeklyTags,
+    summary: "PHP2Shell and the Node.js security releases, Claude API version 2026-10-21 with breaking changes, Agent Skills moves to the Linux Foundation, TypeScript 7.1 beta, React Native 0.88 and what AI is doing to mobile and team budgets.",
+    body: `Two security fixes to apply now, one API upgrade to plan, and a clear signal about where agent tooling is going.
+
+## 1. Patch first: PHP2Shell, Node.js and React
+
+On October 21, PHP released 8.5.12, 8.4.27, 8.3.36 and 8.2.35. They fix PHP2Shell, two critical remote code execution flaws (CVE-2026-109618 and CVE-2026-109619) in the PHP engine itself, found with AI help and reported in August. PHP says every installation that serves web requests is at risk, with mod_php the worst case: one unauthenticated request can trigger the attack before any application code runs. Amazon saw an exploit attempt on a honeypot four days before the fix, and by October 23 it reported broad attempts in the wild. On October 23, PHP also advised setting \`session.upload_progress.enabled=0\` until the next release.
+
+The same day, Node.js shipped 26.12.1, 24.22.1 and 22.23.4. The HIGH fixes cover TLS checks on non-canonical IP addresses, null bytes in DNS resolve inputs, and an out-of-bounds write in the Brotli decoder (CVE-2026-111497), credited to OpenAI's Codex Security researchers.
+
+And if you skipped last week: the React Server Components RCE (CVSS 9.5) is fixed in React 19.3.1, with backports 19.0.9, 19.1.10 and 19.2.9. In Next.js, take 16.4.1 or 15.5.28.
+
+My take: the gap between "an AI found a bug" and "attackers are trying it" is now days. Treat runtime patches like an incident with an owner and a deadline, not a ticket for next sprint.
+
+## 2. Claude API version 2026-10-21: the first new version since 2023
+
+Anthropic released API version \`2026-10-21\`. Version \`2023-06-01\` is not deprecated, but new major SDKs default to the new one: \`@anthropic-ai/sdk\` 1.0.0, Python \`anthropic\` 2.0.0, Go v2 and the \`ant\` CLI 2.0.0. The most visible breaking change: the sampling parameters \`temperature\`, \`top_p\` and \`top_k\` are removed from the Messages API.
+
+If your code sets \`temperature: 0\` to get stable output, that line has to go when you bump the SDK. Pin the SDK major version in \`package.json\` today, and upgrade on purpose with the migration guide open. A blind \`npm update\` won't do it for you, but a fresh install or a bot PR might.
+
+## 3. Agent Skills gets a neutral home
+
+On October 22, Anthropic donated Agent Skills to the Agentic AI Foundation under the Linux Foundation, the same home as MCP. A skill is a folder with a \`SKILL.md\` file that teaches an agent a task, plus any scripts or references it needs. Anthropic says more than 70 platforms adopted the standard since December 2025, including ChatGPT, Cursor, GitHub Copilot and VS Code. Maintainers come from Anthropic, Google, OpenAI and others.
+
+Why it matters for a team lead: the knowledge you write down for agents (how to run the tests, how to release, which folder owns what) is becoming a portable format, not a vendor feature. Writing it once now pays off across tools.
+
+## Mobile
+
+- React Native 0.88 shipped on October 19: web-based event dispatching by default, variable fonts in \`Text\` and \`TextInput\`, \`SceneDelegate\` on iOS, React 19.3. It's the third release in a row with no user-facing breaking changes.
+- Expo SDK 58 is out, ready for iOS 27 and the folding iPhone Duo.
+- Safari 27.1 shipped with iPhone Duo on October 23. A responsive layout adapts without changes, and the Device Posture and Viewport Segments APIs are behind flags for now.
+
+## Also worth knowing
+
+- TypeScript 7.1 beta (October 20): a new TypeScript API that lets tools like typescript-eslint work with TS 7, typed import attributes, content mappers for Vue, Svelte, Astro and MDX, and stricter conditional types. Microsoft's mui-docs check went from 22.2 s to 11.9 s.
+- tsrs, a Rust port of the TypeScript 7 checker, is now backed by Cloudflare and VoidZero under the Oxc umbrella, working with the TypeScript team.
+- DuckDB 2.0 LTS (October 21) adds a server mode and a new file format. Files written by 2.0 can't be opened by older versions, so test on a copy.
+- OpenAI's GPT-6 models entered private preview on Google Cloud, and the full Claude Platform became generally available on Google Cloud through Anthropic.
+- Anthropic opened a research preview of Claude Duet, a proactive agent app, for Pro and Max users in the US.
+- OpenAI will require approval for model routers and AI gateways that resell its models, effective November 20.
+- shadcn/ui added AI Elements, 21 copy-paste patterns for agent UIs. React Router 8.5 now recommends React 19.3's \`<ViewTransition>\`.
+
+## From my reading list
+
+- The Pragmatic Engineer asked 27 companies what they spend on AI per engineer. Spending caps are common, company size doesn't predict spend, and CodeRabbit's data shows weekly PRs about doubling in a year. Few teams can say what the return is yet. If you lead a team, start measuring before someone asks you.
+- ByteByteGo on Shopify leaving React Native: agents made writing the same feature in Swift and Kotlin cheap enough that the cross-platform savings no longer justified the trade-offs. Re-check your old architecture decisions against today's costs.
+- ByteByteGo on prompt caching vs semantic caching: put the shared, stable part of the prompt first so the provider cache can reuse it, and be careful with semantic caches, because two similar questions can need different answers.
+- Bytes counted four ports of the TypeScript compiler in a few weeks. The reason is real: TS 7's Go binary broke tools that called the old JavaScript API. 7.1's new API is the official answer.
+
+## What I'm watching this week
+
+- How fast PHP hosts and WordPress providers roll out the fixes, and whether exploitation spreads.
+- SDK upgrades to Claude API \`2026-10-21\` breaking builds that set \`temperature\`.
+- The TypeScript 7.1 release candidate, expected in about a month.
+
+Which of these patches did you have to apply? Write to me, I read every reply.`,
+    sources: [
+      { label: "PHP security advisory, October 21, 2026", url: "https://www.php.net/" },
+      { label: "Wiz, PHP2Shell: AI uncovers critical RCE vulnerabilities", url: "https://www.wiz.io/blog/php2shell-php-rce" },
+      { label: "Node.js, October 21, 2026 security releases", url: "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+      { label: "Node.js 24.22.1 (LTS) release notes", url: "https://nodejs.org/en/blog/release/v24.22.1" },
+      { label: "React advisory GHSA-xqc2-xf4c-x3h3", url: "https://github.com/react/react/security/advisories/GHSA-xqc2-xf4c-x3h3" },
+      { label: "Claude Platform, Migrating to API version 2026-10-21", url: "https://platform.claude.com/docs/en/api/migration-2026-10-21" },
+      { label: "Anthropic, Donating Agent Skills to the Agentic AI Foundation", url: "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation" },
+      { label: "React Native blog, React Native 0.88", url: "https://reactnative.dev/blog" },
+      { label: "Expo changelog, Expo SDK 58", url: "https://expo.dev/changelog" },
+      { label: "TypeScript, Announcing TypeScript 7.1 Beta", url: "https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/" },
+      { label: "DuckDB, Announcing DuckDB 2.0.0 LTS", url: "https://duckdb.org/2026/10/21/announcing-duckdb-200.html" },
+      { label: "9to5AI, The Week in AI #5", url: "https://9to5ai.tech/the-week-in-ai-5" },
+      { label: "Retro AI Tracker, week of Oct 19–25, 2026", url: "https://retroaitracker.com/news/week/2026-W43" },
+      { label: "Dev Weekly, Oct 19–25, 2026", url: "https://singhajit.com/dev-weekly/2026/oct-19-25/php-rce-duckdb-2-typescript-71-safari-271/" },
+      { label: "This Week In React #302", url: "https://thisweekinreact.com/newsletter/302" },
+      { label: "The Pragmatic Engineer, What's the ROI of software engineers' spending on AI?", url: "https://newsletter.pragmaticengineer.com/p/whats-the-roi-of-software-engineers" },
+      { label: "ByteByteGo, Why Shopify Migrated From React Native", url: "https://blog.bytebytego.com/p/why-shopify-migrated-from-react-native" },
+      { label: "ByteByteGo, LLM Prompt Caching Versus Semantic Caching", url: "https://blog.bytebytego.com/p/llm-prompt-caching-versus-semantic" },
+      { label: "Bytes #531, A TypeScript Compiler Journey from Hell", url: "https://bytes.dev/archives/531" }
+    ],
+  },
 ];
 
 /** Newest first. */
