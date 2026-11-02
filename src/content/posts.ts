@@ -4196,6 +4196,90 @@ Which of these patches did you have to apply? Write to me, I read every reply.`,
       { label: "Bytes #531, A TypeScript Compiler Journey from Hell", url: "https://bytes.dev/archives/531" }
     ],
   },
+  {
+    slug: "2026-11-02-week-44",
+    date: "2026-11-02",
+    lang: "en",
+    title: "Week 44: secrets leak through dev tools, and Node 26 goes LTS",
+    tags: weeklyTags,
+    summary: "A fake Claude Code extension on Cursor's marketplace and the Northflank breach put developer secrets at risk, Node.js 26 becomes LTS and Node 27 alpha starts a yearly cycle, GitHub Universe ships agents that fix pull requests, and GPT-6.1 Terra, Gemini 4 Carbon and open-weight Mistral Large 4 arrive.",
+    body: `Two incidents to check against your own machines and servers, one runtime upgrade to plan, and a busy week for coding agents and models.
+
+## 1. Check your secrets: a fake extension and a hosting breach
+
+On October 29, a modified version of Anthropic's Claude Code extension (versions 2.1.312 and 2.1.313, Windows and macOS) was served by the Cursor VS Code Extension Marketplace between about 2:27am and 1:35pm PT. Anthropic did not build it. Cursor says it sent host details home (hostname, username, public IP, Git email and the names of environment variables), tried to add an attacker's SSH key to \`authorized_keys\`, opened a reverse SSH tunnel and installed persistence through a LaunchAgent or a scheduled task. Cursor removed it, rebuilt the marketplace and had the attacker's server taken offline. Its advice: run the check script, remove the key and the persistence scripts, and do not count on uninstalling the extension, because the scripts keep running.
+
+On October 30, the hosting platform Northflank told customers to assume every environment variable it stored had been decrypted, and to rotate all keys. Customers then reported someone else using the AI API keys they had stored there.
+
+My take: the target this week was the developer's own setup, the editor, the extension store and the secret store of the hosting platform. Treat AI API keys like production passwords. Give each project its own key, set spend alerts with the provider, and keep a short list of where every key lives so you can rotate them all in an hour.
+
+## 2. Node.js 26 is LTS, and Node 27 starts a yearly cycle
+
+Node.js 26 (codename Lithium) became LTS on October 28 with 26.13.0. It stays supported until April 30, 2029. Node 24 moved to maintenance on October 20, and Node 22 reaches end of life on April 30, 2027.
+
+The next day, the first Node.js 27 alpha came out. From 27 on, Node ships one major release a year: alpha from October, Current from April, LTS in October, then 30 months of LTS. Every release line becomes LTS, so the odd/even rule is gone. The alpha brings V8 15.6 and requires OpenSSL 3 or later. Two changes to test early: when \`--max-old-space-size\` is not set, the default heap limit is now half of physical memory (between 256 MB and 4 GB), and \`Buffer\` memory now counts toward it. Also, \`structuredClone()\` and \`postMessage()\` use a new format that older Node versions can't read.
+
+If you run Node 22 in production, plan the move to 26 now rather than in April. If you run memory-tight containers, set \`--max-old-space-size\` yourself so the new default can't surprise you later.
+
+## 3. GitHub Universe: agents that fix the pull request, and new models
+
+At GitHub Universe on October 28, Agent Merge came to pull requests on github.com. You pick "Watch and fix" in the merge box, and Copilot fixes failing Actions workflows or merge conflicts in a cloud environment. It needs a paid Copilot plan. AI Scan for repositories entered public preview: an agent scans the whole repository within a fixed time budget, skips what CodeQL already reports, and works on public repos without a Copilot license. Copilot Fusion is generally available too. It picks and combines models per task, with Standard, High and Max effort levels.
+
+The model news was just as busy. OpenAI released GPT-6.1 Terra, aimed at computer use and visual reasoning, with standard API prices 50% lower than GPT-5.6 Terra and GPT-6.1 Sol. Google announced Gemini 4 Carbon on October 28, first on the Artificial Analysis Intelligence Index v5 at 59, but only for a group of cyber defenders for now; its launch price is $2 per million input tokens and $10 per million output tokens. Mistral released the weights of Mistral Large 4, a 1 trillion parameter model, on October 29, and cut its API price to $0.70 per million input tokens.
+
+My take: before you turn on an agent that pushes to your branches, write down what it may touch and what it may not. Agent Merge only handles two named blockers, and that kind of narrow scope is a good default for any agent you let act alone.
+
+## Mobile
+
+- Android Studio Rabbit 2 (October 28) makes Bring Your Own Agent stable: more than 40 coding agents that speak the Agent Client Protocol run inside the IDE, with access to the project structure, Compose Preview, the Emulator and Logcat.
+- Apple Intelligence is coming to iPhones in mainland China, with Alibaba's Qwen powering some features in Siri, Writing Tools and Visual Intelligence. Developers can test it in the iOS beta from November 4, and users get it with iOS 27.3 in December.
+
+## Also worth knowing
+
+- Anthropic filed its S-1 with the SEC on October 26 to list on Nasdaq under the symbol ANT. Share count and price range are not set yet.
+- Anthropic's Frontier Red Team showed an unreleased internal model building exploit chains against Chrome, Safari and Linux. All were reported under a 90 day disclosure policy, and 62 Chrome CVEs are patched as of Chrome 156. Keep browsers on auto update.
+- GitHub Copilot Fusion Max scored 60 on the Artificial Analysis Coding Agent Index, within two points of Claude Code with Opus 5.5 Max, at about half the average API cost per task, GitHub says.
+- OpenSSL 4.1.0 shipped with DTLS 1.3.
+- Mistral Large 4 scores 48% on the Artificial Analysis Coding Agent Index, which Mistral describes as tied with the leading open-weight model.
+
+## From my reading list
+
+- The Pragmatic Engineer looked at AI SRE tools from Rootly, incident.io and ResolveAI, and at OpenAI's in-house bot Sevbot. The useful part is the reliability math: incident rate equals change rate times the chance that a change breaks something. AI agents raise the change rate, so the second number has to come down through testing, smaller deploys and quick rollbacks.
+- Tech World With Milan interviewed Itamar Gilad, who led parts of Gmail: at most one in three ideas has any measurable effect, and most teams never find out which ones because they don't measure after launch. Cheap AI coding makes this worse, not better. Decide how you'll measure a feature before you build it.
+- ByteByteGo on Uber's MCP Gateway: a registry (the control plane, where tools are listed, configured and switched on or off) and a proxy gateway (the data plane, which routes each agent call and checks permissions). If several teams in your company build agents, one shared tool registry beats every team wiring its own.
+- Refactoring on how AI changes engineering management: some companies say they need fewer managers, but the job of setting the quality bar and growing people hasn't moved. AI takes the status reports and glue work, and adds more review.
+
+## What I'm watching this week
+
+- Whether more editor marketplaces add signing checks after the Cursor incident.
+- The Apple Intelligence developer beta for China on November 4.
+- Early Node 27 alpha reports on the new heap default.
+
+Which of these did you have to act on this week: the extension, a key rotation or the Node upgrade? Write to me, I read every reply.`,
+    sources: [
+      { label: "Cursor, Security notice: malicious version of Anthropic.claude-code", url: "https://cursor.com/blog/claude-code-extension-security-notice" },
+      { label: "BleepingComputer, Northflank security breach leads to abuse of customers' AI API keys", url: "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/" },
+      { label: "Node.js previous releases (v26 LTS, v27 alpha)", url: "https://nodejs.org/en/about/previous-releases" },
+      { label: "Node.js, Evolving the Node.js Release Schedule", url: "https://nodejs.org/en/blog/announcements/evolving-the-nodejs-release-schedule" },
+      { label: "Node.js 27.0.0-alpha release notes", url: "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0" },
+      { label: "GitHub Changelog, Agent Merge watches and fixes pull requests in the cloud", url: "https://github.blog/changelog/2026-10-28-agent-merge-watches-and-fixes-pull-requests-in-the-cloud" },
+      { label: "GitHub Changelog, AI Scan for repositories in public preview", url: "https://github.blog/changelog/2026-10-28-ai-scan-for-repositories-in-public-preview" },
+      { label: "GitHub Changelog, Route and orchestrate models with GitHub Copilot Fusion", url: "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion" },
+      { label: "OpenAI, Introducing GPT-6.1 Terra", url: "https://openai.com/index/introducing-gpt-6-1-terra/" },
+      { label: "Google, Introducing Gemini 4 Carbon", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/" },
+      { label: "Mistral, Mistral Large 4 is now open weight", url: "https://mistral.ai/news/mistral-large-4-oss" },
+      { label: "Anthropic, Anthropic files S-1 with the SEC", url: "https://www.anthropic.com/news/s1-sec" },
+      { label: "Anthropic, Discovering and exploiting vulnerabilities with Claude", url: "https://www.anthropic.com/research/discovering-vulnerabilities-with-claude" },
+      { label: "Android Developers Blog, Android developer tools at Android Dev Summit", url: "https://developer.android.com/blog/posts/android-dev-summit-26-developer-tools-performance" },
+      { label: "JARRUS, Apple Intelligence is coming to China in December", url: "https://thejarrus.com/en/news/apple-intelligence-china/" },
+      { label: "Tech AI Wire, Tools This Week, October 30, 2026", url: "https://techaiwire.com/articles/tools-this-week-october-30-2026-copilot-fusion-node-js-27/" },
+      { label: "AI News Briefing, week of October 26 to November 1, 2026", url: "https://talkingfingers.net/news/weekly-2026-11-01/" },
+      { label: "The Pragmatic Engineer, AI SRE: what is it, and does it work?", url: "https://newsletter.pragmaticengineer.com/p/ai-sre" },
+      { label: "Tech World With Milan, Why most of what you build creates no value", url: "https://newsletter.techworld-with-milan.com/p/why-most-of-what-you-build-creates" },
+      { label: "ByteByteGo, How Uber built a gateway for AI agents to access tools", url: "https://blog.bytebytego.com/p/how-uber-built-a-gateway-for-ai-agents" },
+      { label: "Refactoring, How AI is changing engineering management", url: "https://refactoring.fm/p/how-ai-is-changing-engineering-management" },
+    ],
+  },
 ];
 
 /** Newest first. */
