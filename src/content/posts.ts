@@ -4280,6 +4280,105 @@ Which of these did you have to act on this week: the extension, a key rotation o
       { label: "Refactoring, How AI is changing engineering management", url: "https://refactoring.fm/p/how-ai-is-changing-engineering-management" },
     ],
   },
+  {
+    slug: "2026-11-09-week-45",
+    date: "2026-11-09",
+    lang: "en",
+    title: "Week 45: patch Next.js and OpenSSH, and AI starts finding bugs faster than we fix them",
+    tags: weeklyTags,
+    summary: "Next.js 16.4.5 and 15.5.29 fix seven cache bugs and OpenSSH 10.6p2 fixes a password bypass on Alpine, OpenAI's GPT-6 Cyber finds bugs at a new pace, Gemini 2.5 models get silently rerouted from December 1, Claude's API adds message threads, and the engineering newsletters agree that everything around the code is now the slow part.",
+    body: `A heavy patch week, a cyber model that found 81 Firefox bugs, and two API changes that can quietly change how your app behaves next month.
+
+## 1. Patch week: Next.js, OpenSSH, and Node.js on November 11
+
+Next.js shipped its November security release on November 3: 16.4.5 for the 16 line and 15.5.29 for 15.5. Most of the seven advisories are about \`use cache\` and Cache Components. The one rated High is a cross-tenant cache leak when the same \`use cache\` function is called directly and through \`unstable_cache()\`. Others cover binary arguments such as a \`Blob\` collapsing to the same cache key and mixing two users, a poisoned fallback shell in self-hosted apps, HttpOnly cookie values exposed through an internal header on Edge routes, and an SVG bypass in Image Optimization.
+
+On November 5, OpenSSH released 10.6p2 for CVE-2026-123158, nicknamed *sshole. On Linux systems that use musl libc without PAM, which includes Alpine's default sshd, a password login could succeed for an account that should not accept one. Alpine published fixed packages for every branch the same day, for example \`10.6_p2-r0\` on edge and \`10.3_p1-r2\` on 3.24.
+
+Node.js announced on November 3 that security releases for 26.x, 24.x and 22.x land on or shortly after November 11, each with a High issue. No CVEs or versions yet. If you skipped the October 21 builds (26.12.1, 24.22.1, 22.23.4), you are still open to the Brotli decoder flaw CVE-2026-111497, which CISA lists as exploited.
+
+My take: the Next.js bugs live in caching features many of us adopted this year. After you bump the version, grep for \`use cache\` and \`unstable_cache\` and check what each cached function reads from the request, like the tenant, the locale or the user. If the answer is "something per user", that function should not be shared. And look at your Docker base images: an \`alpine\` image with sshd in it needs a rebuild, not just a host update.
+
+## 2. GPT-6 Cyber and the new pace of vulnerability research
+
+OpenAI released GPT-6 Cyber on November 5. It is a model trained to find and validate exploitable bugs while staying inside the scope a researcher sets. OpenAI says it found 81 previously unknown high-severity vulnerabilities in Firefox, developed working exploits for 948 Linux kernel vulnerabilities, and helped build the exploit demonstration for the Brotli flaw that Node.js patched in October. On ExploitGym it scores 48.5%, up from 32.1% for GPT-5.6 Cyber. OpenAI rates it Critical for cybersecurity under its Preparedness Framework, so access is limited to approved Daybreak Red customers through the API and Codex.
+
+The same week Chrome 157 reached stable (November 3) with 213 security fixes, seven of them Critical, and Android's November bulletin fixed 216 issues.
+
+My take: these numbers mean more patch releases, more often, for the tools we depend on. That makes your update path the thing to fix. Pin exact versions, let Renovate or Dependabot open the pull requests, and keep a test suite fast enough that a security bump can merge the same day. A team that needs a week to ship a dependency update is going to be behind most of the time.
+
+## 3. Two API changes to put in the calendar
+
+Google deprecated \`gemini-2.5-pro\` and \`gemini-2.5-flash\` on November 2. From December 1, requests to \`gemini-2.5-pro\` are routed automatically to \`gemini-3.8-flash\`, and \`gemini-2.5-flash\` goes to \`gemini-3.5-flash-lite\`, billed at the new model's rates. Your code keeps working, but on a different model. Google lists breaking changes in the migration guide: function calling and \`thought_signature\` validation, \`thinking_level\` replacing \`thinking_budget\`, and removed sampling parameters and prefilled model turns.
+
+Anthropic put message threads into public beta on the Messages API on November 2. The first request sends the full conversation and starts a thread. After that you send only the new messages and the previous response ID. Anthropic says requests with 500k to 1M tokens see median time to first token drop by about 35% in Claude Code. A thread expires 5 minutes after its last request, and token usage stays the same because Claude still reads the whole conversation.
+
+My take: a silent model swap is the worst kind of change, because nothing fails and the answers just get different. Grep your repos and your environment variables for \`gemini-2.5\` this week, then run a few real prompts against the replacement before December 1. If you build long-running agents on Claude, threads look like an easy latency win, but your client still needs the fallback path that resends everything once a thread expires.
+
+## Mobile
+
+- Android's November security bulletin (November 2) lists 216 fixes, 23 of them Critical. The worst, CVE-2026-58868 in Framework, allows remote code execution with no user interaction on Android 14 to 17. Patch level 2026-11-05 covers the whole bulletin.
+- The 27.3 betas started on November 3, and TestFlight accepts builds from Xcode 27.3 beta. Safari 27.3 beta adds Adaptive Dark Mode, which recolors light-only sites when the user is in dark mode. Sites that declare \`color-scheme: light dark\` in CSS or the matching meta tag are left alone, so test your web views and landing pages.
+- The first React Native 0.89 release candidate came out on November 4, with a lot of performance work.
+
+## Also worth knowing
+
+- GitHub Actions will block \`pull_request_target\` by default in public repositories from December 2. Two brownouts, November 9 and November 16 from 16:00 to 18:00 UTC, fail those runs for real. Check the Insights view now.
+- undici 7.30.2 and 8.12.4 (November 5) fix a High cache poisoning bug when \`compose(redirect(), cache())\` runs on an originless Agent with a shared cache.
+- Chrome 157 ships HTML-in-Canvas as stable, and Background Fetch now enforces CORS like a normal fetch.
+- Rails 8.0.5.2 and 8.1.4.1 (November 4) fix 21 security issues, and Rails 8.0 security support ended on November 7.
+- OpenAI released Images 2.6 on November 4, which it says is 50% faster and can create GIFs.
+- Anthropic launched Personal Finance in beta for US Pro, Max and Ultra users on November 5. It reads linked accounts through Plaid and can't move money.
+- Bloomberg reported on November 6 that OpenAI has raised $11 billion of a new round at a $1.25 trillion valuation.
+
+## From my reading list
+
+The engineering newsletters this week kept circling one theme: AI made writing code cheap, and now everything around the code is the slow part.
+
+- ByteByteGo on Anthropic's source control. Anthropic says merged changes grew from about 2,500 a day in May to more than 30,000 a day by September, with roughly 25 million CI checkouts a day. Plain Git clones did not fit a world where most clients are always-online agents, so they built their own system, Scion. The lesson for the rest of us is smaller but real: when agents open the pull requests, your CI, checkouts and caches become the bottleneck, so measure them before you add more agents.
+- ByteByteGo on Netflix's performance agents. Netflix built agents that read profiler output and propose fixes, because AI-written code tends to compile, pass unit tests and still waste CPU on hot paths it cannot see. The practice to copy: keep a performance check in the loop, not just correctness tests, for code that runs on every request.
+- The Pragmatic Engineer, "a tale of two eras". The winning essay of its reader challenge compares one engineer's output before and after joining an AI-native startup: about 11 times more pull requests, but new costs like context switching, lost shared context and less time spent on design. Faster output does not remove the need for design time. It makes it easier to skip.
+- Refactoring, process changes as migrations. It recaps a talk that treats moving a team from manual gates to CI/CD to agent workflows like a code migration: understand why people work the current way, get the strongest skeptics on board first, draw a clear line once you decide, and keep fixing the long tail. Same issue: share agent skills in tiers (personal, per repo, per organization) so a few power users' gains reach the whole team.
+- Engineering Leadership on a tech lead at Adobe. The point that stuck: the technical part is only part of the role. The rest is turning vague requests into clear structure before engineers start, and asking the awkward question early. With AI doing more of the typing, that part of the job grows.
+
+## What I'm watching this week
+
+- The Node.js security release due November 11, and which modules it touches.
+- The second GitHub Actions brownout on November 16.
+- Claude Fable 5.2, which Anthropic released on November 9, just after this window, at $8 per million input tokens and $40 per million output tokens.
+
+Which one cost you the most time this week: the Next.js bump, an Alpine image rebuild, or finding every \`gemini-2.5\` string? Write to me, I read every reply.`,
+    sources: [
+      { label: "Next.js, November 2026 Security Release", url: "https://nextjs.org/blog/november-2026-security-release" },
+      { label: "Netlify, Next.js security release (Nov 2026)", url: "https://www.netlify.com/changelog/2026-11-03-nextjs-security-vulnerabilities/" },
+      { label: "OpenSSH release notes, 10.6p2", url: "https://www.openssh.org/releasenotes.html#10.6p2" },
+      { label: "Orca Security, *sshole OpenSSH authentication bypass on Alpine Linux", url: "https://orca.security/resources/research/sshole-openssh-authentication-bypass-gives-attackers-root-on-alpine-linux/" },
+      { label: "Node.js, Wednesday, November 11, 2026 Security Releases", url: "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases" },
+      { label: "OpenAI, GPT-6 Cyber", url: "https://openai.com/index/introducing-gpt-6-cyber" },
+      { label: "Chrome Releases, November 2026", url: "https://chromereleases.googleblog.com/2026/11/" },
+      { label: "Gemini API release notes", url: "https://aistudio.google.com/docs/changelog" },
+      { label: "Gemini API deprecations", url: "https://aistudio.google.com/docs/deprecations" },
+      { label: "Claude, Make long-running agents faster with message threads", url: "https://claude.com/resources/articles/message-threads" },
+      { label: "Claude Platform release notes", url: "https://platform.claude.com/docs/en/release-notes/overview" },
+      { label: "Android Security Bulletin, November 2026", url: "https://source.android.com/docs/security/bulletin/2026/2026-11-01" },
+      { label: "App Store Connect release notes", url: "https://developer.apple.com/help/app-store-connect/release-notes" },
+      { label: "WebKit, Introducing Adaptive Dark Mode", url: "https://webkit.org/blog/18541/introducing-adaptive-dark-mode" },
+      { label: "React Native releases overview", url: "https://reactnative.dev/releases/overview" },
+      { label: "GitHub Changelog, pull_request_target blocked by default December 2", url: "https://github.blog/changelog/2026-11-02-pull_request_target-blocked-by-default-december-2" },
+      { label: "undici advisory GHSA-mqg3-3v4r-cm32", url: "https://github.com/nodejs/undici/security/advisories/GHSA-mqg3-3v4r-cm32" },
+      { label: "Rails 8.0.5.2 and 8.1.4.1 released", url: "https://rubyonrails.org/2026/11/4/Rails-8.0.5.2-and-8.1.4.1-have-been-released" },
+      { label: "OpenAI, Introducing Images 2.6", url: "https://openai.com/index/introducing-images-2-6/" },
+      { label: "Claude, Introducing Personal Finance in Claude", url: "https://claude.com/resources/articles/introducing-personal-finance-in-claude" },
+      { label: "TechCrunch, OpenAI reportedly raises an additional $11 billion at a $1.25 trillion valuation", url: "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation" },
+      { label: "This Week In React #304", url: "https://thisweekinreact.com/newsletter/304" },
+      { label: "ByteByteGo, How Anthropic Redesigned Source Control", url: "https://blog.bytebytego.com/p/how-anthropic-redesigned-source-control" },
+      { label: "ByteByteGo, How Netflix Uses AI Agents for Performance Engineering", url: "https://blog.bytebytego.com/p/how-netflix-uses-ai-agents-for-performance" },
+      { label: "The Pragmatic Engineer, How software engineering is changing: a tale of two eras", url: "https://newsletter.pragmaticengineer.com/p/how-software-engineering-is-changing" },
+      { label: "Refactoring, Process migrations, shared skills, and weekly readings", url: "https://refactoring.fm/p/process-migrations-shared-skills" },
+      { label: "Engineering Leadership, How Adobe's Tech Lead Works and Uses AI", url: "https://newsletter.eng-leadership.com/p/how-adobes-tech-lead-works-and-uses" },
+      { label: "Dev Weekly Nov 2-8, 2026 (Ajit Singh)", url: "https://singhajit.com/dev-weekly/2026/nov-2-8/mariadb-2027-chrome-157-alloydb-express-gpt-6-cyber/" }
+    ],
+  },
 ];
 
 /** Newest first. */
