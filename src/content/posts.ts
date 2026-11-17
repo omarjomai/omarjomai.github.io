@@ -4379,6 +4379,114 @@ Which one cost you the most time this week: the Next.js bump, an Alpine image re
       { label: "Dev Weekly Nov 2-8, 2026 (Ajit Singh)", url: "https://singhajit.com/dev-weekly/2026/nov-2-8/mariadb-2027-chrome-157-alloydb-express-gpt-6-cyber/" }
     ],
   },
+  {
+    slug: "2026-11-16-week-46",
+    date: "2026-11-16",
+    lang: "en",
+    title: "Week 46: patch Node.js, Apache and Chrome, and your CI secrets are the new target",
+    tags: weeklyTags,
+    summary: "Node.js, Apache httpd and Chrome security releases to install now, the wfx-loot campaign stealing CI secrets from GitHub repositories and Cursor's incident report, Fable 5.2 and Gemini 4 Carbon cutting top-tier prices, plus a reading list on AI code review and AI spend.",
+    body: `Three security releases you should install this week, a CI attack that hit thousands of GitHub repositories, and a price cut at the top of the model market from both Anthropic and Google.
+
+## 1. Patch week: Node.js, Apache httpd and Chrome
+
+Node.js shipped the security releases it announced last week on November 11: 22.23.5, 24.22.3 and 26.13.1. Most of the High issues are in HTTP/2 and TLS. CVE-2026-123864 lets an unauthenticated client read memory from other connections, including TLS private keys, on HTTPS servers whose handler calls \`res.flushHeaders()\` before the request body ends. Plain \`node:http\` is not affected. CVE-2026-123863 and CVE-2026-126051 let a remote client crash the process: the first through HTTP/2 session teardown, the second on TLS servers that use \`SNICallback\`, \`OCSPRequest\`, session hooks or \`server.addContext()\`. The releases also update llhttp, undici and sqlite.
+
+Apache HTTP Server 2.4.71 came out the same day and fixes CVE-2026-119618, a critical race condition in mod_http2 that can lead to remote code execution. It affects httpd 2.4.55 through 2.4.70 and standalone mod_h2 2.0.8 through 2.0.42. Only servers with \`h2\` or \`h2c\` in the \`Protocols\` directive are exposed. Red Hat shipped fixed \`mod_http2\` packages for RHEL 9 and 10, and RHEL 8 and older don't have the vulnerable code.
+
+On November 9 Google patched CVE-2026-125350, a use-after-free in Chrome's XML component with an exploit in the wild. It is the eighth exploited Chrome zero-day of 2026. The fix is in 157.0.8103.50/.51, and newer builds (157.0.8103.78) followed on November 11 for desktop and Android. CISA gave US federal agencies until November 24.
+
+Two of these finds came from AI-assisted research. Apache credits Anthropic's OSS Scanner, which reported the httpd bug on October 26, eight days before Google's team found it too. Node.js credits Chris Rohlf working with Claude for several of its High reports.
+
+My take: the Node bugs sit in code paths most of us never think about, like a handler that flushes headers early. Don't try to work out whether your app is exposed. Bump the runtime, then check where Node actually comes from: Docker base images, serverless runtime settings, and CI images often pin an older version and won't pick up the fix by themselves. For Apache, run \`grep -R "Protocols" /etc/httpd /etc/apache2\` today. If you see \`h2\` and can't patch yet, dropping HTTP/2 is a quick stopgap, as long as nothing behind it (a gRPC backend, say) needs it.
+
+## 2. Your CI secrets are the target now
+
+Starting November 10 at about 12:45 UTC, an attacker used stolen credentials for 4,837 GitHub accounts to push a secret stealer into repositories those accounts could write to. Aikido Security, which named the campaign wfx-loot, counted probe pull requests in 61,764 repositories and confirmed the payload ran in at least 1,806 of them. Each attack starts with a harmless looking pull request titled \`docs: dependency audit notes\` from a \`wfx-docs\` branch. Then comes a commit like \`ci: refresh build cache\` or \`chore: add ci helper\`, which either injects a 1,500-line script into an existing workflow or adds an npm \`postinstall\` hook. The script collects Actions secrets, \`GITHUB_TOKEN\`, OIDC tokens, cloud credentials and AI provider keys, exchanges OIDC tokens for AWS, GCP and Azure sessions, and on AWS can create long-lived IAM keys. The attacker then reverts the commit within about a minute and deletes the workflow run and its logs. A missing run number is often the only trace left.
+
+On November 13 Cursor published its full report on the October incident. An attacker got an access key Cursor had issued to Fireworks AI, which Fireworks exposed, and copied coding agent traces, mostly from 2025, from sessions not in Privacy Mode. A small number of those traces held credentials that had not been redacted. From there the attacker reached internal tools and placed tampered copies of the Claude Code extension (2.1.312 and 2.1.313) on the cache behind Cursor's extension marketplace, where they stayed up for about 11 hours. Cursor says at most 5,000 users could have received them. Anthropic's real extension and Open VSX were not compromised.
+
+My take: both stories end the same way. Secrets got copied into places where nobody was looking for them, like CI logs, agent traces and support tickets. Check your repositories for the wfx-loot markers: a \`wfx-docs\` branch, those commit titles, a gap in the workflow run numbers. Then make the pipeline less worth stealing from. Use OIDC with short-lived, narrowly scoped cloud roles instead of stored keys, give \`GITHUB_TOKEN\` read-only permissions by default, and run \`npm ci --ignore-scripts\` in CI where your build allows it. And if you paste a key into an AI tool or a support chat, assume it got stored somewhere and rotate it.
+
+## 3. Fable 5.2 and Gemini 4 Carbon cut the price of the top tier
+
+Anthropic released Claude Fable 5.2 on November 9 (API id \`claude-fable-5-2\`) at $8 per million input tokens and $40 per million output, down from $10 and $50 for Fable 5.1. It has a 1M token context window and up to 128K output tokens. An optional fast mode runs up to 2.5 times faster at $16 and $80. Mythos 5.2 is the same model with fewer cyber and biology safeguards, available only through Anthropic's verification programs. Anthropic still recommends Opus 5.5 for everyday work.
+
+Google opened Gemini 4 Carbon to paying API users on November 10 at $2 and $10 until November 30, then $4 and $20. On November 12 it added Gemini 4 Hydrogen, a faster model at $1.50 and $7.50 flat across the 1M context, which Google pitches as the replacement for Gemini 3.8 Flash. Hydrogen also reached GitHub Copilot on November 13.
+
+The benchmarks depend on who runs them. Anthropic's own table puts Fable 5.2 at 69.9% on FrontierSWE v2, ahead of Carbon at 61.2%, but the same table has Carbon ahead on AutomationBench (53.9% to 51.4%). Google says Carbon ranks first on CursorBench 4.0 and AutomationBench at more than 2X lower cost per task than the next best external model. On the Artificial Analysis Intelligence Index, Fable 5.2 scores 65 at its highest setting, and Artificial Analysis puts its peak per-task cost at about $26.50, around 2.6 times Opus 5.5.
+
+My take: per-token prices went down, but "Xhigh" effort burns a lot of tokens, so price per task is what you should compare. The pattern both labs are pushing is a mix: an expensive model to plan and review, a cheap fast one to write code and run tests. You can do that yourself with any provider. Before switching a production workload, run 20 or so of your own real tasks through each candidate and log cost, time and pass rate. Leaderboard scores won't tell you that.
+
+## Mobile
+
+- Android 17 QPR2 reached Pixel phones as a stable release on November 10, alongside the November Pixel Drop and security patch. Pixel 6a and newer get it.
+- Android 17 QPR3 Beta 4 (November 12) fixes, among other things, an unclear Conscrypt error when apps targeting API level 36 try TLS 1.0 or 1.1. If your app still talks to an old backend, test against this build.
+- React Native 0.89.0-rc.1 was tagged on November 10.
+- Chrome 157.0.8103.78 for Android (November 11) carries the zero-day fix from story 1, so make sure in-app web views get it too.
+- Apple announced the Swift Student Challenge 2027 on November 10. Submissions open February 8 to 28, and apps for any Apple platform are accepted this time.
+
+## Also worth knowing
+
+- PostgreSQL 18.7, 17.12, 16.16, 15.20 and 14.25 (November 12) fix 52 security vulnerabilities, several of them CVSS 8.8 code execution bugs. One fix needs C-language extensions rebuilt. Read the post-update steps before you upgrade.
+- Microsoft released .NET 11 with C# 15 union types on November 10. Support for .NET 8 and .NET 9 ended the same day.
+- Rust 1.100 (November 12) stabilizes the never type \`!\` after ten years.
+- The GraphQL over HTTP spec was published on November 12. It adds the \`application/graphql-response+json\` response type, so errors can finally return 4xx and 5xx instead of 200 for everything.
+- GitHub will remove a set of Copilot models on December 14. Check the changelog for the list if you pinned one.
+- Vercel released UI SDK in public beta on November 12, an Apache-2.0 TypeScript library that lets an agent assemble components for React, Vue, Svelte, Solid and Web Components.
+- Nvidia announced on November 12 that Jensen Huang had resigned as CEO. CFO Colette Kress is interim CEO.
+
+## From my reading list
+
+The engineering newsletters I read this week kept coming back to the same point: agents made writing code cheap, so the work moved to reviewing it, measuring it, and choosing when not to use a big model at all.
+
+- ByteByteGo on LinkedIn's AI code reviewer: it covers more than 40,000 pull requests a week, and most of its comments land before a human opens the PR. A human still approves every change. The lesson: a useful reviewer has to flag real bugs in the changed lines, follow your codebase's own conventions, and comment while the author can still act. Vendor reviewers are quick to set up but generic, so if you try one, check whether its comments could apply to any project.
+- ByteByteGo on how GitHub moved the Copilot runtime from TypeScript to Rust, about 430K lines of production TypeScript, mostly done with Copilot's own agents. They replaced one component per pull request behind a thin wrapper, deleted the old version in the same change, kept behaviour the same, and merged nothing that failed the end-to-end tests. That is the old strangler pattern, and it still works when agents write the code.
+- The Pragmatic Engineer on incident.io's AI spend: about $1,600 per engineer per month now, down from $4,500, and nearly 80% of production PRs include agent-written code. Yet the median engineer ships only about 10% more PRs than two years ago, while tenured engineers ship about 70% more. New hires are asked to hold off on AI for their first month, because heavy use right after joining made them perform worse later. Measure cost per unit of work, not tokens, and protect the time people need to learn a codebase.
+- PostHog's Product for Engineers on decision models: small models that answer a narrow yes/no or multiple-choice question with a calibrated probability. They use one as a gate in front of an LLM call, and 98.7% of items skip the LLM. Set the threshold by which mistake costs more (0.4 when missing personal data is worse, 0.85 when a false alarm is worse), and re-tune it whenever the model version changes.
+- Tech World With Milan on a three-month rewrite that took nine: software laws like Brooks's and Linus's seem to contradict each other because each holds only in its own context. Before you add people or agents to a late project, name which force is slowing it down.
+
+## What I'm watching this week
+
+- Whether Debian bookworm and Ubuntu ship the Apache 2.4.71 fix, since distribution packages lagged upstream at the end of the week.
+- The end of Gemini 4 Carbon's introductory price on November 30.
+- macOS 27.3 beta 2 (November 16) splits Full Disk Access and Device Control permissions, which affects developer tools and agents that drive other apps on a Mac.
+
+Did wfx-loot touch any repository you can write to, and how long did it take you to find out? Write to me, I read every reply.`,
+    sources: [
+      { label: "Node.js, Wednesday, November 11, 2026 Security Releases", url: "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases" },
+      { label: "Node.js 22.23.5 release notes", url: "https://nodejs.org/en/blog/release/v22.23.5" },
+      { label: "Apache HTTP Server 2.4 vulnerabilities", url: "https://httpd.apache.org/security/vulnerabilities_24.html" },
+      { label: "Red Hat, RHSB-2026-017 Apache HTTP Server (CVE-2026-119618)", url: "https://access.redhat.com/security/vulnerabilities/RHSB-2026-017" },
+      { label: "Cloud Security Alliance, CVE-2026-119618 research note", url: "https://labs.cloudsecurityalliance.org/research/csa-research-note-apache-mod-http2-cve-2026-119618-20261112" },
+      { label: "Chrome Releases, Stable Channel Update for Desktop", url: "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_018223192.html" },
+      { label: "The Hacker News, Chrome eighth exploited zero-day of 2026", url: "https://thehackernews.com/2026/11/google-issues-chrome-security-update.html" },
+      { label: "Aikido Security, wfx-loot campaign", url: "https://www.aikido.dev/blog/compromised-github-accounts-push-ci-secret-stealer-to-tens-of-thousands-of-repositories" },
+      { label: "OX Security, wfx-loot", url: "https://www.ox.security/blog/thousands-of-github-accounts-hijacked-with-wfx-loot-ci-secret-stealing-malware-via-github-actions-npm/" },
+      { label: "Cursor, An update on our recent security incident", url: "https://cursor.com/blog/security-incident-update" },
+      { label: "Anthropic, Claude Fable 5.2 and Mythos 5.2", url: "https://www.anthropic.com/claude-fable-and-mythos-5-2" },
+      { label: "Claude Platform, Claude Fable 5.2 overview", url: "https://platform.claude.com/docs/en/models/fable-5-2/overview" },
+      { label: "The Decoder, Fable 5.2 on the Artificial Analysis index", url: "https://the-decoder.com/claude-fable-5-2-and-mythos-5-2-cement-anthropics-ai-lead-just-before-its-ipo/" },
+      { label: "Google, Gemini 4 Carbon is now available", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/" },
+      { label: "Google, Introducing Gemini 4 Hydrogen", url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/" },
+      { label: "GitHub Changelog, Gemini 4 Hydrogen in GitHub Copilot", url: "https://github.blog/changelog/2026-11-13-gemini-4-hydrogen-in-github-copilot" },
+      { label: "GitHub Changelog, Upcoming deprecation of selected Copilot models in December", url: "https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december/" },
+      { label: "9to5Google, Android 17 QPR2 November update", url: "https://9to5google.com/2026/11/10/android-17-qpr2-november-pixel-update/" },
+      { label: "Android Developers, Android 17 QPR3 release notes", url: "https://developer.android.com/about/versions/17/qpr3/release-notes" },
+      { label: "React Native 0.89.0-rc.1", url: "https://github.com/facebook/react-native/releases/tag/v0.89.0-rc.1" },
+      { label: "Apple Developer News", url: "https://developer.apple.com/news/" },
+      { label: "PostgreSQL 18.7, 17.12, 16.16, 15.20, 14.25 and 19 RC 2 released", url: "https://www.postgresql.org/about/news/postgresql-187-1712-1616-1520-1425-and-19-rc-2-released-3442/" },
+      { label: "Vercel UI SDK introduction", url: "https://ui-sdk.dev/docs/core/changelog/introducing-ui-sdk" },
+      { label: "Mind and Machine Weekly, 15 November 2026", url: "https://mindandmachineweekly.substack.com/p/mind-and-machine-weekly-15-november" },
+      { label: "Dev Weekly Nov 9-15, 2026 (Ajit Singh)", url: "https://singhajit.com/dev-weekly/2026/nov-9-15/dotnet-11-rust-1-100-graphql-http-nitro-gemini-decisions/" },
+      { label: "Linuxiac Weekly Wrap-Up, Week 46", url: "https://linuxiac.com/linuxiac-weekly-wrap-up-week-46-2026-november-9-15/" },
+      { label: "ByteByteGo, How LinkedIn Uses AI to Review 40,000 Pull Requests a Week", url: "https://blog.bytebytego.com/p/how-linkedin-uses-ai-to-review-40000" },
+      { label: "ByteByteGo, How GitHub Used AI to Port Copilot From TypeScript to Rust", url: "https://blog.bytebytego.com/p/how-github-used-ai-to-port-copilot" },
+      { label: "The Pragmatic Engineer, The Pulse: Details of incident.io's AI spend", url: "https://newsletter.pragmaticengineer.com/p/the-pulse-details-of-incidentios" },
+      { label: "Product for Engineers (PostHog), Not everything needs an LLM", url: "https://newsletter.posthog.com/p/decision-models" },
+      { label: "Tech World With Milan, We Promised Three Months. It Took Nine.", url: "https://newsletter.techworld-with-milan.com/p/we-promised-three-months-it-took" }
+    ],
+  },
 ];
 
 /** Newest first. */
